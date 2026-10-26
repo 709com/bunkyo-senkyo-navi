@@ -22,3 +22,25 @@
 
 ## 定期巡回（予定）
 - 各党の公認ページ、選挙ドットコム、候補者の公式サイトを確認し、変更があれば候補データと「更新情報」を更新案として本人に提示する
+
+## v2（複数ページ化）
+- data/candidates.json（候補・政党・更新情報）と data/results.json（過去結果。tools/import_results.py で生成・検算済み）から `python3 build.py` で全ページを生成
+- ページ：/ /kouho/ /kouho/<slug>/ /kekka/ /kekka/<年>/ /touhyou/ 他6ページ /about/ 404 sitemap robots
+- 現職は必ず2023年の結果に名前が一致する（build時にassert）
+
+## 引き継ぎメモ（2026-10-26 チャットから）
+未完了（完了扱いにしない）
+- main への push（公開）は未実施。pages.dev に出ているのは古い1ページ版
+- 独自ドメイン未接続。Cloudflare から「active」のメールが届いたら、Pages に bunkyo-senkyo.jp と www を追加（本人作業）
+- 旧サイト bunkyo-kosodate.net の非公開化は本人作業（Coming Soon プラグイン＋noindex）
+- 判断待ち台帳に2件登録済み
+
+気をつけること
+- ページを直接書き換えない。data/*.json を直して build する（直接直すと次の build で消える）
+- 未確認の項目（区選管の受付時間、区長選・都議選の年齢など）は「—」のまま。わかったら埋め、必ず確認日を付ける
+- 川畑さん：本人の表明URLが取れたら「未確認」の表示を外す
+- 告示後は連絡先の表示が必須（build.py の CONTACT は設定済み）
+- 自動巡回は未実装。作るなら「提案→本人のOK→反映」。SNSリンクは公式サイトから辿れるものだけ
+- zip で上書きするときは、古い版が混ざらないよう先にフォルダごとバックアップ
+- このPCの python3 は Microsoft Store への案内だけで動かない。C:\Users\709co\AppData\Local\Programs\Python\Python311\python.exe で build する
+- 表示確認用サーバー：D:\AI作業用\.claude\launch.json の「navi2027-local」（http://localhost:8027）

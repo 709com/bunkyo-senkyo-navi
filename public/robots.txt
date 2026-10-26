@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bunkyo-senkyo.jp/sitemap.xml

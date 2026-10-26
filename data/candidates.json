@@ -8,41 +8,354 @@
     "seats_source": "https://www.city.bunkyo.lg.jp/b045/p006374.html"
   },
   "candidates": [
-    {"name": "浅川 のぼる", "kana": "あさかわ のぼる", "status": "現", "party": "自由民主党", "basis": "党公認", "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf", "source_label": "自民党東京都連 第1次公認", "checked": "2026-10-13", "links": {}},
-    {"name": "市村 やすとし", "kana": "いちむら やすとし", "status": "現", "party": "自由民主党", "basis": "党公認", "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf", "source_label": "自民党東京都連 第1次公認", "checked": "2026-10-13", "links": {}},
-    {"name": "依田 翼", "kana": "よだ つばさ", "status": "現", "party": "都民ファーストの会", "basis": "選挙ドットコム掲載", "source": "https://go2senkyo.com/local/senkyo/24560", "source_label": "選挙ドットコム「予想される顔ぶれ」", "checked": "2026-10-26", "links": {}},
-    {"name": "川畑 あやこ", "kana": "かわはた あやこ", "status": "新", "party": "無所属", "basis": "選挙ドットコム掲載", "source": "https://go2senkyo.com/local/senkyo/24560", "source_label": "選挙ドットコム「予想される顔ぶれ」", "checked": "2026-10-26", "links": {}},
-    {"name": "佐藤 豪一", "kana": "さとう ごういち", "status": "現", "party": "自由民主党", "basis": "党公認", "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf", "source_label": "自民党東京都連 第1次公認", "checked": "2026-10-13", "links": {}},
-    {"name": "沢田 けいじ", "kana": "さわだ けいじ", "status": "現", "party": "立憲民主党", "basis": "党公認", "source": "https://cdp-japan.jp/election/868", "source_label": "立憲民主党 公認・推薦一覧", "checked": "2026-10-13", "links": {}},
-    {"name": "品田 ひでこ", "kana": "しなだ ひでこ", "status": "現", "party": "立憲民主党", "basis": "党公認", "source": "https://cdp-japan.jp/election/868", "source_label": "立憲民主党 公認・推薦一覧", "checked": "2026-10-13", "links": {}},
-    {"name": "高山 かずひろ", "kana": "たかやま かずひろ", "status": "現", "party": "日本維新の会", "basis": "党公認", "source": "https://o-ishin.jp/election/candidate/2027kounin/", "source_label": "日本維新の会 2027年公認候補予定者", "checked": "2026-10-26", "links": {}},
-    {"name": "高山 たいぞう", "kana": "たかやま たいぞう", "status": "現", "party": "国民民主党", "basis": "党公認", "source": "https://www.new-kokumin.tokyo/2026/03/dai1jikouhosha20260316/", "source_label": "国民民主党東京都連 第一次公認", "checked": "2026-10-13", "links": {}},
-    {"name": "たかはま なおき", "kana": "たかはま なおき", "status": "現", "party": "無所属", "basis": "本人公表", "source": "https://go2senkyo.com/local/senkyo/24560", "source_label": "選挙ドットコム「予想される顔ぶれ」", "checked": "2026-10-26", "links": {"web": "https://takahamanaoki.com/"}, "operator": true},
-    {"name": "田中 としかね", "kana": "たなか としかね", "status": "現", "party": "自由民主党", "basis": "党公認", "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf", "source_label": "自民党東京都連 第1次公認", "checked": "2026-10-13", "links": {}},
-    {"name": "名取 けんいち", "kana": "なとり けんいち", "status": "現", "party": "自由民主党", "basis": "党公認", "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf", "source_label": "自民党東京都連 第1次公認", "checked": "2026-10-13", "links": {}},
-    {"name": "のぐち けんたろう", "kana": "のぐち けんたろう", "status": "現", "party": "自由民主党", "basis": "党公認", "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf", "source_label": "自民党東京都連 第1次公認", "checked": "2026-10-13", "links": {}},
-    {"name": "ほかり 吉紀", "kana": "ほかり よしのり", "status": "現", "party": "無所属", "basis": "選挙ドットコム掲載", "source": "https://go2senkyo.com/local/senkyo/24560", "source_label": "選挙ドットコム「予想される顔ぶれ」", "checked": "2026-10-26", "links": {}},
-    {"name": "松平 雄一郎", "kana": "まつだいら ゆういちろう", "status": "現", "party": "自由民主党", "basis": "党公認", "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf", "source_label": "自民党東京都連 第1次公認", "checked": "2026-10-13", "links": {}},
-    {"name": "宮崎 こうき", "kana": "みやざき こうき", "status": "現", "party": "日本維新の会", "basis": "党公認", "source": "https://o-ishin.jp/election/candidate/2027kounin/", "source_label": "日本維新の会 2027年公認候補予定者", "checked": "2026-10-26", "links": {}},
-    {"name": "山田 ひろこ", "kana": "やまだ ひろこ", "status": "現", "party": "自由民主党", "basis": "党公認", "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf", "source_label": "自民党東京都連 第1次公認", "checked": "2026-10-13", "links": {}},
-    {"name": "吉村 美紀", "kana": "よしむら みき", "status": "現", "party": "自由民主党", "basis": "党公認", "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf", "source_label": "自民党東京都連 第1次公認", "checked": "2026-10-13", "links": {}}
+    {
+      "name": "浅川 のぼる",
+      "kana": "あさかわ のぼる",
+      "status": "現",
+      "party": "自由民主党",
+      "basis": "党公認",
+      "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf",
+      "source_label": "自民党東京都連 第1次公認",
+      "checked": "2026-10-13",
+      "links": {},
+      "slug": "asakawa-noboru",
+      "result_names": [
+        "浅川 のぼる"
+      ]
+    },
+    {
+      "name": "市村 やすとし",
+      "kana": "いちむら やすとし",
+      "status": "現",
+      "party": "自由民主党",
+      "basis": "党公認",
+      "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf",
+      "source_label": "自民党東京都連 第1次公認",
+      "checked": "2026-10-13",
+      "links": {},
+      "slug": "ichimura-yasutoshi",
+      "result_names": [
+        "市村 やすとし"
+      ]
+    },
+    {
+      "name": "依田 翼",
+      "kana": "よだ つばさ",
+      "status": "現",
+      "party": "都民ファーストの会",
+      "basis": "選挙ドットコム掲載（本人の表明は未確認）",
+      "source": "https://go2senkyo.com/local/senkyo/24560",
+      "source_label": "選挙ドットコム「予想される顔ぶれ」に掲載（現職議員。本人の立候補表明は未確認）",
+      "checked": "2026-10-26",
+      "links": {},
+      "slug": "yoda-tsubasa",
+      "result_names": [
+        "依田 翼"
+      ]
+    },
+    {
+      "name": "佐藤 豪一",
+      "kana": "さとう ごういち",
+      "status": "現",
+      "party": "自由民主党",
+      "basis": "党公認",
+      "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf",
+      "source_label": "自民党東京都連 第1次公認",
+      "checked": "2026-10-13",
+      "links": {},
+      "slug": "sato-goichi",
+      "result_names": [
+        "佐藤 豪一",
+        "佐藤 ごういち"
+      ]
+    },
+    {
+      "name": "沢田 けいじ",
+      "kana": "さわだ けいじ",
+      "status": "現",
+      "party": "立憲民主党",
+      "basis": "党公認",
+      "source": "https://cdp-japan.jp/election/868",
+      "source_label": "立憲民主党 公認・推薦一覧",
+      "checked": "2026-10-13",
+      "links": {},
+      "slug": "sawada-keiji",
+      "result_names": [
+        "沢田 けいじ"
+      ]
+    },
+    {
+      "name": "品田 ひでこ",
+      "kana": "しなだ ひでこ",
+      "status": "現",
+      "party": "立憲民主党",
+      "basis": "党公認",
+      "source": "https://cdp-japan.jp/election/868",
+      "source_label": "立憲民主党 公認・推薦一覧",
+      "checked": "2026-10-13",
+      "links": {},
+      "slug": "shinada-hideko",
+      "result_names": [
+        "品田 ひでこ"
+      ]
+    },
+    {
+      "name": "高山 かずひろ",
+      "kana": "たかやま かずひろ",
+      "status": "現",
+      "party": "日本維新の会",
+      "basis": "党公認",
+      "source": "https://o-ishin.jp/election/candidate/2027kounin/",
+      "source_label": "日本維新の会 2027年公認候補予定者",
+      "checked": "2026-10-26",
+      "links": {},
+      "slug": "takayama-kazuhiro",
+      "result_names": [
+        "高山 かずひろ"
+      ]
+    },
+    {
+      "name": "高山 泰三",
+      "kana": "たかやま たいぞう",
+      "status": "現",
+      "party": "国民民主党",
+      "basis": "党公認",
+      "source": "https://www.new-kokumin.tokyo/2026/03/dai1jikouhosha20260316/",
+      "source_label": "国民民主党東京都連 第一次公認",
+      "checked": "2026-10-13",
+      "links": {},
+      "slug": "takayama-taizo",
+      "result_names": [
+        "高山 たいぞう"
+      ]
+    },
+    {
+      "name": "たかはま なおき",
+      "kana": "たかはま なおき",
+      "status": "現",
+      "party": "無所属",
+      "basis": "選挙ドットコム掲載（本人の表明は未確認）",
+      "source": "https://go2senkyo.com/local/senkyo/24560",
+      "source_label": "選挙ドットコム「予想される顔ぶれ」に掲載（現職議員。本人の立候補表明は未確認）",
+      "checked": "2026-10-26",
+      "links": {},
+      "operator": true,
+      "slug": "takahama-naoki",
+      "result_names": [
+        "たかはま なおき"
+      ]
+    },
+    {
+      "name": "田中 としかね",
+      "kana": "たなか としかね",
+      "status": "現",
+      "party": "自由民主党",
+      "basis": "党公認",
+      "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf",
+      "source_label": "自民党東京都連 第1次公認",
+      "checked": "2026-10-13",
+      "links": {},
+      "slug": "tanaka-toshikane",
+      "result_names": [
+        "田中 としかね"
+      ]
+    },
+    {
+      "name": "名取 顕一",
+      "kana": "なとり けんいち",
+      "status": "現",
+      "party": "自由民主党",
+      "basis": "党公認",
+      "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf",
+      "source_label": "自民党東京都連 第1次公認",
+      "checked": "2026-10-13",
+      "links": {},
+      "slug": "natori-kenichi",
+      "result_names": [
+        "名取 けんいち"
+      ]
+    },
+    {
+      "name": "のぐち けんたろう",
+      "kana": "のぐち けんたろう",
+      "status": "現",
+      "party": "自由民主党",
+      "basis": "党公認",
+      "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf",
+      "source_label": "自民党東京都連 第1次公認",
+      "checked": "2026-10-13",
+      "links": {},
+      "slug": "noguchi-kentaro",
+      "result_names": [
+        "のぐち けんたろう"
+      ]
+    },
+    {
+      "name": "ほかり 吉紀",
+      "kana": "ほかり よしのり",
+      "status": "現",
+      "party": "無所属",
+      "basis": "選挙ドットコム掲載（本人の表明は未確認）",
+      "source": "https://go2senkyo.com/local/senkyo/24560",
+      "source_label": "選挙ドットコム「予想される顔ぶれ」に掲載（現職議員。本人の立候補表明は未確認）",
+      "checked": "2026-10-26",
+      "links": {},
+      "slug": "hokari-yoshinori",
+      "result_names": [
+        "ほかり 吉紀"
+      ]
+    },
+    {
+      "name": "松平 雄一郎",
+      "kana": "まつだいら ゆういちろう",
+      "status": "現",
+      "party": "自由民主党",
+      "basis": "党公認",
+      "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf",
+      "source_label": "自民党東京都連 第1次公認",
+      "checked": "2026-10-13",
+      "links": {},
+      "slug": "matsudaira-yuichiro",
+      "result_names": [
+        "松平 雄一郎"
+      ]
+    },
+    {
+      "name": "宮崎 こうき",
+      "kana": "みやざき こうき",
+      "status": "現",
+      "party": "日本維新の会",
+      "basis": "党公認",
+      "source": "https://o-ishin.jp/election/candidate/2027kounin/",
+      "source_label": "日本維新の会 2027年公認候補予定者",
+      "checked": "2026-10-26",
+      "links": {},
+      "slug": "miyazaki-koki",
+      "result_names": [
+        "宮崎 こうき"
+      ]
+    },
+    {
+      "name": "山田 ひろこ",
+      "kana": "やまだ ひろこ",
+      "status": "現",
+      "party": "自由民主党",
+      "basis": "党公認",
+      "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf",
+      "source_label": "自民党東京都連 第1次公認",
+      "checked": "2026-10-13",
+      "links": {},
+      "slug": "yamada-hiroko",
+      "result_names": [
+        "山田 ひろこ"
+      ]
+    },
+    {
+      "name": "吉村 美紀",
+      "kana": "よしむら みき",
+      "status": "現",
+      "party": "自由民主党",
+      "basis": "党公認",
+      "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf",
+      "source_label": "自民党東京都連 第1次公認",
+      "checked": "2026-10-13",
+      "links": {},
+      "slug": "yoshimura-miki",
+      "result_names": [
+        "吉村 美紀",
+        "よしむら 美紀"
+      ]
+    },
+    {
+      "name": "川畑 あやこ",
+      "kana": "かわはた あやこ",
+      "status": "新",
+      "party": "無所属",
+      "basis": "選挙ドットコム掲載（本人の表明は未確認）",
+      "source": "https://go2senkyo.com/local/senkyo/24560",
+      "source_label": "選挙ドットコム「予想される顔ぶれ」に掲載（新人。本人の立候補表明は未確認）",
+      "checked": "2026-10-26",
+      "links": {},
+      "slug": "kawabata-ayako",
+      "result_names": [
+        "川畑 あやこ"
+      ]
+    }
   ],
   "parties": [
-    {"party": "自由民主党", "count": "9人", "note": "東京都連 第1次公認（2026/10/13付）", "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf"},
-    {"party": "立憲民主党", "count": "2人", "note": "公認・推薦一覧（2026/9/30現在）", "source": "https://cdp-japan.jp/election/868"},
-    {"party": "日本維新の会", "count": "2人", "note": "2027年実施予定 公認候補予定者", "source": "https://o-ishin.jp/election/candidate/2027kounin/"},
-    {"party": "国民民主党", "count": "1人", "note": "東京都連 第一次公認（2026/3/16）", "source": "https://www.new-kokumin.tokyo/2026/03/dai1jikouhosha20260316/"},
-    {"party": "日本共産党", "count": "未発表", "note": "党サイトで文京区の公認発表を確認できず", "source": ""},
-    {"party": "公明党", "count": "未発表", "note": "特別区の公認は未発表", "source": ""},
-    {"party": "その他の政党", "count": "未確認", "note": "発表を確認次第掲載", "source": ""}
+    {
+      "party": "自由民主党",
+      "count": "9人",
+      "note": "東京都連 第1次公認（2026/10/13付）",
+      "source": "https://www.tokyo-jimin.jp/cms/wp-content/uploads/2026/10/bb4ced39f044f259a096351f6becf104.pdf"
+    },
+    {
+      "party": "立憲民主党",
+      "count": "2人",
+      "note": "公認・推薦一覧（2026/9/30現在）",
+      "source": "https://cdp-japan.jp/election/868"
+    },
+    {
+      "party": "日本維新の会",
+      "count": "2人",
+      "note": "2027年実施予定 公認候補予定者",
+      "source": "https://o-ishin.jp/election/candidate/2027kounin/"
+    },
+    {
+      "party": "国民民主党",
+      "count": "1人",
+      "note": "東京都連 第一次公認（2026/3/16）",
+      "source": "https://www.new-kokumin.tokyo/2026/03/dai1jikouhosha20260316/"
+    },
+    {
+      "party": "日本共産党",
+      "count": "未発表",
+      "note": "党サイトで文京区の公認発表を確認できず",
+      "source": ""
+    },
+    {
+      "party": "公明党",
+      "count": "未発表",
+      "note": "特別区の公認は未発表",
+      "source": ""
+    },
+    {
+      "party": "その他の政党",
+      "count": "未確認",
+      "note": "発表を確認次第掲載",
+      "source": ""
+    }
   ],
   "news": [
-    {"date": "2026-10-26", "text": "サイトを公開しました。立候補予定者18人（政党の公認発表・選挙ドットコム掲載・本人公表に基づく）を掲載。"}
+    {
+      "date": "2026-10-26",
+      "text": "過去4回（2011〜2023年）の文京区議選の公式結果をグラフと表で追加しました。"
+    },
+    {
+      "date": "2026-10-26",
+      "text": "投票ガイド（選管の場所、期日前投票、入場券、投票できる人など）を追加しました。"
+    },
+    {
+      "date": "2026-10-26",
+      "text": "サイトを公開しました。立候補予定者18人を掲載（政党の公認発表、または選挙ドットコムの予想一覧に基づく）。"
+    }
   ],
   "links": [
-    {"label": "文京区選挙管理委員会（選挙の種類・定数・任期）", "url": "https://www.city.bunkyo.lg.jp/b045/p006374.html"},
-    {"label": "前回（令和5年）文京区議会議員選挙の結果", "url": "https://www.city.bunkyo.lg.jp/b045/p006425.html"},
-    {"label": "前回（令和5年）の立候補者一覧・選挙公報", "url": "https://www.city.bunkyo.lg.jp/b045/p006423/index.html"},
-    {"label": "選挙ドットコム 文京区議会議員選挙", "url": "https://go2senkyo.com/local/senkyo/24560"}
+    {
+      "label": "文京区選挙管理委員会（選挙の種類・定数・任期）",
+      "url": "https://www.city.bunkyo.lg.jp/b045/p006374.html"
+    },
+    {
+      "label": "前回（令和5年）文京区議会議員選挙の結果",
+      "url": "https://www.city.bunkyo.lg.jp/b045/p006425.html"
+    },
+    {
+      "label": "前回（令和5年）の立候補者一覧・選挙公報",
+      "url": "https://www.city.bunkyo.lg.jp/b045/p006423/index.html"
+    },
+    {
+      "label": "選挙ドットコム 文京区議会議員選挙",
+      "url": "https://go2senkyo.com/local/senkyo/24560"
+    }
   ]
 }
