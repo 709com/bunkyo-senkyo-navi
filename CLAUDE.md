@@ -50,3 +50,13 @@
 - build.py の `NOINDEX = True` で、全ページに noindex、Cloudflare 用 `_headers` に X-Robots-Tag、robots.txt からサイトマップの案内を外している
 - robots.txt で巡回を拒否しない（拒否すると noindex が読まれず、URLだけ検索に出ることがある）
 - Google Search Console への登録・サイトマップ送信は、本人が本格公開を決めるまでしない。解除は `NOINDEX = False` → build → 本人OK → push
+
+## 情報の鮮度と定期巡回（2026-10-26 開始）
+- 確認日から14日（build.py の STALE_DAYS）たつと、閲覧時にブラウザ側で「・要再確認」を灰色で表示（全員同じ扱い）
+- 定期巡回：デスクトップアプリの予定タスク「navi2027-patrol」（毎週月曜8時ごろ。アプリが閉じていれば次の起動時に実行）
+  - 各党公認ページ・選挙ドットコム・区選管・Web検索を見て、patrol/YYYY-MM-DD.md に更新案を書く。patrol/state.md が前回状態
+  - サイトのデータ・build・push には触れない。反映は本人OKのあと
+  - 変更があればスマホに通知
+  - patrol/ は内部資料なので .gitignore で公開リポジトリに入れない
+- 頻度の目安：〜12月 週1／1〜2月 週2／3月〜告示 毎日／告示日 当日。1月になったら頻度を上げる
+- 自民都連の公認一覧はPDF。WebFetch では中身が読めないので、巡回は「新しい発表が出たか」まで。氏名の照合は Claude Code で pypdf を使って行う

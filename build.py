@@ -14,6 +14,18 @@ SITE_NAME = "文京区議選NAVI 2027"
 MAIL = "info@takahamanaoki.com"
 CONTACT = f'<a href="mailto:{MAIL}">{MAIL}</a>'  # 公選法上、告示後は連絡先表示が必要
 ROBOTS_META = '<meta name="robots" content="noindex, nofollow">\n' if NOINDEX else ""
+# 確認日からこの日数を過ぎたら「要再確認」と表示する（全員同じ扱い）。
+# ページは作り置きなので、閲覧した日の日付でブラウザ側が判定する（作り直さなくても表示が切り替わる）
+STALE_DAYS = 14
+STALE_JS = ("<script>(function(){var L=" + str(STALE_DAYS) + "*864e5,n=Date.now();"
+            "document.querySelectorAll('.chk[data-d]').forEach(function(e){"
+            "var t=Date.parse(e.getAttribute('data-d')+'T00:00:00+09:00');"
+            "if(t&&n-t>=L){var s=document.createElement('span');s.className='muted';s.textContent='・要再確認';e.appendChild(s);}"
+            "});})();</script>")
+
+
+def chk(date):
+    return f'（<span class="chk" data-d="{html.escape(str(date))}">{html.escape(str(date))}確認</span>）'
 
 cand_data = json.loads((ROOT / "data/candidates.json").read_text(encoding="utf-8"))
 res_data = json.loads((ROOT / "data/results.json").read_text(encoding="utf-8"))
@@ -92,6 +104,7 @@ def layout(path, title, desc, body, crumbs=None, jsonld=None, active=None):
 <p>運営：たかはま なおき（文京区議会議員・2027年文京区議選の立候補予定者）／連絡先：{CONTACT}<br>
 このサイトは文京区・文京区議会・文京区選挙管理委員会の公式サイトではありません。掲載内容の誤りは上記までご連絡ください。<br>
 最終更新 {E(UPDATED)}</p></div></footer>
+{STALE_JS}
 </body></html>
 """
 
@@ -195,7 +208,7 @@ def page_kouho():
         cards.append(f"""<li class="card"><div class="top"><span class="st st-{'new' if c['status']=='新' else 'cur'}">{E(c['status'])}</span><span class="party">{E(c['party'])}</span>{op}</div>
 <div class="nm"><a href="/kouho/{c['slug']}/">{E(c['name'])}</a></div><div class="kana">{E(c['kana'])}</div>
 <div class="ln">{lk}</div>
-<div class="src">根拠：<a href="{E(c['source'])}" rel="noopener" target="_blank">{E(c['source_label'])}</a>（{E(c['checked'])}確認）</div></li>""")
+<div class="src">根拠：<a href="{E(c['source'])}" rel="noopener" target="_blank">{E(c['source_label'])}</a>{chk(c['checked'])}</div></li>""")
     body = f"""<div class="hero"><h1>文京区議会議員選挙2027 立候補予定者一覧</h1>
 <p class="lead">{len(cands)}人・50音順・敬称略。本人の公表や政党の発表があり次第、追加します。</p></div>
 <p class="note">氏名の表記は文京区議会の議員名簿に合わせています。「現」は現職議員、「新」は新人です。掲載されていない方も立候補する可能性があります。</p>
@@ -225,7 +238,7 @@ def page_candidate(c):
 <section><h2>基本情報</h2><dl class="kv">
 <dt>党派</dt><dd>{E(c['party'])}</dd><dt>区分</dt><dd>{'現職議員' if c['status']=='現' else '新人'}</dd>
 <dt>公式サイト・SNS</dt><dd>{lk_html}</dd>
-<dt>掲載の根拠</dt><dd><a href="{E(c['source'])}" rel="noopener" target="_blank">{E(c['source_label'])}</a>（{E(c['checked'])}確認）</dd></dl>
+<dt>掲載の根拠</dt><dd><a href="{E(c['source'])}" rel="noopener" target="_blank">{E(c['source_label'])}</a>{chk(c['checked'])}</dd></dl>
 <p class="note">立候補を正式に表明しているか、党の公認が出ているかは「掲載の根拠」のとおりです。{who}</p></section>
 <section><h2>過去の文京区議選の結果（公式）</h2>{hist}</section>
 <p><a href="/kouho/">← 立候補予定者の一覧にもどる</a></p>"""
@@ -449,7 +462,7 @@ def page_about():
 <li>評価・論評・得票予想・順位づけは載せません。</li>
 <li>公約や選挙公報は転載せず、文京区選挙管理委員会の公式のページへのリンクで紹介します。</li>
 <li>公式サイトやSNSへのリンクは、ご本人のサイトや政党のページからリンクされているものだけを載せます（なりすまし防止）。</li>
-<li>すべての情報に、出典と確認日を付けます。</li></ol></div></section>
+<li>すべての情報に、出典と確認日を付けます。確認日から{STALE_DAYS}日以上たったものには「要再確認」と表示し、出典を見直して更新します。</li></ol></div></section>
 <section><h2>過去の結果と投票ガイドについて</h2><p>過去の結果は文京区選挙管理委員会が公表した数字を使い、公式の合計と一致することを確認しています。投票ガイドは文京区・東京都の選挙管理委員会の公式ページを出典としています。</p></section>
 <section><h2>運営者</h2><div class="box"><p>たかはま なおき（文京区議会議員・無所属）<br>このサイトの運営者は、2027年の文京区議会議員選挙の立候補予定者です。そのため、中立であることを最優先にして運営しています。</p>
 <p>誤りのご指摘、掲載・修正・削除のご希望は、次のアドレスまでご連絡ください。確認のうえ、速やかに対応します。<br>連絡先：{CONTACT}</p>
