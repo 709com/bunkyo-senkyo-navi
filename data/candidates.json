@@ -43,9 +43,9 @@
       "kana": "よだ つばさ",
       "status": "現",
       "party": "都民ファーストの会",
-      "basis": "選挙ドットコム掲載（本人の表明は未確認）",
-      "source": "https://go2senkyo.com/local/senkyo/24560",
-      "source_label": "選挙ドットコム「予想される顔ぶれ」に掲載（現職議員。本人の立候補表明は未確認）",
+      "basis": "党公認",
+      "source": "https://tomin1st.jp/wp-content/uploads/2026/05/196f3cac5f27b04f0d5f11dd308a357d.pdf",
+      "source_label": "都民ファーストの会 統一地方選 第1次公認（2026-05-11）",
       "checked": "2026-10-26",
       "links": {},
       "slug": "yoda-tsubasa",
@@ -280,6 +280,77 @@
       "result_names": [
         "川畑 あやこ"
       ]
+    },
+    {
+      "name": "坂本 しょうこ",
+      "kana": "さかもと しょうこ",
+      "status": "新",
+      "party": "日本共産党",
+      "basis": "本人公表",
+      "source": "https://x.com/SakaSho_JCP",
+      "source_label": "本人のX（プロフィールに「文京区議会議員選挙2027予定候補」、2026-10-12の投稿で区政への挑戦を表明）",
+      "checked": "2026-10-26",
+      "links": {},
+      "slug": "sakamoto-shoko",
+      "result_names": []
+    },
+    {
+      "name": "宮本 伸一",
+      "kana": "みやもと しんいち",
+      "status": "現",
+      "party": "公明党",
+      "basis": "選挙ドットコム掲載（本人の表明は未確認）",
+      "source": "https://go2senkyo.com/local/senkyo/24560",
+      "source_label": "選挙ドットコム「予想される顔ぶれ」に掲載（現職議員。本人の立候補表明は未確認）",
+      "slug": "miyamoto-shinichi",
+      "result_names": [
+        "宮本 伸一"
+      ],
+      "checked": "2026-10-26",
+      "links": {}
+    },
+    {
+      "name": "田中 かすみ",
+      "kana": "たなか かすみ",
+      "status": "現",
+      "party": "公明党",
+      "basis": "選挙ドットコム掲載（本人の表明は未確認）",
+      "source": "https://go2senkyo.com/local/senkyo/24560",
+      "source_label": "選挙ドットコム「予想される顔ぶれ」に掲載（現職議員。本人の立候補表明は未確認）",
+      "slug": "tanaka-kasumi",
+      "result_names": [
+        "田中 かすみ"
+      ],
+      "checked": "2026-10-26",
+      "links": {}
+    },
+    {
+      "name": "本田 かおり",
+      "kana": "ほんだ かおり",
+      "status": "新",
+      "party": "都民ファーストの会",
+      "basis": "党公認",
+      "source": "https://tomin1st.jp/wp-content/uploads/2026/08/623e100a9aca34a3816c9454dc32e99f.pdf",
+      "source_label": "都民ファーストの会 統一地方選 第4次公認（2026-08-27。公認名：本田 香緒利）",
+      "slug": "honda-kaori",
+      "result_names": [
+        "本田 かおり"
+      ],
+      "checked": "2026-10-26",
+      "links": {}
+    },
+    {
+      "name": "福澤 直人",
+      "kana": "ふくざわ なおと",
+      "status": "新",
+      "party": "日本保守党",
+      "basis": "選挙ドットコム掲載（本人の表明は未確認）",
+      "source": "https://go2senkyo.com/local/senkyo/24560",
+      "source_label": "選挙ドットコム「予想される顔ぶれ」に掲載（本人の立候補表明は未確認）",
+      "slug": "fukuzawa-naoto",
+      "result_names": [],
+      "checked": "2026-10-26",
+      "links": {}
     }
   ],
   "parties": [
@@ -308,15 +379,21 @@
       "source": "https://www.new-kokumin.tokyo/2026/03/dai1jikouhosha20260316/"
     },
     {
+      "party": "都民ファーストの会",
+      "count": "2人",
+      "note": "統一地方選 公認候補予定者（第1次 2026/5/11・第4次 2026/8/27）",
+      "source": "https://tomin1st.jp/news/"
+    },
+    {
       "party": "日本共産党",
       "count": "未発表",
-      "note": "党サイトで文京区の公認発表を確認できず",
-      "source": ""
+      "note": "党の予定候補一覧に文京区は未掲載（2026-10-26確認）。本人が予定候補と公表した1人を一覧に掲載",
+      "source": "https://www.jcp.or.jp/page-15348/"
     },
     {
       "party": "公明党",
       "count": "未発表",
-      "note": "特別区の公認は未発表",
+      "note": "党の公認発表（公明新聞）で文京区分は確認できず（2026-10-26確認）。選挙ドットコム掲載の現職2人を一覧に掲載",
       "source": ""
     },
     {
@@ -327,6 +404,14 @@
     }
   ],
   "news": [
+    {
+      "date": "2026-10-26",
+      "text": "宮本伸一さん・田中かすみさん（公明党）、本田かおりさん（都民ファーストの会・党公認）、福澤直人さん（日本保守党）を追加しました。依田翼さんの根拠を都民ファーストの会の公認に更新しました。"
+    },
+    {
+      "date": "2026-10-26",
+      "text": "坂本しょうこさん（日本共産党・新人）を追加しました（本人の公表に基づく）。"
+    },
     {
       "date": "2026-10-26",
       "text": "過去4回（2011〜2023年）の文京区議選の公式結果をグラフと表で追加しました。"
