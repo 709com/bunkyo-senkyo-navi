@@ -271,14 +271,32 @@
       "kana": "かわはた あやこ",
       "status": "新",
       "party": "無所属",
-      "basis": "選挙ドットコム掲載（本人の表明は未確認）",
-      "source": "https://go2senkyo.com/local/senkyo/24560",
-      "source_label": "選挙ドットコム「予想される顔ぶれ」に掲載（新人。本人の立候補表明は未確認）",
+      "basis": "本人公表",
+      "source": "https://go2senkyo.com/seijika/186988",
+      "source_label": "本人の選挙ドットコムのプロフィール（「もう一度挑戦します」）",
       "checked": "2026-10-26",
-      "links": {},
+      "links": {
+        "x": "https://x.com/Kawahata_Ayako",
+        "instagram": "https://www.instagram.com/bunkyo.ayakyo",
+        "facebook": "https://www.facebook.com/ayako.kawahata1989"
+      },
       "slug": "kawabata-ayako",
       "result_names": [
         "川畑 あやこ"
+      ],
+      "statement": {
+        "text": "もう一度挑戦します",
+        "source": "https://go2senkyo.com/seijika/186988",
+        "source_label": "本人の選挙ドットコムのプロフィール",
+        "checked": "2026-10-26"
+      },
+      "profile": [
+        {
+          "text": "36歳。3児の母／マーケター（デジタル広告）／共働き世帯／PTA会長",
+          "source": "https://go2senkyo.com/seijika/186988",
+          "source_label": "本人の選挙ドットコムのプロフィール",
+          "checked": "2026-10-26"
+        }
       ]
     },
     {
@@ -290,9 +308,25 @@
       "source": "https://x.com/SakaSho_JCP",
       "source_label": "本人のX（プロフィールに「文京区議会議員選挙2027予定候補」、2026-10-12の投稿で区政への挑戦を表明）",
       "checked": "2026-10-26",
-      "links": {},
+      "links": {
+        "x": "https://x.com/SakaSho_JCP"
+      },
       "slug": "sakamoto-shoko",
-      "result_names": []
+      "result_names": [],
+      "statement": {
+        "text": "来春、文京区政に挑戦することを決意しました",
+        "source": "https://x.com/SakaSho_JCP",
+        "source_label": "本人のX（2026-10-12の投稿）",
+        "checked": "2026-10-26"
+      },
+      "profile": [
+        {
+          "text": "子育て・教育相談室長／元公務員で学芸員",
+          "source": "https://x.com/SakaSho_JCP",
+          "source_label": "本人のXのプロフィール",
+          "checked": "2026-10-26"
+        }
+      ]
     },
     {
       "name": "宮本 伸一",
@@ -337,7 +371,23 @@
         "本田 かおり"
       ],
       "checked": "2026-10-26",
-      "links": {}
+      "links": {
+        "blog": "https://ameblo.jp/hondamarukaori111/"
+      },
+      "profile": [
+        {
+          "text": "52歳（2026年8月27日の党発表時点）",
+          "source": "https://tomin1st.jp/wp-content/uploads/2026/08/623e100a9aca34a3816c9454dc32e99f.pdf",
+          "source_label": "都民ファーストの会 第4次公認の発表",
+          "checked": "2026-10-26"
+        },
+        {
+          "text": "二児の母／看護師／子育て支援員",
+          "source": "https://ameblo.jp/hondamarukaori111/",
+          "source_label": "本人のブログのプロフィール",
+          "checked": "2026-10-26"
+        }
+      ]
     },
     {
       "name": "福澤 直人",
@@ -350,7 +400,29 @@
       "slug": "fukuzawa-naoto",
       "result_names": [],
       "checked": "2026-10-26",
-      "links": {}
+      "links": {
+        "x": "https://x.com/fukuzawa_naoto"
+      },
+      "profile": [
+        {
+          "text": "63歳",
+          "source": "https://go2senkyo.com/seijika/200369",
+          "source_label": "選挙ドットコムの本人ページ",
+          "checked": "2026-10-26"
+        },
+        {
+          "text": "日本保守党・文京区政策委員",
+          "source": "https://x.com/fukuzawa_naoto",
+          "source_label": "本人のXの表示名",
+          "checked": "2026-10-27"
+        },
+        {
+          "text": "文京区生まれ文京区育ち／文京区立昭和小学校→文京区立第九中学校→私立城北高等学校→慶應義塾大学経済学部→文京区音羽の出版社勤務",
+          "source": "https://x.com/fukuzawa_naoto",
+          "source_label": "本人のXのプロフィール",
+          "checked": "2026-10-27"
+        }
+      ]
     }
   ],
   "parties": [
@@ -404,6 +476,10 @@
     }
   ],
   "news": [
+    {
+      "date": "2026-10-26",
+      "text": "現職ではない立候補予定者を「挑戦者」として先に紹介する構成にしました。挑戦者は経歴や本人の言葉も紹介します（全員同じ基準）。"
+    },
     {
       "date": "2026-10-26",
       "text": "宮本伸一さん・田中かすみさん（公明党）、本田かおりさん（都民ファーストの会・党公認）、福澤直人さん（日本保守党）を追加しました。依田翼さんの根拠を都民ファーストの会の公認に更新しました。"

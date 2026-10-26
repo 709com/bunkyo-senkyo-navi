@@ -48,6 +48,8 @@ h2{font-size:21px;margin:0 0 6px;line-height:1.4}
 section{padding:28px 0 6px}
 .grid{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
 .card{background:var(--cd);border:1px solid var(--ln);border-radius:12px;padding:14px}
+.card.ch .nm{font-size:20px}.q{margin:10px 0 6px;padding:8px 12px;border-left:3px solid var(--nw);background:var(--bg);font-size:15px;line-height:1.6}.q cite{display:block;font-style:normal;font-size:12px;color:var(--mu);margin-top:4px}
+.prof{margin:6px 0;padding-left:1.1em;font-size:14px;line-height:1.6}.prof .muted{font-size:12px}
 .top{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12px}
 .st{border-radius:4px;padding:1px 7px;font-weight:700;color:#fff}.st-cur{background:var(--ac)}.st-new{background:var(--nw)}
 .party{color:var(--mu)}.tag{border:1px solid var(--mu);border-radius:4px;padding:0 6px;color:var(--mu)}
@@ -133,6 +135,8 @@ for c in cands:
     c["hist"] = [(e, r) for e in elections for r in e["rows"] if r["name"] in c["result_names"]]
     if c["status"] == "現":
         assert any(e["year"] == 2023 for e, _ in c["hist"]), c["name"]
+challengers = [c for c in cands if c["status"] != "現"]
+incumbents = [c for c in cands if c["status"] == "現"]
 
 
 def hbars(items, maxv, fmt, orange=()):
@@ -172,6 +176,9 @@ def page_index():
 <div class="hero"><h1>文京区議会議員選挙2027<br>立候補予定者まとめ</h1>
 <p class="lead">政党の公認発表など、公開されている情報だけで作った一覧です。すべてに出典と確認日を付けています。</p>
 <div class="facts"><div>投票日 <b>{E(el['date_note'])}</b></div><div>定数 <b>{el['seats']}</b></div><div>掲載中の予定者 <b>{len(cands)}人</b></div></div></div>
+<section><h2>挑戦者（現職ではない立候補予定者・{len(challengers)}人）</h2>
+<p class="note">現職に比べて知られる機会が少ないため、本人の公表や政党の発表から、経歴や本人の言葉を紹介しています。50音順・敬称略。全員同じ基準です。</p>
+<ul class="grid">{''.join(challenger_card(c) for c in challengers)}</ul></section>
 <ul class="cards">
 <li><a class="t" href="/kouho/">立候補予定者の一覧</a>氏名・党派・公式リンクを50音順に。出典と確認日つき。</li>
 <li><a class="t" href="/kekka/">過去の選挙結果とグラフ</a>2011〜2023年の4回分。投票率、当選ライン、党派別の議席。</li>
@@ -192,9 +199,31 @@ def page_index():
 
 
 # ------------------------------------------------------------ 候補者
+def stl(c):
+    # 「新人」は初めての立候補と誤解されやすく、過去の立候補歴まで責任を持てないため「挑戦者」と表示する
+    return "現職" if c["status"] == "現" else "挑戦者"
+
+
+def src_link(x):
+    return f'<a href="{E(x["source"])}" rel="noopener" target="_blank">{E(x["source_label"])}</a>{chk(x["checked"])}'
+
+
+def challenger_card(c):
+    """挑戦者（現職ではない方）を厚めに紹介するカード。全員同じ形。"""
+    lk = " ".join(cand_links(c)) or '<span class="muted">確認中</span>'
+    st = c.get("statement")
+    quote = f'<blockquote class="q">「{E(st["text"])}」<cite>{src_link(st)}</cite></blockquote>' if st else ""
+    prof = "".join(f'<li>{E(p["text"])}<span class="muted">（{src_link(p)}）</span></li>' for p in c.get("profile", []))
+    prof = f'<ul class="prof">{prof}</ul>' if prof else ""
+    return f"""<li class="card ch"><div class="top"><span class="st st-new">挑戦者</span><span class="party">{E(c['party'])}</span></div>
+<div class="nm"><a href="/kouho/{c['slug']}/">{E(c['name'])}</a></div><div class="kana">{E(c['kana'])}</div>
+{quote}{prof}<div class="ln">{lk}</div>
+<div class="src">根拠：{src_link(c)}</div></li>"""
+
+
 def cand_links(c):
     out = []
-    for k, label in (("web", "公式サイト"), ("x", "X"), ("instagram", "Instagram"), ("youtube", "YouTube"), ("line", "LINE")):
+    for k, label in (("web", "公式サイト"), ("x", "X"), ("instagram", "Instagram"), ("facebook", "Facebook"), ("blog", "ブログ"), ("youtube", "YouTube"), ("line", "LINE")):
         if c["links"].get(k):
             out.append(f'<a href="{E(c["links"][k])}" rel="noopener" target="_blank">{label}</a>')
     return out
@@ -202,17 +231,22 @@ def cand_links(c):
 
 def page_kouho():
     cards = []
-    for c in cands:
+    for c in incumbents:
         lk = " ".join(cand_links(c)) or '<span class="muted">確認中</span>'
         op = '<span class="tag">運営者</span>' if c.get("operator") else ""
-        cards.append(f"""<li class="card"><div class="top"><span class="st st-{'new' if c['status']=='新' else 'cur'}">{E(c['status'])}</span><span class="party">{E(c['party'])}</span>{op}</div>
+        cards.append(f"""<li class="card"><div class="top"><span class="st st-cur">現職</span><span class="party">{E(c['party'])}</span>{op}</div>
 <div class="nm"><a href="/kouho/{c['slug']}/">{E(c['name'])}</a></div><div class="kana">{E(c['kana'])}</div>
 <div class="ln">{lk}</div>
-<div class="src">根拠：<a href="{E(c['source'])}" rel="noopener" target="_blank">{E(c['source_label'])}</a>{chk(c['checked'])}</div></li>""")
+<div class="src">根拠：{src_link(c)}</div></li>""")
     body = f"""<div class="hero"><h1>文京区議会議員選挙2027 立候補予定者一覧</h1>
-<p class="lead">{len(cands)}人・50音順・敬称略。本人の公表や政党の発表があり次第、追加します。</p></div>
-<p class="note">氏名の表記は文京区議会の議員名簿に合わせています。「現」は現職議員、「新」は新人です。掲載されていない方も立候補する可能性があります。</p>
-<ul class="grid">{''.join(cards)}</ul>"""
+<p class="lead">{len(cands)}人（挑戦者{len(challengers)}人・現職{len(incumbents)}人）。それぞれ50音順・敬称略。本人の公表や政党の発表があり次第、追加します。</p></div>
+<section><h2>挑戦者（{len(challengers)}人）</h2>
+<p class="note">現職ではない立候補予定者です。現職に比べて知られる機会が少ないため、本人の公表や政党の発表から、経歴や本人の言葉を厚めに紹介しています。全員同じ基準です。</p>
+<ul class="grid">{''.join(challenger_card(c) for c in challengers)}</ul></section>
+<section><h2>現職（{len(incumbents)}人）</h2>
+<p class="note">氏名の表記は文京区議会の議員名簿に合わせています。</p>
+<ul class="grid">{''.join(cards)}</ul></section>
+<p class="note">掲載されていない方も立候補する可能性があります。</p>"""
     write("/kouho/", layout("/kouho/", "文京区議会議員選挙2027 立候補予定者一覧",
                             f"文京区議会議員選挙（2027年4月予定）の立候補予定者{len(cands)}人を50音順に。党派・公式リンク・出典・確認日つき。",
                             body, crumbs=[(None, "候補者")], active="/kouho/"))
@@ -231,21 +265,28 @@ def page_candidate(c):
         hist = f"""<div class="tbl"><table><thead><tr><th>選挙</th><th>当時の党派</th><th class="n">得票数</th><th class="n">順位</th><th>結果</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div>
 <p class="note">文京区選挙管理委員会が公表した結果です。党派は当時の表記のまま掲載しています。得票数の小数点以下は公式の按分票です。</p>"""
     else:
-        hist = '<p class="note">2011〜2023年の4回の文京区議選の公式結果に、該当する届出名が見つかりませんでした（新人の場合など）。</p>'
+        hist = '<p class="note">2011〜2023年の4回の文京区議選の公式結果に、該当する届出名は見つかりませんでした。</p>'
+    hist += '<p class="note">このサイトでは、文京区議選の公式結果だけを掲載しています。ほかの選挙への立候補歴は扱っていません。</p>'
     who = "このサイトの運営者です。" if c.get("operator") else ""
-    body = f"""<div class="hero"><h1>{E(c['name'])}（{'現職' if c['status']=='現' else '新人'}）</h1>
+    st = c.get("statement")
+    extra = ""
+    if st:
+        extra += f'<dt>本人の言葉</dt><dd>「{E(st["text"])}」（{src_link(st)}）</dd>'
+    if c.get("profile"):
+        extra += "<dt>経歴など</dt><dd><ul class=\"prof\">" + "".join(f'<li>{E(p["text"])}<span class="muted">（{src_link(p)}）</span></li>' for p in c["profile"]) + "</ul></dd>"
+    body = f"""<div class="hero"><h1>{E(c['name'])}（{stl(c)}）</h1>
 <p class="lead">{E(c['kana'])}｜{E(c['party'])}｜文京区議会議員選挙2027の立候補予定者</p></div>
 <section><h2>基本情報</h2><dl class="kv">
-<dt>党派</dt><dd>{E(c['party'])}</dd><dt>区分</dt><dd>{'現職議員' if c['status']=='現' else '新人'}</dd>
-<dt>公式サイト・SNS</dt><dd>{lk_html}</dd>
-<dt>掲載の根拠</dt><dd><a href="{E(c['source'])}" rel="noopener" target="_blank">{E(c['source_label'])}</a>{chk(c['checked'])}</dd></dl>
+<dt>党派</dt><dd>{E(c['party'])}</dd><dt>区分</dt><dd>{'現職議員' if c['status']=='現' else '挑戦者（現職ではない立候補予定者）'}</dd>
+{extra}<dt>公式サイト・SNS</dt><dd>{lk_html}</dd>
+<dt>掲載の根拠</dt><dd>{src_link(c)}</dd></dl>
 <p class="note">立候補を正式に表明しているか、党の公認が出ているかは「掲載の根拠」のとおりです。{who}</p></section>
 <section><h2>過去の文京区議選の結果（公式）</h2>{hist}</section>
 <p><a href="/kouho/">← 立候補予定者の一覧にもどる</a></p>"""
     ld = {"@context": "https://schema.org", "@type": "ProfilePage", "name": f"{c['name']}｜文京区議会議員選挙2027", "url": f"{SITE_URL}/kouho/{c['slug']}/", "inLanguage": "ja"}
     p = f"/kouho/{c['slug']}/"
     write(p, layout(p, f"{c['name']}（{c['party']}）文京区議会議員選挙2027",
-                    f"{c['name']}（{c['party']}・{'現職' if c['status']=='現' else '新人'}）の基本情報、公式リンク、過去の文京区議選の結果。出典と確認日つき。",
+                    f"{c['name']}（{c['party']}・{stl(c)}）の基本情報、公式リンク、過去の文京区議選の結果。出典と確認日つき。",
                     body, crumbs=[("/kouho/", "候補者"), (None, c["name"])], jsonld=ld, active="/kouho/"))
 
 
@@ -459,6 +500,7 @@ def page_about():
 <section><h2>掲載の基準</h2><div class="box"><ol>
 <li>掲載するのは、本人の公表、政党の公式発表のいずれかで確認できた方と、選挙ドットコムの「予想される顔ぶれ」に載っている方です。後者は「本人の立候補表明は未確認」と明記し、表明を確認でき次第、表記を改めます。うわさや推測では掲載しません。</li>
 <li>並び順は50音順です。運営者本人も他の方とまったく同じ形式で掲載しています。</li>
+<li>現職ではない立候補予定者を「挑戦者」として先に紹介し、本人の公表や政党の発表にある経歴・本人の言葉を厚めに載せます。現職に比べて知られる機会が少ないためで、挑戦者は全員同じ基準です。過去の立候補歴は、文京区議選の公式結果だけを載せ、ほかの選挙への立候補歴は扱いません。</li>
 <li>評価・論評・得票予想・順位づけは載せません。</li>
 <li>公約や選挙公報は転載せず、文京区選挙管理委員会の公式のページへのリンクで紹介します。</li>
 <li>公式サイトやSNSへのリンクは、ご本人のサイトや政党のページからリンクされているものだけを載せます（なりすまし防止）。</li>
