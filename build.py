@@ -11,8 +11,22 @@ SITE_URL = "https://bunkyo-senkyo.jp"
 # True の間は検索エンジンに載せない（noindex）。本格公開するときに False にして build → push
 NOINDEX = True
 SITE_NAME = "文京区議選NAVI 2027"
-MAIL = "info@takahamanaoki.com"
-CONTACT = f'<a href="mailto:{MAIL}">{MAIL}</a>'  # 公選法上、告示後は連絡先表示が必要
+# 訂正・削除・苦情の受付（Googleフォーム。先生のアカウントで作成、2026-10-27）
+# 迷惑メール対策のため、メールアドレスはサイトに出さない。
+# 公選法142条の3第3項の「電子メールアドレス等」には返信用フォームのURLも含まれる（総務省の解説）ので、
+# 告示後はこのフォームへのリンクが連絡先の表示になる。
+FORM_URL = "https://forms.gle/4hbVfq6LhWJ6BGDR7"
+FORM_PREFILL = "https://docs.google.com/forms/d/e/1FAIpQLSdaPzgNA6QgV6D2bunWUCJ5KVS4FwtG2QM_xsuZHbxf2xrVIg/viewform"
+FORM_TARGET_ENTRY = "entry.2074378040"  # フォームの「対象」欄
+CONTACT = '<a href="/teisei/">受付フォーム</a>'
+
+
+def teisei_href(target=""):
+    """各カードの「訂正・削除を依頼」リンク。フォームの「対象」欄に名前を入れた状態で開く。"""
+    from urllib.parse import quote
+    if not target:
+        return FORM_URL
+    return f"{FORM_PREFILL}?usp=pp_url&{FORM_TARGET_ENTRY}={quote(target)}"
 ROBOTS_META = '<meta name="robots" content="noindex, nofollow">\n' if NOINDEX else ""
 # 確認日からこの日数を過ぎたら「要再確認」と表示する（全員同じ扱い）。
 # ページは作り置きなので、閲覧した日の日付でブラウザ側が判定する（作り直さなくても表示が切り替わる）
@@ -71,11 +85,16 @@ dl.kv{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;margin:8px
 .hb .v{position:absolute;left:100%;top:0;padding-left:6px;white-space:nowrap;line-height:22px;font-size:13px;font-weight:700}
 .chart{background:var(--cd);border:1px solid var(--ln);border-radius:12px;padding:14px 16px;margin:12px 0}
 svg text{fill:var(--fg);font-size:13px}svg .ax{stroke:var(--ln)}svg .lnx{stroke:var(--ac);stroke-width:3;fill:none}svg .dot{fill:var(--ac)}
+.notice{background:var(--ac2);border-bottom:1px solid var(--ln);font-size:13px}.notice .w{padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
+.btn{display:inline-block;background:var(--nw);color:#fff !important;text-decoration:none;font-weight:700;border-radius:8px;padding:5px 12px;font-size:13px}.btn:hover{opacity:.85}
+.iv{margin:6px 0;font-size:14px}.iv ul{margin:2px 0}
+.fix{display:inline-block;margin-top:8px;font-size:12px;color:var(--mu)}
+.tf label{display:block;font-weight:700;margin:12px 0 4px}.tf input,.tf select,.tf textarea{width:100%;box-sizing:border-box;font:inherit;padding:8px;border:1px solid var(--ln);border-radius:8px;background:var(--cd);color:var(--fg)}.tf textarea{min-height:140px}.tf .btn{font-size:16px;padding:10px 18px;margin-top:14px;border:0;cursor:pointer}
 footer.site{margin-top:44px;border-top:1px solid var(--ln);padding:22px 0 40px;font-size:13px;color:var(--mu)}
 @media (max-width:520px){th,td{padding:7px 6px}.hb li{grid-template-columns:6.8em 1fr}.chart svg text{font-size:21px}}
 """
 
-NAV = [("/kouho/", "候補者"), ("/kekka/", "過去の結果"), ("/touhyou/", "投票ガイド"), ("/about/", "掲載基準・運営者")]
+NAV = [("/kouho/", "区議選の候補者"), ("/kucho/", "区長選"),("/kekka/", "過去の結果"), ("/touhyou/", "投票ガイド"), ("/about/", "掲載基準・運営者")]
 PAGES = []
 
 
@@ -101,10 +120,12 @@ def layout(path, title, desc, body, crumbs=None, jsonld=None, active=None):
 <style>{CSS}</style></head>
 <body>
 <header class="site"><div class="w"><a class="brand" href="/">{SITE_NAME}</a><nav class="main">{nav}</nav></div></header>
+<div class="notice"><div class="w">公式サイトではありません。運営者が公開情報から集めた範囲で、運営者の責任で掲載しています。<a class="btn" href="/teisei/">訂正・削除・苦情の受付</a></div></div>
 <main class="w">{cr}{body}</main>
 <footer class="site"><div class="w">
+<p><a class="btn" href="/teisei/">掲載内容の訂正・削除・苦情はこちら</a></p>
 <p>運営：たかはま なおき（文京区議会議員・2027年文京区議選の立候補予定者）／連絡先：{CONTACT}<br>
-このサイトは文京区・文京区議会・文京区選挙管理委員会の公式サイトではありません。掲載内容の誤りは上記までご連絡ください。<br>
+このサイトは文京区・文京区議会・文京区選挙管理委員会の公式サイトではありません。運営者が公開情報から集めた範囲で、運営者の責任において掲載しています。<br>
 最終更新 {E(UPDATED)}</p></div></footer>
 {STALE_JS}
 </body></html>
@@ -181,13 +202,14 @@ def page_index():
 <ul class="grid">{''.join(challenger_card(c) for c in challengers)}</ul></section>
 <ul class="cards">
 <li><a class="t" href="/kouho/">立候補予定者の一覧</a>氏名・党派・公式リンクを50音順に。出典と確認日つき。</li>
+<li><a class="t" href="/kucho/">区長選挙2027</a>立候補予定者{len(kc_cands)}人、現在の区長の状況、報道、過去4回の結果。</li>
 <li><a class="t" href="/kekka/">過去の選挙結果とグラフ</a>2011〜2023年の4回分。投票率、当選ライン、党派別の議席。</li>
 <li><a class="t" href="/touhyou/">投票ガイド</a>選管の場所、期日前投票、入場券をなくしたとき、投票できる人。</li>
 </ul>
 <section><h2>立候補予定者（{len(cands)}人・50音順・敬称略）</h2>
 <p class="note">名前を押すと、出典と過去の選挙結果のページに移ります。掲載されていない方も立候補する可能性があります。</p>
 <ul class="chips">{chips}</ul></section>
-<section id="party"><h2>政党の公認状況</h2><p class="note">各党の公式発表で確認できた範囲です。</p>
+{votematch_html(cand_data)}{votematch_html(kucho)}<section id="party"><h2>政党の公認状況</h2><p class="note">各党の公式発表で確認できた範囲です。</p>
 <div class="tbl"><table><tbody>{''.join(prow)}</tbody></table></div></section>
 <section id="news"><h2>更新情報</h2><ul class="news">{news}</ul></section>
 <section><h2>公式の情報へのリンク</h2><ul>{links}</ul></section>
@@ -208,7 +230,34 @@ def src_link(x):
     return f'<a href="{E(x["source"])}" rel="noopener" target="_blank">{E(x["source_label"])}</a>{chk(x["checked"])}'
 
 
-def challenger_card(c):
+def article_list(arts):
+    """報道機関の記事。日付・媒体・見出し・リンクだけ（要約・論評なし）。新しい順。"""
+    if not arts:
+        return '<p class="note">まだありません。見つけ次第、日付・媒体・見出し・リンクを載せます。</p>'
+    li = "".join(f'<li><time>{E(a["date"])}</time>{E(a["media"])}「<a href="{E(a["url"])}" rel="noopener" target="_blank">{E(a["title"])}</a>」</li>'
+                 for a in sorted(arts, key=lambda a: a["date"], reverse=True))
+    return f'<ul class="news">{li}</ul><p class="note">特定の候補に有利・不利かを問わず、見つけた記事をすべて載せています。記事の内容についての要約や論評はしていません。</p>'
+
+
+def interview_html(c):
+    """候補ごとのインタビュー記事（任意）。interview: [{"title","url","date"}]。空なら何も出さない。"""
+    iv = c.get("interview") or []
+    if not iv:
+        return ""
+    li = "".join(f'<li><a href="{E(x["url"])}" rel="noopener" target="_blank">{E(x.get("title") or "インタビュー")}</a>{("（" + E(x["date"]) + "）") if x.get("date") else ""}</li>' for x in iv)
+    return f'<div class="iv"><b>インタビュー</b><ul class="prof">{li}</ul></div>'
+
+
+def votematch_html(data):
+    """ボートマッチ（任意）。votematch: [{"label","url","note"}]。空なら何も出さない。"""
+    vm = data.get("votematch") or []
+    if not vm:
+        return ""
+    li = "".join(f'<li><a class="t" href="{E(x["url"])}" rel="noopener" target="_blank">{E(x["label"])}</a>{E(x.get("note", ""))}</li>' for x in vm)
+    return f'<section><h2>ボートマッチ</h2><ul class="cards">{li}</ul><p class="note">いくつかの質問に答えると、考えの近い候補がわかる外部のサイトです。</p></section>'
+
+
+def challenger_card(c, base="/kouho/"):
     """挑戦者（現職ではない方）を厚めに紹介するカード。全員同じ形。"""
     lk = " ".join(cand_links(c)) or '<span class="muted">確認中</span>'
     st = c.get("statement")
@@ -216,9 +265,9 @@ def challenger_card(c):
     prof = "".join(f'<li>{E(p["text"])}<span class="muted">（{src_link(p)}）</span></li>' for p in c.get("profile", []))
     prof = f'<ul class="prof">{prof}</ul>' if prof else ""
     return f"""<li class="card ch"><div class="top"><span class="st st-new">挑戦者</span><span class="party">{E(c['party'])}</span></div>
-<div class="nm"><a href="/kouho/{c['slug']}/">{E(c['name'])}</a></div><div class="kana">{E(c['kana'])}</div>
-{quote}{prof}<div class="ln">{lk}</div>
-<div class="src">根拠：{src_link(c)}</div></li>"""
+<div class="nm">{f'<a href="{base}{c["slug"]}/">{E(c["name"])}</a>' if base else E(c["name"])}</div><div class="kana">{E(c['kana'])}</div>
+{quote}{prof}{c.get('hist_html', '')}{interview_html(c)}<div class="ln">{lk}</div>
+<div class="src">根拠：{src_link(c)}</div><a class="fix" href="{E(teisei_href(c['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></li>"""
 
 
 def cand_links(c):
@@ -236,8 +285,8 @@ def page_kouho():
         op = '<span class="tag">運営者</span>' if c.get("operator") else ""
         cards.append(f"""<li class="card"><div class="top"><span class="st st-cur">現職</span><span class="party">{E(c['party'])}</span>{op}</div>
 <div class="nm"><a href="/kouho/{c['slug']}/">{E(c['name'])}</a></div><div class="kana">{E(c['kana'])}</div>
-<div class="ln">{lk}</div>
-<div class="src">根拠：{src_link(c)}</div></li>""")
+{interview_html(c)}<div class="ln">{lk}</div>
+<div class="src">根拠：{src_link(c)}</div><a class="fix" href="{E(teisei_href(c['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></li>""")
     body = f"""<div class="hero"><h1>文京区議会議員選挙2027 立候補予定者一覧</h1>
 <p class="lead">{len(cands)}人（挑戦者{len(challengers)}人・現職{len(incumbents)}人）。それぞれ50音順・敬称略。本人の公表や政党の発表があり次第、追加します。</p></div>
 <section><h2>挑戦者（{len(challengers)}人）</h2>
@@ -246,7 +295,9 @@ def page_kouho():
 <section><h2>現職（{len(incumbents)}人）</h2>
 <p class="note">氏名の表記は文京区議会の議員名簿に合わせています。</p>
 <ul class="grid">{''.join(cards)}</ul></section>
-<p class="note">掲載されていない方も立候補する可能性があります。</p>"""
+<p class="note">掲載されていない方も立候補する可能性があります。</p>
+{votematch_html(cand_data)}<section><h2>区議選に関する報道</h2>
+<p class="note">文京区議選の情勢などを伝える報道機関の記事です。</p>{article_list(cand_data.get('articles', []))}</section>"""
     write("/kouho/", layout("/kouho/", "文京区議会議員選挙2027 立候補予定者一覧",
                             f"文京区議会議員選挙（2027年4月予定）の立候補予定者{len(cands)}人を50音順に。党派・公式リンク・出典・確認日つき。",
                             body, crumbs=[(None, "候補者")], active="/kouho/"))
@@ -256,7 +307,7 @@ def page_kouho():
 
 def page_candidate(c):
     lk = cand_links(c)
-    lk_html = "　".join(lk) if lk else f'確認中です。公式のサイトやSNSをお持ちの場合は、{CONTACT} までお知らせください。'
+    lk_html = "　".join(lk) if lk else f'確認中です。公式のサイトやSNSをお持ちの場合は、{CONTACT}からお知らせください。'
     rows = []
     for e, r in c["hist"]:
         res = "当選" if r["elected"] else ("次点" if r["runnerup"] else "落選")
@@ -278,9 +329,9 @@ def page_candidate(c):
 <p class="lead">{E(c['kana'])}｜{E(c['party'])}｜文京区議会議員選挙2027の立候補予定者</p></div>
 <section><h2>基本情報</h2><dl class="kv">
 <dt>党派</dt><dd>{E(c['party'])}</dd><dt>区分</dt><dd>{'現職議員' if c['status']=='現' else '挑戦者（現職ではない立候補予定者）'}</dd>
-{extra}<dt>公式サイト・SNS</dt><dd>{lk_html}</dd>
+{extra}<dt>公式サイト・SNS</dt><dd>{lk_html}</dd>{('<dt>インタビュー</dt><dd>' + interview_html(c) + '</dd>') if c.get('interview') else ''}
 <dt>掲載の根拠</dt><dd>{src_link(c)}</dd></dl>
-<p class="note">立候補を正式に表明しているか、党の公認が出ているかは「掲載の根拠」のとおりです。{who}</p></section>
+<p class="note">立候補を正式に表明しているか、党の公認が出ているかは「掲載の根拠」のとおりです。{who}</p><a class="fix" href="{E(teisei_href(c['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></section>
 <section><h2>過去の文京区議選の結果（公式）</h2>{hist}</section>
 <p><a href="/kouho/">← 立候補予定者の一覧にもどる</a></p>"""
     ld = {"@context": "https://schema.org", "@type": "ProfilePage", "name": f"{c['name']}｜文京区議会議員選挙2027", "url": f"{SITE_URL}/kouho/{c['slug']}/", "inLanguage": "ja"}
@@ -495,19 +546,84 @@ def page_touhyou():
                               body, crumbs=[(None, "投票ガイド")], active="/touhyou/"))
 
 
+# ------------------------------------------------------------ 区長選
+kucho = json.loads((ROOT / "data/kucho.json").read_text(encoding="utf-8"))
+kc_cands = sorted(kucho["candidates"], key=lambda c: unicodedata.normalize("NFKC", c["kana"]).replace(" ", ""))
+kc_results = sorted(kucho["results"], key=lambda r: r["year"])
+for r in kc_results:  # 検算：候補の得票合計＝投票者数−無効票−不足票
+    assert sum(x["votes"] for x in r["rows"]) == r["voters"] - r["invalid"] - r["shortage"], r["year"]
+for c in kc_cands:
+    hist = [(r, x) for r in kc_results for x in r["rows"] if x["name"] in c.get("result_names", [])]
+    if hist:
+        c["hist_html"] = '<ul class="prof">' + "".join(
+            f'<li>{r["year"]}年の文京区長選：{x["votes"]:,}票（{"当選" if x["elected"] else "落選"}）<span class="muted">（<a href="{E(r["source"])}" rel="noopener" target="_blank">文京区選挙管理委員会</a>）</span></li>'
+            for r, x in hist) + "</ul>"
+
+
+def page_kucho():
+    el, m = kucho["election"], kucho["mayor"]
+    msrc = "".join(f'<li>{src_link(s)}</li>' for s in m["sources"])
+    rows = []
+    for r in reversed(kc_results):
+        cand = "".join(f'<tr><td>{E(x["name"])}</td><td>{E(x["party"])}</td><td class="n">{x["votes"]:,}</td><td>{"当選" if x["elected"] else "落選"}</td></tr>' for x in sorted(r["rows"], key=lambda x: -x["votes"]))
+        ele = f'{r["electorate"]:,}人' if r["electorate"] else "—"
+        rows.append(f"""<section><h3>{E(r['label'])}（{E(r['date'])}）</h3>
+<div class="tbl"><table><thead><tr><th>候補者</th><th>党派</th><th class="n">得票数</th><th>結果</th></tr></thead><tbody>{cand}</tbody></table></div>
+<p class="note">投票率 {r['turnout']:.2f}%／当日有権者数 {ele}／投票者数 {r['voters']:,}人。出典：<a href="{E(r['source'])}" rel="noopener" target="_blank">文京区選挙管理委員会</a>（取得日 {E(kucho['results_fetched'])}）</p></section>""")
+    turnout_svg = line_chart([(r["year"], r["turnout"]) for r in kc_results], 40, 60, 5, "%", "文京区長選の投票率の推移")
+    cards = "".join(challenger_card(c, base=None) for c in kc_cands) or '<li class="card">まだいません。</li>'
+    body = f"""<div class="hero"><h1>文京区長選挙2027</h1>
+<p class="lead">区議選と同じ基準で、公開されている情報だけをまとめています。すべてに出典と確認日を付けています。</p>
+<div class="facts"><div>投票日 <b>{E(el['date_note'])}</b></div><div>区長の任期満了 <b>2027年4月26日</b></div><div>立候補予定者 <b>{len(kc_cands)}人</b></div></div></div>
+<section><h2>現在の区長</h2><div class="box"><p><b>{E(m['name'])}</b>（{E(m['kana'])}）<br>{E(m['note'])}</p>
+<p>{E(m['intention'])}</p><ul class="prof">{msrc}</ul><a class="fix" href="{E(teisei_href(m['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></div>
+<p class="note">現在の区長は、立候補の意向を表明するまで、立候補予定者には含めていません。</p></section>
+<section><h2>立候補予定者（{len(kc_cands)}人・50音順・敬称略）</h2>
+<p class="note">本人の公表や会見の報道などで、区長選への立候補の意向が確認できた方です。いずれも現職ではない「挑戦者」です。全員同じ基準で紹介しています。</p>
+<ul class="grid">{cards}</ul></section>
+{votematch_html(kucho)}<section><h2>区長選に関する報道</h2>{article_list(kucho['articles'])}</section>
+<section><h2>過去の文京区長選の結果（公式）</h2>
+<div class="chart">{turnout_svg}<p class="note">投票率の推移。縦軸は40〜60%です。</p></div>
+{''.join(rows)}
+<p class="note">得票数は、どの回も「投票者数−無効票−不足票」と一致することを確かめています。当日有権者数は、区長選の結果ページに記載がない回は「—」としています。</p></section>"""
+    write("/kucho/", layout("/kucho/", "文京区長選挙2027 立候補予定者と過去の結果",
+                            f"2027年4月の文京区長選挙の立候補予定者{len(kc_cands)}人、現在の区長の状況、報道、過去4回（2011〜2023年）の公式結果。出典と確認日つき。",
+                            body, crumbs=[(None, "区長選")], active="/kucho/"))
+
+
+# ------------------------------------------------------------ 訂正・削除・苦情の受付
+def page_teisei():
+    how = f"""<p><a class="btn" style="font-size:17px;padding:12px 20px" href="{E(FORM_URL)}" rel="noopener" target="_blank">受付フォームを開く</a></p>
+<p class="note">Googleフォームが開きます。Googleへのログインは不要です。ご用件と内容だけで送れます（お名前・ご連絡先は任意）。各候補の欄にある「この掲載の訂正・削除を依頼」から開くと、対象の欄にその方のお名前が入った状態で開きます。</p>"""
+    body = f"""<div class="hero"><h1>訂正・削除・苦情の受付</h1>
+<p class="lead">このサイトは公式サイトではなく、運営者が公開情報から集めた範囲で、運営者の責任において掲載しています。誤りのご指摘、掲載の削除のご依頼、苦情やご意見を、どなたからでも受け付けます。</p></div>
+<section><h2>受付</h2>{how}</section>
+<section><h2>対応の方針</h2><div class="box"><ul>
+<li><b>ご本人からの削除のご依頼</b>：原則として、確認でき次第すぐに掲載を取り下げます。</li>
+<li><b>訂正のご依頼</b>：出典を確認のうえ、速やかに直します。直した内容は「更新情報」でお知らせします。</li>
+<li><b>苦情・ご意見</b>：運営者が必ず目を通し、必要な対応をします。</li>
+<li>ご連絡先をいただいた場合は、対応の結果をお返事します。</li>
+</ul></div></section>
+<section><h2>いただいた情報の扱い</h2><p>お名前やご連絡先は、このご依頼への対応のためだけに使い、ほかの目的には使いません。ご依頼の内容を、ご本人の同意なく公開することはありません。</p></section>
+<section><h2>運営者</h2><p>たかはま なおき（文京区議会議員・2027年文京区議選の立候補予定者）<br>連絡先：<a href="{E(FORM_URL)}" rel="noopener" target="_blank">受付フォーム</a></p></section>"""
+    write("/teisei/", layout("/teisei/", "訂正・削除・苦情の受付", "文京区議選NAVI 2027の掲載内容について、訂正・削除のご依頼や苦情を受け付けます。ご本人からの削除のご依頼には原則すぐに応じます。",
+                             body, crumbs=[(None, "訂正・削除・苦情の受付")]))
+
+
 def page_about():
-    body = f"""<div class="hero"><h1>掲載基準と運営者</h1><p class="lead">このサイトが、何を、どういう基準で載せているかの説明です。</p></div>
+    body = f"""<div class="hero"><h1>掲載基準と運営者</h1><p class="lead">このサイトが、何を、どういう基準で載せているかの説明です。このサイトは公式サイトではなく、運営者が公開情報から集めた範囲で、運営者の責任において掲載しています。誤りや削除のご依頼は<a href="/teisei/">受付ページ</a>からお寄せください。</p></div>
 <section><h2>掲載の基準</h2><div class="box"><ol>
-<li>掲載するのは、本人の公表、政党の公式発表のいずれかで確認できた方と、選挙ドットコムの「予想される顔ぶれ」に載っている方です。後者は「本人の立候補表明は未確認」と明記し、表明を確認でき次第、表記を改めます。うわさや推測では掲載しません。</li>
+<li>掲載するのは、本人の公表、政党の公式発表、本人の会見や表明を報じた報道機関の記事のいずれかで確認できた方と、選挙ドットコムの「予想される顔ぶれ」に載っている方です（区議選・区長選とも同じ基準）。後者は「本人の立候補表明は未確認」と明記し、表明を確認でき次第、表記を改めます。うわさや推測では掲載しません。</li>
 <li>並び順は50音順です。運営者本人も他の方とまったく同じ形式で掲載しています。</li>
 <li>現職ではない立候補予定者を「挑戦者」として先に紹介し、本人の公表や政党の発表にある経歴・本人の言葉を厚めに載せます。現職に比べて知られる機会が少ないためで、挑戦者は全員同じ基準です。過去の立候補歴は、文京区議選の公式結果だけを載せ、ほかの選挙への立候補歴は扱いません。</li>
 <li>評価・論評・得票予想・順位づけは載せません。</li>
 <li>公約や選挙公報は転載せず、文京区選挙管理委員会の公式のページへのリンクで紹介します。</li>
-<li>公式サイトやSNSへのリンクは、ご本人のサイトや政党のページからリンクされているものだけを載せます（なりすまし防止）。</li>
+<li>公式サイトやSNSへのリンクは、ご本人のものと確かめられたものだけを載せます（なりすまし防止）。</li>
+<li>報道機関の記事は、文京区の区長選・区議選に関するものを、特定の候補に有利・不利かを問わず、見つけたものをすべて載せます。載せるのは日付・媒体・見出し・リンクだけで、要約や論評は付けません。</li>
 <li>すべての情報に、出典と確認日を付けます。確認日から{STALE_DAYS}日以上たったものには「要再確認」と表示し、出典を見直して更新します。</li></ol></div></section>
 <section><h2>過去の結果と投票ガイドについて</h2><p>過去の結果は文京区選挙管理委員会が公表した数字を使い、公式の合計と一致することを確認しています。投票ガイドは文京区・東京都の選挙管理委員会の公式ページを出典としています。</p></section>
 <section><h2>運営者</h2><div class="box"><p>たかはま なおき（文京区議会議員・無所属）<br>このサイトの運営者は、2027年の文京区議会議員選挙の立候補予定者です。そのため、中立であることを最優先にして運営しています。</p>
-<p>誤りのご指摘、掲載・修正・削除のご希望は、次のアドレスまでご連絡ください。確認のうえ、速やかに対応します。<br>連絡先：{CONTACT}</p>
+<p>誤りのご指摘、掲載・修正・削除のご希望は、受付フォームからお寄せください。確認のうえ、速やかに対応します。<br>連絡先：{CONTACT}</p>
 <p class="muted">このサイトは、文京区・文京区議会・文京区選挙管理委員会の公式サイトではありません。</p></div></section>"""
     write("/about/", layout("/about/", "掲載基準と運営者", "文京区議選NAVI 2027の掲載基準、情報の出典、運営者と連絡先。運営者は立候補予定者本人で、全員を同じ形式で掲載しています。",
                             body, crumbs=[(None, "掲載基準・運営者")], active="/about/"))
@@ -516,7 +632,7 @@ def page_about():
 if OUT.exists():
     shutil.rmtree(OUT)
 OUT.mkdir(parents=True)
-page_index(); page_kouho(); page_kekka(); page_touhyou(); page_about()
+page_index(); page_kouho(); page_kucho(); page_kekka(); page_touhyou(); page_teisei(); page_about()
 n_pages = len(PAGES)
 (OUT / "404.html").write_text(layout("/404", "ページが見つかりません", "お探しのページは見つかりませんでした。", '<div class="hero"><h1>ページが見つかりません</h1><p><a href="/">トップにもどる</a></p></div>'), encoding="utf-8")
 PAGES.remove("/404")

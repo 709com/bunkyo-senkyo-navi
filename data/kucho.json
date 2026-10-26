@@ -1,0 +1,74 @@
+{
+  "updated": "2026-10-27",
+  "election": {
+    "name": "文京区長選挙",
+    "term_end": "2027-04-26",
+    "date_note": "2027年4月予定（告示日・投票日は文京区選挙管理委員会の発表待ち）",
+    "term_source": "https://www.senkyo.metro.tokyo.lg.jp/election/schedule/expiration",
+    "term_source_label": "東京都選挙管理委員会「任期満了日一覧」"
+  },
+  "mayor": {
+    "name": "成澤 廣修",
+    "kana": "なりさわ ひろのぶ",
+    "note": "2007年に初当選し、現在5期目。任期は2027年4月26日まで。",
+    "intention": "次の区長選への立候補の意向は、表明されていません。2026年9月16日の区議会一般質問（質問者：たかはま なおき。このサイトの運営者）で「この任期の総括と、次の4年のリーダーは」と問われた際も、立候補するかどうかを明言しませんでした。",
+    "sources": [
+      {"source": "https://www.senkyo.metro.tokyo.lg.jp/election/schedule/expiration", "source_label": "東京都選挙管理委員会「任期満了日一覧」", "checked": "2026-10-27"},
+      {"source": "https://www.city.bunkyo.lg.jp/kugikai/p007909.html", "source_label": "文京区議会「一般質問要旨（令和8年9月定例議会）」", "checked": "2026-10-27"}
+    ],
+    "checked": "2026-10-27"
+  },
+  "candidates": [
+    {
+      "name": "えびさわ けいこ",
+      "kana": "えびさわ けいこ",
+      "status": "新",
+      "party": "無所属",
+      "basis": "報道（本人の表明）",
+      "source": "https://www.tokyo-np.co.jp/article/523380",
+      "source_label": "東京新聞デジタル（2026-10-23）「文京区長選挙 小木郁夫さんが立候補表明、海老沢敬子さんは公約を説明」",
+      "checked": "2026-10-27",
+      "links": {"web": "https://ebisawakeiko.com/"},
+      "slug": "ebisawa-keiko",
+      "result_names": ["えびさわ けいこ"],
+      "profile": [
+        {"text": "62歳。元文京区議（2007年初当選、4期）。2026年10月21日に無所属での出馬を表明", "source": "https://www.tokyo-np.co.jp/article/523380", "source_label": "東京新聞デジタル（2026-10-23）", "checked": "2026-10-27"}
+      ]
+    },
+    {
+      "name": "小木 郁夫",
+      "kana": "こぼく いくお",
+      "status": "新",
+      "party": "無所属",
+      "basis": "本人公表",
+      "source": "https://x.com/Koboku_Ikuo/status/2113893805174993180",
+      "source_label": "本人のX（記者会見で区長選への挑戦の決意を表明）",
+      "checked": "2026-10-27",
+      "links": {"x": "https://x.com/Koboku_Ikuo"},
+      "slug": "koboku-ikuo",
+      "result_names": [],
+      "statement": {"text": "27年4月の #文京区長選挙 に挑戦する決意を、記者会見で表明しました", "source": "https://x.com/Koboku_Ikuo/status/2113893805174993180", "source_label": "本人のX", "checked": "2026-10-27"},
+      "profile": [
+        {"text": "46歳。団体職員。2026年10月22日に都庁で会見し、無所属での立候補を表明", "source": "https://www.tokyo-np.co.jp/article/523380", "source_label": "東京新聞デジタル（2026-10-23）", "checked": "2026-10-27"}
+      ]
+    }
+  ],
+  "articles": [
+    {"date": "2026-10-23", "media": "東京新聞デジタル", "title": "文京区長選挙 小木郁夫さんが立候補表明、海老沢敬子さんは公約を説明", "url": "https://www.tokyo-np.co.jp/article/523380"}
+  ],
+  "results_fetched": "2026-10-27",
+  "results": [
+    {"year": 2023, "label": "令和5年（2023年）", "date": "2023年4月23日", "turnout": 52.15, "electorate": 178703, "voters": 93199, "invalid": 2630, "shortage": 4,
+     "source": "https://www.city.bunkyo.lg.jp/b045/p006426.html",
+     "rows": [{"name": "成沢 ひろのぶ", "party": "無所属", "votes": 50999, "elected": true}, {"name": "えびさわ けいこ", "party": "無所属", "votes": 39566, "elected": false}]},
+    {"year": 2019, "label": "平成31年（2019年）", "date": "2019年4月21日", "turnout": 50.58, "electorate": 174823, "voters": 88421, "invalid": 2418, "shortage": 1,
+     "source": "https://www.city.bunkyo.lg.jp/kusejoho/senkyo/kako/h31kucho.html",
+     "rows": [{"name": "成沢 ひろのぶ", "party": "無所属", "votes": 56890, "elected": true}, {"name": "小竹 ひろ子", "party": "無所属", "votes": 29112, "elected": false}]},
+    {"year": 2015, "label": "平成27年（2015年）", "date": "2015年4月26日", "turnout": 49.92, "electorate": null, "voters": 81828, "invalid": 4166, "shortage": 0,
+     "source": "https://www.city.bunkyo.lg.jp/b045/p006451.html",
+     "rows": [{"name": "成沢 ひろのぶ", "party": "無所属", "votes": 56258, "elected": true}, {"name": "中島 つかね", "party": "無所属", "votes": 21404, "elected": false}]},
+    {"year": 2011, "label": "平成23年（2011年）", "date": "2011年4月24日", "turnout": 48.52, "electorate": null, "voters": 77080, "invalid": 3160, "shortage": 3,
+     "source": "https://www.city.bunkyo.lg.jp/b045/p006452.html",
+     "rows": [{"name": "成沢 ひろのぶ", "party": "無所属", "votes": 47383, "elected": true}, {"name": "小竹 ひろ子", "party": "無所属", "votes": 23424, "elected": false}, {"name": "しらすな いわお", "party": "無所属", "votes": 3110, "elected": false}]}
+  ]
+}
