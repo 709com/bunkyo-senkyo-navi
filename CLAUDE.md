@@ -44,3 +44,9 @@
 - zip で上書きするときは、古い版が混ざらないよう先にフォルダごとバックアップ
 - このPCの python3 は Microsoft Store への案内だけで動かない。C:\Users\709co\AppData\Local\Programs\Python\Python311\python.exe で build する
 - 表示確認用サーバー：D:\AI作業用\.claude\launch.json の「navi2027-local」（http://localhost:8027）
+
+## 検索エンジンの扱い（2026-10-26 本人方針）
+- ページは公開のまま（誰でも開ける）。ただし積極的に発信しないため、検索サイトには出さない
+- build.py の `NOINDEX = True` で、全ページに noindex、Cloudflare 用 `_headers` に X-Robots-Tag、robots.txt からサイトマップの案内を外している
+- robots.txt で巡回を拒否しない（拒否すると noindex が読まれず、URLだけ検索に出ることがある）
+- Google Search Console への登録・サイトマップ送信は、本人が本格公開を決めるまでしない。解除は `NOINDEX = False` → build → 本人OK → push

@@ -8,9 +8,12 @@ from collections import defaultdict
 ROOT = pathlib.Path(__file__).parent
 OUT = ROOT / "public"
 SITE_URL = "https://bunkyo-senkyo.jp"
+# True の間は検索エンジンに載せない（noindex）。本格公開するときに False にして build → push
+NOINDEX = True
 SITE_NAME = "文京区議選NAVI 2027"
 MAIL = "info@takahamanaoki.com"
 CONTACT = f'<a href="mailto:{MAIL}">{MAIL}</a>'  # 公選法上、告示後は連絡先表示が必要
+ROBOTS_META = '<meta name="robots" content="noindex, nofollow">\n' if NOINDEX else ""
 
 cand_data = json.loads((ROOT / "data/candidates.json").read_text(encoding="utf-8"))
 res_data = json.loads((ROOT / "data/results.json").read_text(encoding="utf-8"))
@@ -75,7 +78,7 @@ def layout(path, title, desc, body, crumbs=None, jsonld=None, active=None):
 <html lang="ja"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{E(full)}</title>
-<meta name="description" content="{E(desc)}">
+{ROBOTS_META}<meta name="description" content="{E(desc)}">
 <link rel="canonical" href="{SITE_URL}{path}">
 <meta property="og:title" content="{E(full)}"><meta property="og:description" content="{E(desc)}">
 <meta property="og:type" content="website"><meta property="og:url" content="{SITE_URL}{path}"><meta property="og:locale" content="ja_JP">
@@ -464,5 +467,9 @@ n_pages = len(PAGES)
 PAGES.remove("/404")
 sm = "".join(f"<url><loc>{SITE_URL}{p}</loc><lastmod>{UPDATED}</lastmod></url>" for p in PAGES)
 (OUT / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{sm}</urlset>', encoding="utf-8")
-(OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n", encoding="utf-8")
+# robots.txt で拒否すると noindex の指示が読まれないため、巡回は許可したまま noindex で止める
+(OUT / "robots.txt").write_text("User-agent: *\nAllow: /\n" + ("" if NOINDEX else f"Sitemap: {SITE_URL}/sitemap.xml\n"), encoding="utf-8")
+if NOINDEX:
+    # Cloudflare Pages の設定ファイル。pages.dev 側も含め、全ファイルに「検索に載せない」を付ける
+    (OUT / "_headers").write_text("/*\n  X-Robots-Tag: noindex, nofollow\n", encoding="utf-8")
 print("built", len(PAGES), "pages")
