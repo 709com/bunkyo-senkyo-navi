@@ -15,8 +15,8 @@
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.75 "Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif}
 a{color:var(--ac)}.w{max-width:960px;margin:0 auto;padding:0 16px}
 header.site{border-bottom:1px solid var(--ln);background:var(--cd)}header.site .w{padding:14px 16px}
-.brand{font-size:15px;font-weight:700;letter-spacing:.06em;color:var(--ac);text-decoration:none}
-nav.main{display:flex;gap:6px 18px;flex-wrap:wrap;margin-top:6px;font-size:14px}nav.main a{text-decoration:none;color:var(--fg)}nav.main a:hover,nav.main a[aria-current]{color:var(--ac);text-decoration:underline}
+.brand{font-size:22px;font-weight:700;letter-spacing:.04em;color:var(--ac);text-decoration:none}
+nav.main{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;font-size:16px}nav.main a{text-decoration:none;color:var(--ac);border:1.5px solid var(--ac);border-radius:999px;padding:5px 14px;font-weight:700;background:var(--cd)}nav.main a:hover{background:var(--ac2)}nav.main a[aria-current]{background:var(--ac);color:#fff}
 .crumb{font-size:13px;color:var(--mu);margin:16px 0 0}.crumb a{color:var(--mu)}
 .hero{padding:22px 0 6px}h1{font-size:clamp(22px,4.6vw,32px);line-height:1.4;margin:6px 0 10px}
 h2{font-size:21px;margin:0 0 6px;line-height:1.4}
@@ -54,7 +54,7 @@ svg text{fill:var(--fg);font-size:13px}svg .ax{stroke:var(--ln)}svg .lnx{stroke:
 .fix{display:inline-block;margin-top:8px;font-size:12px;color:var(--mu)}
 .tf label{display:block;font-weight:700;margin:12px 0 4px}.tf input,.tf select,.tf textarea{width:100%;box-sizing:border-box;font:inherit;padding:8px;border:1px solid var(--ln);border-radius:8px;background:var(--cd);color:var(--fg)}.tf textarea{min-height:140px}.tf .btn{font-size:16px;padding:10px 18px;margin-top:14px;border:0;cursor:pointer}
 footer.site{margin-top:44px;border-top:1px solid var(--ln);padding:22px 0 40px;font-size:13px;color:var(--mu)}
-@media (max-width:520px){th,td{padding:7px 6px}.hb li{grid-template-columns:6.8em 1fr}.chart svg text{font-size:21px}}
+@media (max-width:520px){nav.main{display:grid;grid-template-columns:1fr 1fr}nav.main a{text-align:center;padding:6px 8px}th,td{padding:7px 6px}.hb li{grid-template-columns:6.8em 1fr}.chart svg text{font-size:21px}}
 </style></head>
 <body>
 <header class="site"><div class="w"><a class="brand" href="/">文京区議選ナビ2027</a><nav class="main"><a href="/kouho/">区議選</a><a href="/kucho/">区長選</a><a href="/touhyou/">投票ガイド</a><a href="/about/">このサイトについて</a></nav></div></header>
