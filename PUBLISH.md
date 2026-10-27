@@ -1,6 +1,6 @@
 # 公開手順書（GitHub ＋ Cloudflare Pages）
 
-対象：文京区議選NAVI 2027（bunkyo-senkyo.jp）
+対象：文京区議選ナビ2027（bunkyo-senkyo.jp）
 読み手：Claude Code と 先生ご本人。【本人】と書いた手順は人が画面で行う（ログイン・契約・権限の許可はAIが代行しない）。
 
 ## 0. 前提
