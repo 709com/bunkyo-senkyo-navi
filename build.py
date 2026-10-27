@@ -103,10 +103,6 @@ svg text{fill:var(--fg);font-size:13px}svg .ax{stroke:var(--ln)}svg .lnx{stroke:
 .btn{display:inline-block;background:var(--nw);color:#fff !important;text-decoration:none;font-weight:700;border-radius:8px;padding:5px 12px;font-size:13px}.btn:hover{opacity:.85}
 .iv{margin:6px 0;font-size:14px}.iv ul{margin:2px 0}
 .card.open{border:2px dashed var(--ln);background:transparent;box-shadow:none}.card.open p{margin:6px 0}
-.who{display:flex;gap:10px;align-items:center;margin-top:6px}.who .nm{margin-top:0}
-.av{flex:none;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--ac2);color:var(--ac);font-weight:700;font-size:20px;border:2px solid var(--ac)}
-.av.new{border-color:var(--nw);color:var(--nw)}.av.big{width:76px;height:76px;font-size:34px;border-width:3px}
-.phero{display:flex;gap:16px;align-items:center}.phero h1{margin:0}
 .vb{list-style:none;padding:0;margin:10px 0}.vb li{padding:8px 0;border-bottom:1px solid var(--ln)}.vb .yr{font-weight:700;font-size:15px}
 .vb .tr{position:relative;height:26px;background:var(--ac2);border-radius:5px;margin:6px 0 4px}.vb .tr i{display:block;height:100%;border-radius:5px;background:var(--ac)}.vb .tr i.lo{background:var(--gr)}
 .vb .tr b{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px dashed var(--nw)}.vb .cap{font-size:13px;color:var(--mu)}.vb .cap strong{color:var(--fg);font-size:15px}
@@ -119,6 +115,11 @@ svg text{fill:var(--fg);font-size:13px}svg .ax{stroke:var(--ln)}svg .lnx{stroke:
 .js .chart .lnx{stroke-dasharray:1400;stroke-dashoffset:1400}.js .chart.in .lnx{stroke-dashoffset:0;transition:stroke-dashoffset 1.6s ease}
 .js .chart .dot{opacity:0}.js .chart.in .dot{opacity:1;transition:opacity .4s ease 1.2s}
 @media (prefers-reduced-motion:reduce){.js .grow,.js .fade,.js .chart .lnx,.js .chart .dot{transform:none !important;opacity:1 !important;stroke-dashoffset:0 !important;transition:none !important}}
+.faq details{background:var(--cd);border:1px solid var(--ln);border-radius:12px;margin:8px 0;padding:0 16px}
+.faq summary{cursor:pointer;font-weight:700;padding:12px 0;list-style:none;position:relative;padding-right:1.6em}.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"＋";position:absolute;right:0;top:12px;color:var(--ac)}.faq details[open] summary::after{content:"－"}
+.faq details p{margin:0 0 14px;font-size:15px}
+.chips.unc span{display:inline-block;background:var(--cd);border:1px dashed var(--mu);border-radius:999px;padding:3px 12px;font-size:14px;color:var(--mu)}
 .fix{display:inline-block;margin-top:8px;font-size:12px;color:var(--mu)}
 .tf label{display:block;font-weight:700;margin:12px 0 4px}.tf input,.tf select,.tf textarea{width:100%;box-sizing:border-box;font:inherit;padding:8px;border:1px solid var(--ln);border-radius:8px;background:var(--cd);color:var(--fg)}.tf textarea{min-height:140px}.tf .btn{font-size:16px;padding:10px 18px;margin-top:14px;border:0;cursor:pointer}
 footer.site{margin-top:44px;border-top:1px solid var(--ln);padding:22px 0 40px;font-size:13px;color:var(--mu)}
@@ -191,6 +192,10 @@ for c in cands:
     if c["status"] == "現":
         assert any(e["year"] == 2023 for e, _ in c["hist"]), c["name"]
 challengers = [c for c in cands if c["status"] != "現"]
+UNC = cand_data.get("unconfirmed_incumbents", {"members": []})
+_kana = {c["kana"].replace(" ", "") for c in cands}
+for m in UNC["members"]:
+    assert m["kana"].replace(" ", "") not in _kana, m["name"]
 incumbents = [c for c in cands if c["status"] == "現"]
 
 
@@ -232,7 +237,7 @@ def page_index():
 <p class="lead">政党の公認発表など、公開されている情報だけで作った一覧です。すべてに出典と確認日を付けています。</p>
 <div class="facts"><div>投票日 <b>{E(el['date_note'])}</b></div><div>定数 <b>{el['seats']}</b></div><div>掲載中の予定者 <b>{len(cands)}人</b></div></div></div>
 <section><h2>挑戦者（現職ではない立候補予定者・{len(challengers)}人）</h2>
-<p class="note">現職に比べて知られる機会が少ないため、本人の公表や政党の発表から、経歴や本人の言葉を紹介しています。敬称略。全員同じ基準です。並び順は開くたびに入れ替わります（実際の選挙のくじ引きにならい、特定の人が常に先頭にならないようにしています）。</p>
+<p class="note">現職に比べて知られる機会が少ないため、本人の公表や政党の発表から、経歴や本人の言葉を紹介しています。敬称略。全員同じ基準です。並び順は開くたびに入れ替わります。</p>
 <ul class="grid shuffle">{''.join(challenger_card(c) for c in challengers)}{open_card()}</ul></section>
 <ul class="cards">
 <li><a class="t" href="/kouho/">区議選2027</a>立候補予定者{len(cands)}人の一覧（出典と確認日つき）、報道、過去4回の結果とグラフ。</li>
@@ -298,15 +303,21 @@ def challenger_card(c, base="/kouho/"):
     prof = "".join(f'<li>{E(p["text"])}<span class="muted">（{src_link(p)}）</span></li>' for p in c.get("profile", []))
     prof = f'<ul class="prof">{prof}</ul>' if prof else ""
     return f"""<li class="card fade{' ch' if c['status'] != '現' else ''}"><div class="top"><span class="st {'st-cur' if c['status'] == '現' else 'st-new'}">{stl(c)}</span><span class="party">{E(c['party'])}</span></div>
-<div class="who">{avatar(c)}<div><div class="nm">{f'<a href="{base}{c["slug"]}/">{E(c["name"])}</a>' if base else E(c["name"])}</div><div class="kana">{E(c['kana'])}</div></div></div>
+<div class="nm">{f'<a href="{base}{c["slug"]}/">{E(c["name"])}</a>' if base else E(c["name"])}</div><div class="kana">{E(c['kana'])}</div>
 {quote}{prof}{c.get('hist_html', '')}{interview_html(c)}<div class="ln">{lk}</div>
 <div class="src">根拠：{src_link(c)}</div><a class="fix" href="{E(teisei_href(c['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></li>"""
 
 
-def avatar(c, big=False):
-    """氏名の最初の1文字を丸で囲んだ目印。写真は本人の提供・許可があるまで使わない。"""
-    cls = "av" + ("" if c["status"] == "現" else " new") + (" big" if big else "")
-    return f'<span class="{cls}" aria-hidden="true">{E(c["name"][0])}</span>'
+def unconfirmed_html():
+    """立候補の意向をまだ確認できていない現職議員。出るとも出ないとも決めつけず、氏名だけを並べる。"""
+    ms = UNC["members"]
+    if not ms:
+        return ""
+    chips = "".join(f'<li><span>{E(m["name"])}</span></li>' for m in ms)
+    return f"""<section><h2>立候補の意向をまだ確認できていない現職議員（{len(ms)}人）</h2>
+<p class="note">現在の文京区議会議員のうち、上の一覧に載っていない方です。立候補予定者ではありません。意向が確認でき次第、上の一覧に移します。引退を表明された方は、この欄から外します。敬称略。並び順は開くたびに入れ替わります。</p>
+<ul class="chips shuffle unc">{chips}</ul>
+<p class="src">出典：{src_link(UNC)}</p></section>"""
 
 
 def open_card():
@@ -332,17 +343,18 @@ def page_kouho():
         lk = " ".join(cand_links(c)) or '<span class="muted">確認中</span>'
         op = '<span class="tag">運営者</span>' if c.get("operator") else ""
         cards.append(f"""<li class="card fade"><div class="top"><span class="st st-cur">現職</span><span class="party">{E(c['party'])}</span>{op}</div>
-<div class="who">{avatar(c)}<div><div class="nm"><a href="/kouho/{c['slug']}/">{E(c['name'])}</a></div><div class="kana">{E(c['kana'])}</div></div></div>
+<div class="nm"><a href="/kouho/{c['slug']}/">{E(c['name'])}</a></div><div class="kana">{E(c['kana'])}</div>
 {interview_html(c)}<div class="ln">{lk}</div>
 <div class="src">根拠：{src_link(c)}</div><a class="fix" href="{E(teisei_href(c['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></li>""")
     body = f"""<div class="hero"><h1>文京区議会議員選挙2027 立候補予定者一覧</h1>
-<p class="lead">{len(cands)}人（挑戦者{len(challengers)}人・現職{len(incumbents)}人）。敬称略。並び順は開くたびに入れ替わります（実際の選挙のくじ引きにならい、特定の人が常に先頭にならないようにしています）。本人の公表や政党の発表があり次第、追加します。</p></div>
+<p class="lead">{len(cands)}人（挑戦者{len(challengers)}人・現職{len(incumbents)}人）。敬称略。並び順は開くたびに入れ替わります。本人の公表や政党の発表があり次第、追加します。</p></div>
 <section><h2>挑戦者（{len(challengers)}人）</h2>
 <p class="note">現職ではない立候補予定者です。現職に比べて知られる機会が少ないため、本人の公表や政党の発表から、経歴や本人の言葉を厚めに紹介しています。全員同じ基準です。</p>
 <ul class="grid shuffle">{''.join(challenger_card(c) for c in challengers)}{open_card()}</ul></section>
 <section><h2>現職（{len(incumbents)}人）</h2>
 <p class="note">氏名の表記は文京区議会の議員名簿に合わせています。</p>
 <ul class="grid shuffle">{''.join(cards)}</ul></section>
+{unconfirmed_html()}
 <p class="note">掲載されていない方も立候補する可能性があります。</p>
 {votematch_html(cand_data)}<section><h2>区議選に関する報道</h2>
 <p class="note">文京区議選の情勢などを伝える報道機関の記事です。</p>{article_list(cand_data.get('articles', []))}</section>
@@ -385,8 +397,8 @@ def page_candidate(c):
         extra += f'<dt>本人の言葉</dt><dd>「{E(st["text"])}」（{src_link(st)}）</dd>'
     if c.get("profile"):
         extra += "<dt>経歴など</dt><dd><ul class=\"prof\">" + "".join(f'<li>{E(p["text"])}<span class="muted">（{src_link(p)}）</span></li>' for p in c["profile"]) + "</ul></dd>"
-    body = f"""<div class="hero"><div class="phero">{avatar(c, big=True)}<div><h1>{E(c['name'])}（{stl(c)}）</h1>
-<p class="lead">{E(c['kana'])}｜{E(c['party'])}｜文京区議会議員選挙2027の立候補予定者</p></div></div></div>
+    body = f"""<div class="hero"><h1>{E(c['name'])}（{stl(c)}）</h1>
+<p class="lead">{E(c['kana'])}｜{E(c['party'])}｜文京区議会議員選挙2027の立候補予定者</p></div>
 <section><h2>基本情報</h2><dl class="kv">
 <dt>党派</dt><dd>{E(c['party'])}</dd><dt>区分</dt><dd>{'現職議員' if c['status']=='現' else '挑戦者（現職ではない立候補予定者）'}</dd>
 {extra}<dt>公式サイト・SNS</dt><dd>{lk_html}</dd>{('<dt>インタビュー</dt><dd>' + interview_html(c) + '</dd>') if c.get('interview') else ''}
@@ -642,7 +654,7 @@ def page_kucho():
 <p class="lead">区議選と同じ基準で、公開されている情報だけをまとめています。すべてに出典と確認日を付けています。</p>
 <div class="facts"><div>投票日 <b>{E(el['date_note'])}</b></div><div>区長の任期満了 <b>2027年4月26日</b></div><div>立候補予定者 <b>{len(kc_cands)}人</b></div></div></div>
 <section><h2>立候補予定者（{len(kc_cands)}人・敬称略）</h2>
-<p class="note">本人の公表や会見の報道などで、区長選への立候補の意向が確認できた方です。全員同じ基準で紹介しています。並び順は開くたびに入れ替わります（実際の選挙のくじ引きにならい、特定の人が常に先頭にならないようにしています）。</p>
+<p class="note">本人の公表や会見の報道などで、区長選への立候補の意向が確認できた方です。全員同じ基準で紹介しています。並び順は開くたびに入れ替わります。</p>
 <ul class="grid shuffle">{cards}</ul></section>
 <section><h2>現在の区長</h2><div class="box"><p><b>{E(m['name'])}</b>（{E(m['kana'])}）<br>{E(m['note'])}</p>
 <p>{E(m['intention'])}</p><ul class="prof">{msrc}</ul><a class="fix" href="{E(teisei_href(m['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></div>
@@ -677,8 +689,32 @@ def page_teisei():
                              body, crumbs=[(None, "訂正・削除・苦情の受付")]))
 
 
+# よくある質問（このサイトについて の一番上）。答えは掲載基準と食い違わないように
+FAQ = [
+    ("このサイトは、誰が作っているのですか？",
+     "たかはま なおきが、文京区の選挙の投票率向上を目指し、個人で運営しています。私自身も、2027年の文京区議選の立候補予定者です。文京区や公的機関の公式サイトではありません。"),
+    ("立候補予定者が運営していて、中立なのですか？",
+     "中立であることを最優先にしています。全員を同じ基準・同じ形式で載せ、運営者本人も特別扱いしていません。並び順は開くたびに入れ替わります。評価や得票の予想、投票のお願いは載せません。すべての情報に出典と確認日を付けています。"),
+    ("どうやって、載せる人を決めているのですか？",
+     "本人の公表、政党の発表、本人の会見や表明を伝えた報道、選挙ドットコムの「予想される顔ぶれ」のどれかで確認できた方を載せています。本人の表明をまだ確認できていない方には、その旨を書き添えています。"),
+    ("ここに載っていない人は、立候補しないのですか？",
+     "いいえ。このサイトが公開情報で確認できた方だけを載せているので、ほかにも立候補する方がいる可能性があります。確認でき次第、追加します。"),
+    ("自分や家族についての掲載を、直したり消したりしてほしいです。",
+     "受付フォームからお知らせください。ご本人からの削除のご依頼には、原則としてすぐに応じます。誤りのご指摘は、出典を確かめて速やかに直します。"),
+    ("候補者の写真がないのはなぜですか？",
+     "写真には撮影した人の著作権や、写っている人の権利があるため、このサイトでは載せていません。写真は、各候補の公式サイトやSNSでご覧ください。"),
+    ("情報は、いつ時点のものですか？",
+     "それぞれの情報に「確認日」を付けています。定期的に確かめ直していて、確認日から{STALE_DAYS}日以上たったものには「要再確認」と表示されます。"),
+    ("投票日や投票所は、どこで調べればいいですか？",
+     "日程は文京区選挙管理委員会が発表します。決まり次第、このサイトでもお知らせします。投票所や期日前投票などは「投票ガイド」にまとめています。"),
+]
+
+
 def page_about():
-    body = f"""<div class="hero"><h1>掲載基準と運営者</h1><p class="lead">このサイトが、何を、どういう基準で載せているかの説明です。このサイトは公式サイトではなく、運営者が公開情報から集めた範囲で、運営者の責任において掲載しています。誤りや削除のご依頼は<a href="/teisei/">受付ページ</a>からお寄せください。</p></div>
+    faq = "".join(f"<details><summary>{E(q)}</summary><p>{E(a.replace('{STALE_DAYS}', str(STALE_DAYS)))}</p></details>" for q, a in FAQ)
+    faq = faq.replace("受付フォーム", f'<a href="{E(FORM_URL)}" rel="noopener" target="_blank">受付フォーム</a>', 1).replace("「投票ガイド」", '<a href="/touhyou/">「投票ガイド」</a>', 1)
+    body = f"""<div class="hero"><h1>このサイトについて</h1><p class="lead">よくある質問と、このサイトが何をどういう基準で載せているかの説明です。このサイトは公式サイトではなく、運営者が公開情報から集めた範囲で、運営者の責任において掲載しています。誤りや削除のご依頼は<a href="/teisei/">受付ページ</a>からお寄せください。</p></div>
+<section class="faq"><h2>よくある質問</h2>{faq}</section>
 <section><h2>掲載の基準</h2><div class="box"><ol>
 <li>掲載するのは、本人の公表、政党の公式発表、本人の会見や表明を報じた報道機関の記事のいずれかで確認できた方と、選挙ドットコムの「予想される顔ぶれ」に載っている方です（区議選・区長選とも同じ基準）。後者は「本人の立候補表明は未確認」と明記し、表明を確認でき次第、表記を改めます。うわさや推測では掲載しません。</li>
 <li>並び順は、ページを開くたびにランダムに入れ替わります。実際の選挙で届出の順番をくじ引きで決めるのにならい、特定の人が常に先頭にならないようにするためです。運営者本人も他の方とまったく同じ形式で掲載しています。</li>
@@ -692,7 +728,7 @@ def page_about():
 <section><h2>運営者</h2><div class="box"><p>たかはま なおき（文京区議会議員・無所属）<br>このサイトの運営者は、2027年の文京区議会議員選挙の立候補予定者です。そのため、中立であることを最優先にして運営しています。</p>
 <p>誤りのご指摘、掲載・修正・削除のご希望は、受付フォームからお寄せください。確認のうえ、速やかに対応します。<br>連絡先：{CONTACT}</p>
 <p class="muted">このサイトは、文京区・文京区議会・文京区選挙管理委員会の公式サイトではありません。</p></div></section>"""
-    write("/about/", layout("/about/", "掲載基準と運営者", "文京区議選ナビ2027の掲載基準、情報の出典、運営者と連絡先。運営者は立候補予定者本人で、全員を同じ形式で掲載しています。",
+    write("/about/", layout("/about/", "このサイトについて（よくある質問・掲載基準・運営者）", "文京区議選ナビ2027のよくある質問、掲載基準、情報の出典、運営者と連絡先。運営者は立候補予定者本人で、全員を同じ形式で掲載しています。",
                             body, crumbs=[(None, "このサイトについて")], active="/about/"))
 
 

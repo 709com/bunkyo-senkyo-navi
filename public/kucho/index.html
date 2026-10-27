@@ -53,10 +53,6 @@ svg text{fill:var(--fg);font-size:13px}svg .ax{stroke:var(--ln)}svg .lnx{stroke:
 .btn{display:inline-block;background:var(--nw);color:#fff !important;text-decoration:none;font-weight:700;border-radius:8px;padding:5px 12px;font-size:13px}.btn:hover{opacity:.85}
 .iv{margin:6px 0;font-size:14px}.iv ul{margin:2px 0}
 .card.open{border:2px dashed var(--ln);background:transparent;box-shadow:none}.card.open p{margin:6px 0}
-.who{display:flex;gap:10px;align-items:center;margin-top:6px}.who .nm{margin-top:0}
-.av{flex:none;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--ac2);color:var(--ac);font-weight:700;font-size:20px;border:2px solid var(--ac)}
-.av.new{border-color:var(--nw);color:var(--nw)}.av.big{width:76px;height:76px;font-size:34px;border-width:3px}
-.phero{display:flex;gap:16px;align-items:center}.phero h1{margin:0}
 .vb{list-style:none;padding:0;margin:10px 0}.vb li{padding:8px 0;border-bottom:1px solid var(--ln)}.vb .yr{font-weight:700;font-size:15px}
 .vb .tr{position:relative;height:26px;background:var(--ac2);border-radius:5px;margin:6px 0 4px}.vb .tr i{display:block;height:100%;border-radius:5px;background:var(--ac)}.vb .tr i.lo{background:var(--gr)}
 .vb .tr b{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px dashed var(--nw)}.vb .cap{font-size:13px;color:var(--mu)}.vb .cap strong{color:var(--fg);font-size:15px}
@@ -69,6 +65,11 @@ svg text{fill:var(--fg);font-size:13px}svg .ax{stroke:var(--ln)}svg .lnx{stroke:
 .js .chart .lnx{stroke-dasharray:1400;stroke-dashoffset:1400}.js .chart.in .lnx{stroke-dashoffset:0;transition:stroke-dashoffset 1.6s ease}
 .js .chart .dot{opacity:0}.js .chart.in .dot{opacity:1;transition:opacity .4s ease 1.2s}
 @media (prefers-reduced-motion:reduce){.js .grow,.js .fade,.js .chart .lnx,.js .chart .dot{transform:none !important;opacity:1 !important;stroke-dashoffset:0 !important;transition:none !important}}
+.faq details{background:var(--cd);border:1px solid var(--ln);border-radius:12px;margin:8px 0;padding:0 16px}
+.faq summary{cursor:pointer;font-weight:700;padding:12px 0;list-style:none;position:relative;padding-right:1.6em}.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"＋";position:absolute;right:0;top:12px;color:var(--ac)}.faq details[open] summary::after{content:"－"}
+.faq details p{margin:0 0 14px;font-size:15px}
+.chips.unc span{display:inline-block;background:var(--cd);border:1px dashed var(--mu);border-radius:999px;padding:3px 12px;font-size:14px;color:var(--mu)}
 .fix{display:inline-block;margin-top:8px;font-size:12px;color:var(--mu)}
 .tf label{display:block;font-weight:700;margin:12px 0 4px}.tf input,.tf select,.tf textarea{width:100%;box-sizing:border-box;font:inherit;padding:8px;border:1px solid var(--ln);border-radius:8px;background:var(--cd);color:var(--fg)}.tf textarea{min-height:140px}.tf .btn{font-size:16px;padding:10px 18px;margin-top:14px;border:0;cursor:pointer}
 footer.site{margin-top:44px;border-top:1px solid var(--ln);padding:22px 0 40px;font-size:13px;color:var(--mu)}
@@ -81,12 +82,12 @@ footer.site{margin-top:44px;border-top:1px solid var(--ln);padding:22px 0 40px;f
 <p class="lead">区議選と同じ基準で、公開されている情報だけをまとめています。すべてに出典と確認日を付けています。</p>
 <div class="facts"><div>投票日 <b>2027年4月予定（告示日・投票日は文京区選挙管理委員会の発表待ち）</b></div><div>区長の任期満了 <b>2027年4月26日</b></div><div>立候補予定者 <b>2人</b></div></div></div>
 <section><h2>立候補予定者（2人・敬称略）</h2>
-<p class="note">本人の公表や会見の報道などで、区長選への立候補の意向が確認できた方です。全員同じ基準で紹介しています。並び順は開くたびに入れ替わります（実際の選挙のくじ引きにならい、特定の人が常に先頭にならないようにしています）。</p>
+<p class="note">本人の公表や会見の報道などで、区長選への立候補の意向が確認できた方です。全員同じ基準で紹介しています。並び順は開くたびに入れ替わります。</p>
 <ul class="grid shuffle"><li class="card fade ch"><div class="top"><span class="st st-new">挑戦者</span><span class="party">無所属</span></div>
-<div class="who"><span class="av new" aria-hidden="true">え</span><div><div class="nm">えびさわ けいこ</div><div class="kana">えびさわ けいこ</div></div></div>
+<div class="nm">えびさわ けいこ</div><div class="kana">えびさわ けいこ</div>
 <ul class="prof"><li>62歳。元文京区議（2007年初当選、4期）。2026年10月21日に無所属での出馬を表明<span class="muted">（<a href="https://www.tokyo-np.co.jp/article/523380" rel="noopener" target="_blank">東京新聞デジタル（2026-10-23）</a>（<span class="chk" data-d="2026-10-27">2026-10-27確認</span>））</span></li></ul><ul class="prof"><li>2023年の文京区長選：39,566票（落選）<span class="muted">（<a href="https://www.city.bunkyo.lg.jp/b045/p006426.html" rel="noopener" target="_blank">文京区選挙管理委員会</a>）</span></li></ul><div class="ln"><a href="https://ebisawakeiko.com/" rel="noopener" target="_blank">公式サイト</a></div>
 <div class="src">根拠：<a href="https://www.tokyo-np.co.jp/article/523380" rel="noopener" target="_blank">東京新聞デジタル（2026-10-23）「文京区長選挙 小木郁夫さんが立候補表明、海老沢敬子さんは公約を説明」</a>（<span class="chk" data-d="2026-10-27">2026-10-27確認</span>）</div><a class="fix" href="https://docs.google.com/forms/d/e/1FAIpQLSdaPzgNA6QgV6D2bunWUCJ5KVS4FwtG2QM_xsuZHbxf2xrVIg/viewform?usp=pp_url&amp;entry.2074378040=%E3%81%88%E3%81%B3%E3%81%95%E3%82%8F%20%E3%81%91%E3%81%84%E3%81%93" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></li><li class="card fade ch"><div class="top"><span class="st st-new">挑戦者</span><span class="party">無所属</span></div>
-<div class="who"><span class="av new" aria-hidden="true">小</span><div><div class="nm">小木 郁夫</div><div class="kana">こぼく いくお</div></div></div>
+<div class="nm">小木 郁夫</div><div class="kana">こぼく いくお</div>
 <blockquote class="q">「27年4月の #文京区長選挙 に挑戦する決意を、記者会見で表明しました」<cite><a href="https://x.com/Koboku_Ikuo/status/2113893805174993180" rel="noopener" target="_blank">本人のX</a>（<span class="chk" data-d="2026-10-27">2026-10-27確認</span>）</cite></blockquote><ul class="prof"><li>46歳。団体職員。2026年10月22日に都庁で会見し、無所属での立候補を表明<span class="muted">（<a href="https://www.tokyo-np.co.jp/article/523380" rel="noopener" target="_blank">東京新聞デジタル（2026-10-23）</a>（<span class="chk" data-d="2026-10-27">2026-10-27確認</span>））</span></li></ul><div class="ln"><a href="https://x.com/Koboku_Ikuo" rel="noopener" target="_blank">X</a></div>
 <div class="src">根拠：<a href="https://x.com/Koboku_Ikuo/status/2113893805174993180" rel="noopener" target="_blank">本人のX（記者会見で区長選への挑戦の決意を表明）</a>（<span class="chk" data-d="2026-10-27">2026-10-27確認</span>）</div><a class="fix" href="https://docs.google.com/forms/d/e/1FAIpQLSdaPzgNA6QgV6D2bunWUCJ5KVS4FwtG2QM_xsuZHbxf2xrVIg/viewform?usp=pp_url&amp;entry.2074378040=%E5%B0%8F%E6%9C%A8%20%E9%83%81%E5%A4%AB" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></li></ul></section>
 <section><h2>現在の区長</h2><div class="box"><p><b>成澤 廣修</b>（なりさわ ひろのぶ）<br>2007年に初当選し、現在5期目。任期は2027年4月26日まで。</p>

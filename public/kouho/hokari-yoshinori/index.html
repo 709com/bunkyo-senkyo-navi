@@ -53,10 +53,6 @@ svg text{fill:var(--fg);font-size:13px}svg .ax{stroke:var(--ln)}svg .lnx{stroke:
 .btn{display:inline-block;background:var(--nw);color:#fff !important;text-decoration:none;font-weight:700;border-radius:8px;padding:5px 12px;font-size:13px}.btn:hover{opacity:.85}
 .iv{margin:6px 0;font-size:14px}.iv ul{margin:2px 0}
 .card.open{border:2px dashed var(--ln);background:transparent;box-shadow:none}.card.open p{margin:6px 0}
-.who{display:flex;gap:10px;align-items:center;margin-top:6px}.who .nm{margin-top:0}
-.av{flex:none;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--ac2);color:var(--ac);font-weight:700;font-size:20px;border:2px solid var(--ac)}
-.av.new{border-color:var(--nw);color:var(--nw)}.av.big{width:76px;height:76px;font-size:34px;border-width:3px}
-.phero{display:flex;gap:16px;align-items:center}.phero h1{margin:0}
 .vb{list-style:none;padding:0;margin:10px 0}.vb li{padding:8px 0;border-bottom:1px solid var(--ln)}.vb .yr{font-weight:700;font-size:15px}
 .vb .tr{position:relative;height:26px;background:var(--ac2);border-radius:5px;margin:6px 0 4px}.vb .tr i{display:block;height:100%;border-radius:5px;background:var(--ac)}.vb .tr i.lo{background:var(--gr)}
 .vb .tr b{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px dashed var(--nw)}.vb .cap{font-size:13px;color:var(--mu)}.vb .cap strong{color:var(--fg);font-size:15px}
@@ -69,6 +65,11 @@ svg text{fill:var(--fg);font-size:13px}svg .ax{stroke:var(--ln)}svg .lnx{stroke:
 .js .chart .lnx{stroke-dasharray:1400;stroke-dashoffset:1400}.js .chart.in .lnx{stroke-dashoffset:0;transition:stroke-dashoffset 1.6s ease}
 .js .chart .dot{opacity:0}.js .chart.in .dot{opacity:1;transition:opacity .4s ease 1.2s}
 @media (prefers-reduced-motion:reduce){.js .grow,.js .fade,.js .chart .lnx,.js .chart .dot{transform:none !important;opacity:1 !important;stroke-dashoffset:0 !important;transition:none !important}}
+.faq details{background:var(--cd);border:1px solid var(--ln);border-radius:12px;margin:8px 0;padding:0 16px}
+.faq summary{cursor:pointer;font-weight:700;padding:12px 0;list-style:none;position:relative;padding-right:1.6em}.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"＋";position:absolute;right:0;top:12px;color:var(--ac)}.faq details[open] summary::after{content:"－"}
+.faq details p{margin:0 0 14px;font-size:15px}
+.chips.unc span{display:inline-block;background:var(--cd);border:1px dashed var(--mu);border-radius:999px;padding:3px 12px;font-size:14px;color:var(--mu)}
 .fix{display:inline-block;margin-top:8px;font-size:12px;color:var(--mu)}
 .tf label{display:block;font-weight:700;margin:12px 0 4px}.tf input,.tf select,.tf textarea{width:100%;box-sizing:border-box;font:inherit;padding:8px;border:1px solid var(--ln);border-radius:8px;background:var(--cd);color:var(--fg)}.tf textarea{min-height:140px}.tf .btn{font-size:16px;padding:10px 18px;margin-top:14px;border:0;cursor:pointer}
 footer.site{margin-top:44px;border-top:1px solid var(--ln);padding:22px 0 40px;font-size:13px;color:var(--mu)}
@@ -77,8 +78,8 @@ footer.site{margin-top:44px;border-top:1px solid var(--ln);padding:22px 0 40px;f
 <body>
 <header class="site"><div class="w"><a class="brand" href="/">文京区議選ナビ2027</a><nav class="main"><a href="/kouho/" aria-current=page>区議選</a><a href="/kucho/">区長選</a><a href="/touhyou/">投票ガイド</a><a href="/about/">このサイトについて</a></nav></div></header>
 <div class="notice"><div class="w">公式サイトではありません。運営者が公開情報から集めた範囲で、運営者の責任で掲載しています。<a class="btn" href="/teisei/">訂正・削除・苦情の受付</a></div></div>
-<main class="w"><p class="crumb"><a href="/">トップ</a> › <a href="/kouho/">区議選</a> › ほかり 吉紀</p><div class="hero"><div class="phero"><span class="av big" aria-hidden="true">ほ</span><div><h1>ほかり 吉紀（現職）</h1>
-<p class="lead">ほかり よしのり｜無所属｜文京区議会議員選挙2027の立候補予定者</p></div></div></div>
+<main class="w"><p class="crumb"><a href="/">トップ</a> › <a href="/kouho/">区議選</a> › ほかり 吉紀</p><div class="hero"><h1>ほかり 吉紀（現職）</h1>
+<p class="lead">ほかり よしのり｜無所属｜文京区議会議員選挙2027の立候補予定者</p></div>
 <section><h2>基本情報</h2><dl class="kv">
 <dt>党派</dt><dd>無所属</dd><dt>区分</dt><dd>現職議員</dd>
 <dt>公式サイト・SNS</dt><dd>確認中です。公式のサイトやSNSをお持ちの場合は、<a href="/teisei/">受付フォーム</a>からお知らせください。</dd>
