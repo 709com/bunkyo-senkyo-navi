@@ -94,7 +94,7 @@ footer.site{margin-top:44px;border-top:1px solid var(--ln);padding:22px 0 40px;f
 @media (max-width:520px){th,td{padding:7px 6px}.hb li{grid-template-columns:6.8em 1fr}.chart svg text{font-size:21px}}
 """
 
-NAV = [("/kouho/", "区議選の候補者"), ("/kucho/", "区長選"),("/kekka/", "過去の結果"), ("/touhyou/", "投票ガイド"), ("/about/", "掲載基準・運営者")]
+NAV = [("/kouho/", "区議選"), ("/kucho/", "区長選"), ("/touhyou/", "投票ガイド"), ("/about/", "このサイトについて")]
 PAGES = []
 
 
@@ -201,9 +201,8 @@ def page_index():
 <p class="note">現職に比べて知られる機会が少ないため、本人の公表や政党の発表から、経歴や本人の言葉を紹介しています。50音順・敬称略。全員同じ基準です。</p>
 <ul class="grid">{''.join(challenger_card(c) for c in challengers)}</ul></section>
 <ul class="cards">
-<li><a class="t" href="/kouho/">立候補予定者の一覧</a>氏名・党派・公式リンクを50音順に。出典と確認日つき。</li>
+<li><a class="t" href="/kouho/">区議選2027</a>立候補予定者{len(cands)}人の一覧（出典と確認日つき）、報道、過去4回の結果とグラフ。</li>
 <li><a class="t" href="/kucho/">区長選挙2027</a>立候補予定者{len(kc_cands)}人、現在の区長の状況、報道、過去4回の結果。</li>
-<li><a class="t" href="/kekka/">過去の選挙結果とグラフ</a>2011〜2023年の4回分。投票率、当選ライン、党派別の議席。</li>
 <li><a class="t" href="/touhyou/">投票ガイド</a>選管の場所、期日前投票、入場券をなくしたとき、投票できる人。</li>
 </ul>
 <section><h2>立候補予定者（{len(cands)}人・50音順・敬称略）</h2>
@@ -297,12 +296,15 @@ def page_kouho():
 <ul class="grid">{''.join(cards)}</ul></section>
 <p class="note">掲載されていない方も立候補する可能性があります。</p>
 {votematch_html(cand_data)}<section><h2>区議選に関する報道</h2>
-<p class="note">文京区議選の情勢などを伝える報道機関の記事です。</p>{article_list(cand_data.get('articles', []))}</section>"""
-    write("/kouho/", layout("/kouho/", "文京区議会議員選挙2027 立候補予定者一覧",
-                            f"文京区議会議員選挙（2027年4月予定）の立候補予定者{len(cands)}人を50音順に。党派・公式リンク・出典・確認日つき。",
-                            body, crumbs=[(None, "候補者")], active="/kouho/"))
+<p class="note">文京区議選の情勢などを伝える報道機関の記事です。</p>{article_list(cand_data.get('articles', []))}</section>
+<section id="kekka"><h2>過去の文京区議選の結果（公式・2011〜2023年）</h2>{kekka_html()}</section>"""
+    write("/kouho/", layout("/kouho/", "文京区議会議員選挙2027 立候補予定者と過去の結果",
+                            f"文京区議会議員選挙（2027年4月予定）の立候補予定者{len(cands)}人を50音順に。党派・公式リンク・出典・確認日つき。過去4回（2011〜2023年）の公式結果も。",
+                            body, crumbs=[(None, "区議選")], active="/kouho/"))
     for c in cands:
         page_candidate(c)
+    for e in elections:
+        page_year(e)
 
 
 def page_candidate(c):
@@ -351,8 +353,9 @@ def party_stats():
     return st
 
 
-def page_kekka():
-    ys = [e["year"] for e in elections]
+def kekka_html():
+    """区議選の過去4回の結果（比較・グラフ・党派別）。/kouho/ の下に載せる。"""
+    ys =[e["year"] for e in elections]
     st = party_stats()
     overview = "".join(f"""<tr><th scope=row><a href="/kekka/{e['year']}/">{E(e['label'])}</a></th><td class="n">{e['candidates']}人</td><td class="n">{e['seats']}</td><td class="n">{e['ratio']:.2f}倍</td><td class="n">{e['turnout']:.2f}%</td><td class="n">{e['electorate']:,}</td><td class="n">{fv(e['last_win']['votes'])}</td><td class="n">{fv(e['next']['votes'])}</td><td class="n">{e['gap']:,.0f}</td></tr>""" for e in elections)
     turnout_svg = line_chart([(e["year"], e["turnout"]) for e in elections], 40, 60, 5, "%", "文京区議選の投票率の推移")
@@ -377,8 +380,7 @@ def page_kekka():
     ylinks = "".join(f'<li><a href="/kekka/{e["year"]}/">{E(e["label"])}の全候補の得票</a></li>' for e in reversed(elections))
     srcs = "、".join(f'<a href="{E(e["source"])}" rel="noopener" target="_blank">{e["year"]}年</a>' for e in elections)
     first, last = elections[0], elections[-1]
-    body = f"""<div class="hero"><h1>文京区議会議員選挙の過去の結果（2011〜2023年）</h1>
-<p class="lead">文京区選挙管理委員会が公表した4回分の結果を、グラフと表にまとめました。今回の予想ではなく、過去の公式の数字です。</p></div>
+    body = f"""<p class="note">文京区選挙管理委員会が公表した4回分の結果を、グラフと表にまとめました。今回の予想ではなく、過去の公式の数字です。</p>
 <section><h2>4回の比較</h2><div class="tbl"><table><thead><tr><th>選挙</th><th class="n">候補者</th><th class="n">定数</th><th class="n">倍率</th><th class="n">投票率</th><th class="n">有権者数</th><th class="n">最下位当選の得票</th><th class="n">次点の得票</th><th class="n">差</th></tr></thead><tbody>{overview}</tbody></table></div>
 <p class="note">倍率＝候補者数÷定数。得票数は公式の数字で、按分票による小数点以下を含みます（「差」は小数点以下を四捨五入）。</p></section>
 <section><h2>投票率の推移</h2><div class="chart">{turnout_svg}<p class="note">縦軸は40〜60%です。4回続けて上がっています。</p></div></section>
@@ -394,12 +396,8 @@ def page_kekka():
 <li>出典：文京区選挙管理委員会の各回の結果ページ（{srcs}）。取得日 {E(res_data['fetched'])}。</li>
 <li>取り込んだ数字は、公式の投票者数・無効票などから求めた有効票と、全候補の得票の合計が一致することを確認しています。</li>
 <li>この表やグラフは過去の結果です。次の選挙の当落を予想するものではありません。</li></ul></div></section>"""
-    ld = {"@context": "https://schema.org", "@type": "Dataset", "name": "文京区議会議員選挙の結果（2011〜2023年）", "description": "文京区選挙管理委員会が公表した区議選4回分の得票・投票率", "inLanguage": "ja", "url": f"{SITE_URL}/kekka/"}
-    write("/kekka/", layout("/kekka/", "文京区議会議員選挙の過去の結果（2011〜2023年）グラフと当選ライン",
-                            "文京区議選の2011・2015・2019・2023年の結果を、投票率・当選ライン（最下位当選の得票）・党派別の当選者数でまとめました。出典は文京区選管。",
-                            body, crumbs=[(None, "過去の結果")], jsonld=ld, active="/kekka/"))
-    for e in elections:
-        page_year(e)
+    # 区議選ページの中の小見出しにする
+    return body.replace("<h2>", "<h3>").replace("</h2>", "</h3>")
 
 
 def page_year(e):
@@ -423,11 +421,11 @@ def page_year(e):
 <section><h2>全候補の得票（得票順）</h2><div class="tbl"><table><thead><tr><th class="n">順位</th><th>氏名・党派</th><th class="n">得票数</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div>
 <p class="note">氏名・党派は当時の届出の表記のままです。得票数の小数点以下は公式の按分票です。無効票 {e['invalid']:,}票。</p></section>
 <section><h2>党派別（この回の公式の党派名）</h2><div class="tbl"><table><thead><tr><th>党派</th><th class="n">当選／候補</th><th class="n">得票合計</th></tr></thead><tbody>{prow}</tbody></table></div></section>
-<section><div class="box">出典：<a href="{E(e['source'])}" rel="noopener" target="_blank">文京区選挙管理委員会 {E(e['label'])}の結果</a>（取得日 {E(res_data['fetched'])}）<br>他の年：{nav}　／　<a href="/kekka/">4回の比較にもどる</a></div></section>"""
+<section><div class="box">出典：<a href="{E(e['source'])}" rel="noopener" target="_blank">文京区選挙管理委員会 {E(e['label'])}の結果</a>（取得日 {E(res_data['fetched'])}）<br>他の年：{nav}　／　<a href="/kouho/#kekka">4回の比較にもどる</a></div></section>"""
     p = f"/kekka/{y}/"
     write(p, layout(p, f"{e['label']}文京区議会議員選挙の結果 全候補の得票",
                     f"{e['label']}の文京区議選の結果。{e['candidates']}人の得票、投票率{e['turnout']:.2f}%、最下位当選{fv(e['last_win']['votes'])}票。出典は文京区選管。",
-                    body, crumbs=[("/kekka/", "過去の結果"), (None, f"{y}年")], active="/kekka/"))
+                    body, crumbs=[("/kouho/", "区議選"), ("/kouho/#kekka", "過去の結果"), (None, f"{y}年")], active="/kouho/"))
 
 
 # ------------------------------------------------------------ 投票ガイド
@@ -626,13 +624,13 @@ def page_about():
 <p>誤りのご指摘、掲載・修正・削除のご希望は、受付フォームからお寄せください。確認のうえ、速やかに対応します。<br>連絡先：{CONTACT}</p>
 <p class="muted">このサイトは、文京区・文京区議会・文京区選挙管理委員会の公式サイトではありません。</p></div></section>"""
     write("/about/", layout("/about/", "掲載基準と運営者", "文京区議選NAVI 2027の掲載基準、情報の出典、運営者と連絡先。運営者は立候補予定者本人で、全員を同じ形式で掲載しています。",
-                            body, crumbs=[(None, "掲載基準・運営者")], active="/about/"))
+                            body, crumbs=[(None, "このサイトについて")], active="/about/"))
 
 
 if OUT.exists():
     shutil.rmtree(OUT)
 OUT.mkdir(parents=True)
-page_index(); page_kouho(); page_kucho(); page_kekka(); page_touhyou(); page_teisei(); page_about()
+page_index(); page_kouho(); page_kucho(); page_touhyou(); page_teisei(); page_about()
 n_pages = len(PAGES)
 (OUT / "404.html").write_text(layout("/404", "ページが見つかりません", "お探しのページは見つかりませんでした。", '<div class="hero"><h1>ページが見つかりません</h1><p><a href="/">トップにもどる</a></p></div>'), encoding="utf-8")
 PAGES.remove("/404")
@@ -643,4 +641,6 @@ sm = "".join(f"<url><loc>{SITE_URL}{p}</loc><lastmod>{UPDATED}</lastmod></url>" 
 if NOINDEX:
     # Cloudflare Pages の設定ファイル。pages.dev 側も含め、全ファイルに「検索に載せない」を付ける
     (OUT / "_headers").write_text("/*\n  X-Robots-Tag: noindex, nofollow\n", encoding="utf-8")
+# 旧「過去の結果」ページ（/kekka/）は区議選ページの下に統合した。古いリンクはそこへ転送する
+(OUT / "_redirects").write_text("/kekka /kouho/#kekka 301\n/kekka/ /kouho/#kekka 301\n", encoding="utf-8")
 print("built", len(PAGES), "pages")
