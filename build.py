@@ -31,6 +31,20 @@ ROBOTS_META = '<meta name="robots" content="noindex, nofollow">\n' if NOINDEX el
 # 確認日からこの日数を過ぎたら「要再確認」と表示する（全員同じ扱い）。
 # ページは作り置きなので、閲覧した日の日付でブラウザ側が判定する（作り直さなくても表示が切り替わる）
 STALE_DAYS = 14
+# 候補者の並び順：50音順だと特定の人が常に先頭になるため、開くたびにランダムに入れ替える
+# （実際の選挙のくじ引きにならう）。ul.shuffle の中の li を並べ替え、点線の枠（.open）は最後に残す。
+# JavaScript が動かない環境では、作ったときの50音順のまま表示される。
+SHUFFLE_JS = """<script>(function(){function r(n){if(window.crypto&&crypto.getRandomValues){var a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]%n;}return Math.floor(Math.random()*n);}
+document.querySelectorAll('ul.shuffle').forEach(function(ul){var it=[].slice.call(ul.children).filter(function(li){return !li.classList.contains('open');});
+var fx=[].slice.call(ul.children).filter(function(li){return li.classList.contains('open');});
+for(var i=it.length-1;i>0;i--){var j=r(i+1),t=it[i];it[i]=it[j];it[j]=t;}it.concat(fx).forEach(function(li){ul.appendChild(li);});});})();</script>"""
+# 画面に入ったら動き出す（グラフが伸びる・カードがふわっと出る）。JSが動かない環境では最初から表示
+MOTION_JS = """<script>(function(){
+var t=[];document.querySelectorAll('.fade,.chart').forEach(function(e){t.push([e,[e]]);});
+document.querySelectorAll('.grow').forEach(function(e){t.push([e.parentElement,[e]]);});
+function on(l){l.forEach(function(e){e.classList.add('in');});}
+if(!('IntersectionObserver' in window)){t.forEach(function(x){on(x[1]);});return;}
+var ok=false;t.forEach(function(x){var io=new IntersectionObserver(function(es){ok=true;if(es[0].isIntersecting){on(x[1]);io.disconnect();}},{threshold:.1});io.observe(x[0]);});setTimeout(function(){if(!ok)t.forEach(function(x){on(x[1]);});},3000);})();</script>"""
 STALE_JS = ("<script>(function(){var L=" + str(STALE_DAYS) + "*864e5,n=Date.now();"
             "document.querySelectorAll('.chk[data-d]').forEach(function(e){"
             "var t=Date.parse(e.getAttribute('data-d')+'T00:00:00+09:00');"
@@ -88,6 +102,23 @@ svg text{fill:var(--fg);font-size:13px}svg .ax{stroke:var(--ln)}svg .lnx{stroke:
 .notice{background:var(--ac2);border-bottom:1px solid var(--ln);font-size:13px}.notice .w{padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
 .btn{display:inline-block;background:var(--nw);color:#fff !important;text-decoration:none;font-weight:700;border-radius:8px;padding:5px 12px;font-size:13px}.btn:hover{opacity:.85}
 .iv{margin:6px 0;font-size:14px}.iv ul{margin:2px 0}
+.card.open{border:2px dashed var(--ln);background:transparent;box-shadow:none}.card.open p{margin:6px 0}
+.who{display:flex;gap:10px;align-items:center;margin-top:6px}.who .nm{margin-top:0}
+.av{flex:none;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--ac2);color:var(--ac);font-weight:700;font-size:20px;border:2px solid var(--ac)}
+.av.new{border-color:var(--nw);color:var(--nw)}.av.big{width:76px;height:76px;font-size:34px;border-width:3px}
+.phero{display:flex;gap:16px;align-items:center}.phero h1{margin:0}
+.vb{list-style:none;padding:0;margin:10px 0}.vb li{padding:8px 0;border-bottom:1px solid var(--ln)}.vb .yr{font-weight:700;font-size:15px}
+.vb .tr{position:relative;height:26px;background:var(--ac2);border-radius:5px;margin:6px 0 4px}.vb .tr i{display:block;height:100%;border-radius:5px;background:var(--ac)}.vb .tr i.lo{background:var(--gr)}
+.vb .tr b{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px dashed var(--nw)}.vb .cap{font-size:13px;color:var(--mu)}.vb .cap strong{color:var(--fg);font-size:15px}
+.lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--mu)}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}.lg i.dash{width:0;height:14px;border-left:2px dashed var(--nw);border-radius:0}
+.duel{margin:14px 0 18px}.duel .yr{font-weight:700;font-size:15px;margin-bottom:4px}.duel .tr{display:flex;height:34px;border-radius:6px;overflow:hidden}
+.duel .tr i{display:block;height:100%}.duel .tr i:nth-child(1){background:var(--ac)}.duel .tr i:nth-child(2){background:var(--nw)}.duel .tr i:nth-child(3){background:var(--gr)}
+.duel .nm2{display:flex;justify-content:space-between;gap:8px;font-size:13.5px;margin-top:4px}.duel .nm2 span:last-child{text-align:right}.duel .nm2 b{font-size:16px}.duel .gap{font-size:13px;color:var(--mu)}
+.js .grow{transform:scaleX(0);transform-origin:left center}.js .grow.in{transform:scaleX(1);transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.js .fade{opacity:0;transform:translateY(10px)}.js .fade.in{opacity:1;transform:none;transition:opacity .6s ease,transform .6s ease}
+.js .chart .lnx{stroke-dasharray:1400;stroke-dashoffset:1400}.js .chart.in .lnx{stroke-dashoffset:0;transition:stroke-dashoffset 1.6s ease}
+.js .chart .dot{opacity:0}.js .chart.in .dot{opacity:1;transition:opacity .4s ease 1.2s}
+@media (prefers-reduced-motion:reduce){.js .grow,.js .fade,.js .chart .lnx,.js .chart .dot{transform:none !important;opacity:1 !important;stroke-dashoffset:0 !important;transition:none !important}}
 .fix{display:inline-block;margin-top:8px;font-size:12px;color:var(--mu)}
 .tf label{display:block;font-weight:700;margin:12px 0 4px}.tf input,.tf select,.tf textarea{width:100%;box-sizing:border-box;font:inherit;padding:8px;border:1px solid var(--ln);border-radius:8px;background:var(--cd);color:var(--fg)}.tf textarea{min-height:140px}.tf .btn{font-size:16px;padding:10px 18px;margin-top:14px;border:0;cursor:pointer}
 footer.site{margin-top:44px;border-top:1px solid var(--ln);padding:22px 0 40px;font-size:13px;color:var(--mu)}
@@ -117,6 +148,7 @@ def layout(path, title, desc, body, crumbs=None, jsonld=None, active=None):
 <meta property="og:type" content="website"><meta property="og:url" content="{SITE_URL}{path}"><meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary">
 {ld}
+<script>document.documentElement.classList.add("js")</script>
 <style>{CSS}</style></head>
 <body>
 <header class="site"><div class="w"><a class="brand" href="/">{SITE_NAME}</a><nav class="main">{nav}</nav></div></header>
@@ -128,6 +160,8 @@ def layout(path, title, desc, body, crumbs=None, jsonld=None, active=None):
 このサイトは文京区・文京区議会・文京区選挙管理委員会の公式サイトではありません。運営者が公開情報から集めた範囲で、運営者の責任において掲載しています。<br>
 最終更新 {E(UPDATED)}</p></div></footer>
 {STALE_JS}
+{SHUFFLE_JS}
+{MOTION_JS}
 </body></html>
 """
 
@@ -163,8 +197,8 @@ incumbents = [c for c in cands if c["status"] == "現"]
 def hbars(items, maxv, fmt, orange=()):
     li = []
     for i, (label, v) in enumerate(items):
-        cls = ' class="o"' if i in orange else ""
-        li.append(f'<li><span>{E(label)}</span><span class="t"><i{cls} style="width:{v / maxv * 100:.1f}%"></i><span class="v">{E(fmt(v))}</span></span></li>')
+        cls = "grow o" if i in orange else "grow"
+        li.append(f'<li><span>{E(label)}</span><span class="t"><i class="{cls}" style="width:{v / maxv * 100:.1f}%"></i><span class="v">{E(fmt(v))}</span></span></li>')
     return f'<ul class="hb">{"".join(li)}</ul>'
 
 
@@ -198,16 +232,16 @@ def page_index():
 <p class="lead">政党の公認発表など、公開されている情報だけで作った一覧です。すべてに出典と確認日を付けています。</p>
 <div class="facts"><div>投票日 <b>{E(el['date_note'])}</b></div><div>定数 <b>{el['seats']}</b></div><div>掲載中の予定者 <b>{len(cands)}人</b></div></div></div>
 <section><h2>挑戦者（現職ではない立候補予定者・{len(challengers)}人）</h2>
-<p class="note">現職に比べて知られる機会が少ないため、本人の公表や政党の発表から、経歴や本人の言葉を紹介しています。50音順・敬称略。全員同じ基準です。</p>
-<ul class="grid">{''.join(challenger_card(c) for c in challengers)}</ul></section>
+<p class="note">現職に比べて知られる機会が少ないため、本人の公表や政党の発表から、経歴や本人の言葉を紹介しています。敬称略。全員同じ基準です。並び順は開くたびに入れ替わります（実際の選挙のくじ引きにならい、特定の人が常に先頭にならないようにしています）。</p>
+<ul class="grid shuffle">{''.join(challenger_card(c) for c in challengers)}{open_card()}</ul></section>
 <ul class="cards">
 <li><a class="t" href="/kouho/">区議選2027</a>立候補予定者{len(cands)}人の一覧（出典と確認日つき）、報道、過去4回の結果とグラフ。</li>
 <li><a class="t" href="/kucho/">区長選挙2027</a>立候補予定者{len(kc_cands)}人、現在の区長の状況、報道、過去4回の結果。</li>
 <li><a class="t" href="/touhyou/">投票ガイド</a>選管の場所、期日前投票、入場券をなくしたとき、投票できる人。</li>
 </ul>
-<section><h2>立候補予定者（{len(cands)}人・50音順・敬称略）</h2>
+<section><h2>立候補予定者（{len(cands)}人・敬称略）</h2>
 <p class="note">名前を押すと、出典と過去の選挙結果のページに移ります。掲載されていない方も立候補する可能性があります。</p>
-<ul class="chips">{chips}</ul></section>
+<ul class="chips shuffle">{chips}</ul></section>
 {votematch_html(cand_data)}{votematch_html(kucho)}<section id="party"><h2>政党の公認状況</h2><p class="note">各党の公式発表で確認できた範囲です。</p>
 <div class="tbl"><table><tbody>{''.join(prow)}</tbody></table></div></section>
 <section id="news"><h2>更新情報</h2><ul class="news">{news}</ul></section>
@@ -263,10 +297,25 @@ def challenger_card(c, base="/kouho/"):
     quote = f'<blockquote class="q">「{E(st["text"])}」<cite>{src_link(st)}</cite></blockquote>' if st else ""
     prof = "".join(f'<li>{E(p["text"])}<span class="muted">（{src_link(p)}）</span></li>' for p in c.get("profile", []))
     prof = f'<ul class="prof">{prof}</ul>' if prof else ""
-    return f"""<li class="card ch"><div class="top"><span class="st st-new">挑戦者</span><span class="party">{E(c['party'])}</span></div>
-<div class="nm">{f'<a href="{base}{c["slug"]}/">{E(c["name"])}</a>' if base else E(c["name"])}</div><div class="kana">{E(c['kana'])}</div>
+    return f"""<li class="card fade{' ch' if c['status'] != '現' else ''}"><div class="top"><span class="st {'st-cur' if c['status'] == '現' else 'st-new'}">{stl(c)}</span><span class="party">{E(c['party'])}</span></div>
+<div class="who">{avatar(c)}<div><div class="nm">{f'<a href="{base}{c["slug"]}/">{E(c["name"])}</a>' if base else E(c["name"])}</div><div class="kana">{E(c['kana'])}</div></div></div>
 {quote}{prof}{c.get('hist_html', '')}{interview_html(c)}<div class="ln">{lk}</div>
 <div class="src">根拠：{src_link(c)}</div><a class="fix" href="{E(teisei_href(c['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></li>"""
+
+
+def avatar(c, big=False):
+    """氏名の最初の1文字を丸で囲んだ目印。写真は本人の提供・許可があるまで使わない。"""
+    cls = "av" + ("" if c["status"] == "現" else " new") + (" big" if big else "")
+    return f'<span class="{cls}" aria-hidden="true">{E(c["name"][0])}</span>'
+
+
+def open_card():
+    """挑戦者の欄の最後に置く点線の枠。まだ載っていない方への案内（人数の予想はしない）。"""
+    el = cand_data["election"]
+    return f"""<li class="card open"><div class="nm">ほかにも立候補を予定している方へ</div>
+<p>本人の公表や政党の発表を確認でき次第、ほかの方と同じ基準で掲載します。ご本人からのご連絡も受け付けています。</p>
+<p class="note">定数{el['seats']}に対し、いま掲載している立候補予定者は{len(cands)}人です。</p>
+<a class="btn" href="{E(FORM_URL)}" rel="noopener" target="_blank">掲載についてのご連絡</a></li>"""
 
 
 def cand_links(c):
@@ -282,24 +331,24 @@ def page_kouho():
     for c in incumbents:
         lk = " ".join(cand_links(c)) or '<span class="muted">確認中</span>'
         op = '<span class="tag">運営者</span>' if c.get("operator") else ""
-        cards.append(f"""<li class="card"><div class="top"><span class="st st-cur">現職</span><span class="party">{E(c['party'])}</span>{op}</div>
-<div class="nm"><a href="/kouho/{c['slug']}/">{E(c['name'])}</a></div><div class="kana">{E(c['kana'])}</div>
+        cards.append(f"""<li class="card fade"><div class="top"><span class="st st-cur">現職</span><span class="party">{E(c['party'])}</span>{op}</div>
+<div class="who">{avatar(c)}<div><div class="nm"><a href="/kouho/{c['slug']}/">{E(c['name'])}</a></div><div class="kana">{E(c['kana'])}</div></div></div>
 {interview_html(c)}<div class="ln">{lk}</div>
 <div class="src">根拠：{src_link(c)}</div><a class="fix" href="{E(teisei_href(c['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></li>""")
     body = f"""<div class="hero"><h1>文京区議会議員選挙2027 立候補予定者一覧</h1>
-<p class="lead">{len(cands)}人（挑戦者{len(challengers)}人・現職{len(incumbents)}人）。それぞれ50音順・敬称略。本人の公表や政党の発表があり次第、追加します。</p></div>
+<p class="lead">{len(cands)}人（挑戦者{len(challengers)}人・現職{len(incumbents)}人）。敬称略。並び順は開くたびに入れ替わります（実際の選挙のくじ引きにならい、特定の人が常に先頭にならないようにしています）。本人の公表や政党の発表があり次第、追加します。</p></div>
 <section><h2>挑戦者（{len(challengers)}人）</h2>
 <p class="note">現職ではない立候補予定者です。現職に比べて知られる機会が少ないため、本人の公表や政党の発表から、経歴や本人の言葉を厚めに紹介しています。全員同じ基準です。</p>
-<ul class="grid">{''.join(challenger_card(c) for c in challengers)}</ul></section>
+<ul class="grid shuffle">{''.join(challenger_card(c) for c in challengers)}{open_card()}</ul></section>
 <section><h2>現職（{len(incumbents)}人）</h2>
 <p class="note">氏名の表記は文京区議会の議員名簿に合わせています。</p>
-<ul class="grid">{''.join(cards)}</ul></section>
+<ul class="grid shuffle">{''.join(cards)}</ul></section>
 <p class="note">掲載されていない方も立候補する可能性があります。</p>
 {votematch_html(cand_data)}<section><h2>区議選に関する報道</h2>
 <p class="note">文京区議選の情勢などを伝える報道機関の記事です。</p>{article_list(cand_data.get('articles', []))}</section>
 <section id="kekka"><h2>過去の文京区議選の結果（公式・2011〜2023年）</h2>{kekka_html()}</section>"""
     write("/kouho/", layout("/kouho/", "文京区議会議員選挙2027 立候補予定者と過去の結果",
-                            f"文京区議会議員選挙（2027年4月予定）の立候補予定者{len(cands)}人を50音順に。党派・公式リンク・出典・確認日つき。過去4回（2011〜2023年）の公式結果も。",
+                            f"文京区議会議員選挙（2027年4月予定）の立候補予定者{len(cands)}人の一覧。党派・公式リンク・出典・確認日つき。過去4回（2011〜2023年）の公式結果も。",
                             body, crumbs=[(None, "区議選")], active="/kouho/"))
     for c in cands:
         page_candidate(c)
@@ -315,7 +364,16 @@ def page_candidate(c):
         res = "当選" if r["elected"] else ("次点" if r["runnerup"] else "落選")
         rows.append(f'<tr><td><a href="/kekka/{e["year"]}/">{e["year"]}年</a></td><td>{E(r["party"])}</td><td class="n">{fv(r["votes"])}</td><td class="n">{r["rank"]}位／{e["candidates"]}人</td><td>{res}</td></tr>')
     if rows:
-        hist = f"""<div class="tbl"><table><thead><tr><th>選挙</th><th>当時の党派</th><th class="n">得票数</th><th class="n">順位</th><th>結果</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div>
+        top = max(max(r["votes"], e["last_win"]["votes"]) for e, r in c["hist"]) * 1.08
+        bars = []
+        for e, r in c["hist"]:
+            res = "当選" if r["elected"] else ("次点" if r["runnerup"] else "落選")
+            bars.append(f"""<li><div class="yr"><a href="/kekka/{e['year']}/">{e['year']}年</a>　<span class="muted">{E(r['party'])}</span></div>
+<div class="tr"><i class="grow{'' if r['elected'] else ' lo'}" style="width:{r['votes'] / top * 100:.1f}%"></i><b style="left:{e['last_win']['votes'] / top * 100:.1f}%"></b></div>
+<div class="cap"><strong>{fv(r['votes'])}票</strong>　{r['rank']}位／{e['candidates']}人・{res}　（最下位当選 {fv(e['last_win']['votes'])}票）</div></li>""")
+        hist = f"""<div class="chart"><ul class="vb">{''.join(bars)}</ul>
+<div class="lg"><span><i style="background:var(--ac)"></i>得票（当選）</span><span><i style="background:var(--gr)"></i>得票（落選）</span><span><i class="dash"></i>その回の最下位当選の得票</span></div></div>
+<details><summary class="note">表で見る</summary><div class="tbl"><table><thead><tr><th>選挙</th><th>当時の党派</th><th class="n">得票数</th><th class="n">順位</th><th>結果</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div></details>
 <p class="note">文京区選挙管理委員会が公表した結果です。党派は当時の表記のまま掲載しています。得票数の小数点以下は公式の按分票です。</p>"""
     else:
         hist = '<p class="note">2011〜2023年の4回の文京区議選の公式結果に、該当する届出名は見つかりませんでした。</p>'
@@ -327,8 +385,8 @@ def page_candidate(c):
         extra += f'<dt>本人の言葉</dt><dd>「{E(st["text"])}」（{src_link(st)}）</dd>'
     if c.get("profile"):
         extra += "<dt>経歴など</dt><dd><ul class=\"prof\">" + "".join(f'<li>{E(p["text"])}<span class="muted">（{src_link(p)}）</span></li>' for p in c["profile"]) + "</ul></dd>"
-    body = f"""<div class="hero"><h1>{E(c['name'])}（{stl(c)}）</h1>
-<p class="lead">{E(c['kana'])}｜{E(c['party'])}｜文京区議会議員選挙2027の立候補予定者</p></div>
+    body = f"""<div class="hero"><div class="phero">{avatar(c, big=True)}<div><h1>{E(c['name'])}（{stl(c)}）</h1>
+<p class="lead">{E(c['kana'])}｜{E(c['party'])}｜文京区議会議員選挙2027の立候補予定者</p></div></div></div>
 <section><h2>基本情報</h2><dl class="kv">
 <dt>党派</dt><dd>{E(c['party'])}</dd><dt>区分</dt><dd>{'現職議員' if c['status']=='現' else '挑戦者（現職ではない立候補予定者）'}</dd>
 {extra}<dt>公式サイト・SNS</dt><dd>{lk_html}</dd>{('<dt>インタビュー</dt><dd>' + interview_html(c) + '</dd>') if c.get('interview') else ''}
@@ -340,7 +398,7 @@ def page_candidate(c):
     p = f"/kouho/{c['slug']}/"
     write(p, layout(p, f"{c['name']}（{c['party']}）文京区議会議員選挙2027",
                     f"{c['name']}（{c['party']}・{stl(c)}）の基本情報、公式リンク、過去の文京区議選の結果。出典と確認日つき。",
-                    body, crumbs=[("/kouho/", "候補者"), (None, c["name"])], jsonld=ld, active="/kouho/"))
+                    body, crumbs=[("/kouho/", "区議選"), (None, c["name"])], jsonld=ld, active="/kouho/"))
 
 
 # ------------------------------------------------------------ 過去の結果
@@ -409,7 +467,7 @@ def page_year(e):
             rows.append(f'<tr class="cut"><td colspan="3">▲ 当選（定数{e["seats"]}人）／ ▼ 落選</td></tr>')
         cls = "" if r["elected"] else ' class="lose"'
         mark = "（次点）" if r["runnerup"] else ""
-        rows.append(f'<tr{cls}><td class="n">{r["rank"]}</td><td>{E(r["name"])}{mark}<br><span class="muted">{E(r["party"])}</span></td><td class="n">{fv(r["votes"])}<span class="bar" style="width:{r["votes"]/maxv*100:.1f}%"></span></td></tr>')
+        rows.append(f'<tr{cls}><td class="n">{r["rank"]}</td><td>{E(r["name"])}{mark}<br><span class="muted">{E(r["party"])}</span></td><td class="n">{fv(r["votes"])}<span class="bar grow" style="width:{r["votes"]/maxv*100:.1f}%"></span></td></tr>')
     pv = {}
     for r in e["rows"]:
         s = pv.setdefault(r["party"], [0, 0, 0.0]); s[0] += 1; s[1] += r["elected"]; s[2] += r["votes"]
@@ -569,19 +627,30 @@ def page_kucho():
 <div class="tbl"><table><thead><tr><th>候補者</th><th>党派</th><th class="n">得票数</th><th>結果</th></tr></thead><tbody>{cand}</tbody></table></div>
 <p class="note">投票率 {r['turnout']:.2f}%／当日有権者数 {ele}／投票者数 {r['voters']:,}人。出典：<a href="{E(r['source'])}" rel="noopener" target="_blank">文京区選挙管理委員会</a>（取得日 {E(kucho['results_fetched'])}）</p></section>""")
     turnout_svg = line_chart([(r["year"], r["turnout"]) for r in kc_results], 40, 60, 5, "%", "文京区長選の投票率の推移")
+    # 得票の割合（帯グラフ）。色は得票順（1位=緑、2位=橙、3位=灰）で、人や党派による色分けはしない
+    duels = []
+    for r in reversed(kc_results):
+        xs = sorted(r["rows"], key=lambda x: -x["votes"])
+        tot = sum(x["votes"] for x in xs)
+        segs = "".join(f'<i style="width:{x["votes"] / tot * 100:.2f}%" title="{E(x["name"])} {x["votes"]:,}票"></i>' for x in xs)
+        names = "".join(f'<span>{E(x["name"])}<br><b>{x["votes"] / tot * 100:.1f}%</b>　{x["votes"]:,}票</span>' for x in xs[:2])
+        more = "".join(f'<br>ほか {E(x["name"])} {x["votes"]:,}票（{x["votes"] / tot * 100:.1f}%）' for x in xs[2:])
+        duels.append(f"""<div class="duel"><div class="yr">{E(r['label'])}</div><div class="tr grow">{segs}</div>
+<div class="nm2">{names}</div><div class="gap">1位と2位の差 {xs[0]['votes'] - xs[1]['votes']:,}票{more}</div></div>""")
     cards = "".join(challenger_card(c, base=None) for c in kc_cands) or '<li class="card">まだいません。</li>'
     body = f"""<div class="hero"><h1>文京区長選挙2027</h1>
 <p class="lead">区議選と同じ基準で、公開されている情報だけをまとめています。すべてに出典と確認日を付けています。</p>
 <div class="facts"><div>投票日 <b>{E(el['date_note'])}</b></div><div>区長の任期満了 <b>2027年4月26日</b></div><div>立候補予定者 <b>{len(kc_cands)}人</b></div></div></div>
+<section><h2>立候補予定者（{len(kc_cands)}人・敬称略）</h2>
+<p class="note">本人の公表や会見の報道などで、区長選への立候補の意向が確認できた方です。全員同じ基準で紹介しています。並び順は開くたびに入れ替わります（実際の選挙のくじ引きにならい、特定の人が常に先頭にならないようにしています）。</p>
+<ul class="grid shuffle">{cards}</ul></section>
 <section><h2>現在の区長</h2><div class="box"><p><b>{E(m['name'])}</b>（{E(m['kana'])}）<br>{E(m['note'])}</p>
 <p>{E(m['intention'])}</p><ul class="prof">{msrc}</ul><a class="fix" href="{E(teisei_href(m['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></div>
-<p class="note">現在の区長は、立候補の意向を表明するまで、立候補予定者には含めていません。</p></section>
-<section><h2>立候補予定者（{len(kc_cands)}人・50音順・敬称略）</h2>
-<p class="note">本人の公表や会見の報道などで、区長選への立候補の意向が確認できた方です。いずれも現職ではない「挑戦者」です。全員同じ基準で紹介しています。</p>
-<ul class="grid">{cards}</ul></section>
+<p class="note">現在の区長は、立候補の意向を表明するまで、立候補予定者には含めていません。表明した場合は、上の立候補予定者に「現職」として掲載します。</p></section>
 {votematch_html(kucho)}<section><h2>区長選に関する報道</h2>{article_list(kucho['articles'])}</section>
 <section><h2>過去の文京区長選の結果（公式）</h2>
-<div class="chart">{turnout_svg}<p class="note">投票率の推移。縦軸は40〜60%です。</p></div>
+<h3>得票の割合</h3><div class="chart">{''.join(duels)}<p class="note">有効票に占める各候補の得票の割合です。色は得票の順（1位が緑、2位が橙）で、人や党派で色を分けてはいません。</p></div>
+<h3>投票率の推移</h3><div class="chart">{turnout_svg}<p class="note">投票率の推移。縦軸は40〜60%です。</p></div>
 {''.join(rows)}
 <p class="note">得票数は、どの回も「投票者数−無効票−不足票」と一致することを確かめています。当日有権者数は、区長選の結果ページに記載がない回は「—」としています。</p></section>"""
     write("/kucho/", layout("/kucho/", "文京区長選挙2027 立候補予定者と過去の結果",
@@ -612,7 +681,7 @@ def page_about():
     body = f"""<div class="hero"><h1>掲載基準と運営者</h1><p class="lead">このサイトが、何を、どういう基準で載せているかの説明です。このサイトは公式サイトではなく、運営者が公開情報から集めた範囲で、運営者の責任において掲載しています。誤りや削除のご依頼は<a href="/teisei/">受付ページ</a>からお寄せください。</p></div>
 <section><h2>掲載の基準</h2><div class="box"><ol>
 <li>掲載するのは、本人の公表、政党の公式発表、本人の会見や表明を報じた報道機関の記事のいずれかで確認できた方と、選挙ドットコムの「予想される顔ぶれ」に載っている方です（区議選・区長選とも同じ基準）。後者は「本人の立候補表明は未確認」と明記し、表明を確認でき次第、表記を改めます。うわさや推測では掲載しません。</li>
-<li>並び順は50音順です。運営者本人も他の方とまったく同じ形式で掲載しています。</li>
+<li>並び順は、ページを開くたびにランダムに入れ替わります。実際の選挙で届出の順番をくじ引きで決めるのにならい、特定の人が常に先頭にならないようにするためです。運営者本人も他の方とまったく同じ形式で掲載しています。</li>
 <li>現職ではない立候補予定者を「挑戦者」として先に紹介し、本人の公表や政党の発表にある経歴・本人の言葉を厚めに載せます。現職に比べて知られる機会が少ないためで、挑戦者は全員同じ基準です。過去の立候補歴は、文京区議選の公式結果だけを載せ、ほかの選挙への立候補歴は扱いません。</li>
 <li>評価・論評・得票予想・順位づけは載せません。</li>
 <li>公約や選挙公報は転載せず、文京区選挙管理委員会の公式のページへのリンクで紹介します。</li>
