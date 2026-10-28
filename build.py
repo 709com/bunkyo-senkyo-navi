@@ -817,7 +817,7 @@ def page_teisei():
 <li>ご連絡先をいただいた場合は、対応の結果をお返事します。</li>
 </ul></div></section>
 <section><h2>いただいた情報の扱い</h2><p>お名前やご連絡先は、このご依頼への対応のためだけに使い、ほかの目的には使いません。ご依頼の内容を、ご本人の同意なく公開することはありません。</p></section>
-<section><h2>運営者</h2><p>たかはま なおき（文京区議会議員・2027年文京区議選の立候補予定者）<br>連絡先：<a href="{E(FORM_URL)}" rel="noopener" target="_blank">受付フォーム</a></p></section>"""
+<section><h2>運営者</h2><p>たかはま なおき（文京区議会議員）<br>連絡先：<a href="{E(FORM_URL)}" rel="noopener" target="_blank">受付フォーム</a></p></section>"""
     write("/teisei/", layout("/teisei/", "訂正・削除・苦情の受付", "文京区議選ナビ2027の掲載内容について、訂正・削除のご依頼や苦情を受け付けます。ご本人と確認できた削除のご依頼には原則すぐに応じます。",
                              body, crumbs=[(None, "訂正・削除・苦情の受付")]))
 
