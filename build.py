@@ -172,7 +172,7 @@ def layout(path, title, desc, body, crumbs=None, jsonld=None, active=None):
 <main class="w">{cr}{body}</main>
 <footer class="site"><div class="w">
 <p><a class="btn" href="/teisei/">掲載内容の訂正・削除・苦情はこちら</a></p>
-<p>運営：たかはま なおき（文京区議会議員・2027年文京区議選の立候補予定者）／連絡先：{CONTACT}<br>
+<p>運営：たかはま なおき（文京区議会議員）／連絡先：{CONTACT}<br>
 このサイトは文京区・文京区議会・文京区選挙管理委員会の公式サイトではありません。運営者が公開情報から集めた範囲で、運営者の責任において掲載しています。<br>
 最終更新 {E(UPDATED)}</p></div></footer>
 {SHUFFLE_JS}
