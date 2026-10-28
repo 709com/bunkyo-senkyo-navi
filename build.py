@@ -2,7 +2,7 @@
 使い方: python3 build.py
 データの更新は data/ を直し、このスクリプトで作り直す（ページを直接書き換えない）。
 """
-import json, html, pathlib, shutil, unicodedata
+import json, html, pathlib, unicodedata
 from collections import defaultdict
 
 ROOT = pathlib.Path(__file__).parent
@@ -170,6 +170,7 @@ def write(path, content):
     p = OUT / "index.html" if path == "/" else OUT / path.strip("/") / "index.html"
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(content, encoding="utf-8")
+    WRITTEN.add(p.resolve())
 
 
 def fv(v):
@@ -738,22 +739,29 @@ def page_about():
                             body, crumbs=[(None, "このサイトについて")], active="/about/"))
 
 
-if OUT.exists():
-    shutil.rmtree(OUT)
-OUT.mkdir(parents=True)
+# マスタールール：ファイルを削除しない。public/ は消さずに上書きで作り直し、
+# 今回作らなかった古いファイルは最後に一覧で知らせる（削除は先生が行う）
+OUT.mkdir(parents=True, exist_ok=True)
+WRITTEN = set()
+
+
+def _out(name):
+    p = OUT / name
+    WRITTEN.add(p.resolve())
+    return p
 page_index(); page_kouho(); page_kucho(); page_touhyou(); page_teisei(); page_about()
 n_pages = len(PAGES)
-(OUT / "404.html").write_text(layout("/404", "ページが見つかりません", "お探しのページは見つかりませんでした。", '<div class="hero"><h1>ページが見つかりません</h1><p><a href="/">トップにもどる</a></p></div>'), encoding="utf-8")
+_out("404.html").write_text(layout("/404", "ページが見つかりません", "お探しのページは見つかりませんでした。", '<div class="hero"><h1>ページが見つかりません</h1><p><a href="/">トップにもどる</a></p></div>'), encoding="utf-8")
 PAGES.remove("/404")
 sm = "".join(f"<url><loc>{SITE_URL}{p}</loc><lastmod>{UPDATED}</lastmod></url>" for p in PAGES)
-(OUT / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{sm}</urlset>', encoding="utf-8")
+_out("sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{sm}</urlset>', encoding="utf-8")
 # robots.txt で拒否すると noindex の指示が読まれないため、巡回は許可したまま noindex で止める
-(OUT / "robots.txt").write_text("User-agent: *\nAllow: /\n" + ("" if NOINDEX else f"Sitemap: {SITE_URL}/sitemap.xml\n"), encoding="utf-8")
+_out("robots.txt").write_text("User-agent: *\nAllow: /\n" + ("" if NOINDEX else f"Sitemap: {SITE_URL}/sitemap.xml\n"), encoding="utf-8")
 if NOINDEX:
     # Cloudflare Pages の設定ファイル。pages.dev 側も含め、全ファイルに「検索に載せない」を付ける
-    (OUT / "_headers").write_text("/*\n  X-Robots-Tag: noindex, nofollow\n", encoding="utf-8")
+    _out("_headers").write_text("/*\n  X-Robots-Tag: noindex, nofollow\n", encoding="utf-8")
 # 旧「過去の結果」ページ（/kekka/）は区議選ページの下に統合した。古いリンクはそこへ転送する
-(OUT / "_redirects").write_text("/kekka /kouho/#kekka 301\n/kekka/ /kouho/#kekka 301\n", encoding="utf-8")
+_out("_redirects").write_text("/kekka /kouho/#kekka 301\n/kekka/ /kouho/#kekka 301\n", encoding="utf-8")
 # 内部用：確認日が STALE_DAYS 日を過ぎたもの（画面には出さない）
 import datetime as _dt
 _today = _dt.date.today()
@@ -777,4 +785,9 @@ if _old:
     print(f"確認日が{STALE_DAYS}日以上前のもの {len(_old)}件（見直してください）:")
     for o in _old:
         print("  ", o)
+_stale = sorted(str(f.relative_to(OUT)) for f in OUT.rglob("*") if f.is_file() and f.resolve() not in WRITTEN)
+if _stale:
+    print(f"今回は作らなかった古いファイルが public に {len(_stale)} 件あります（公開されたままになるので、先生に削除をお願いする）:")
+    for f in _stale:
+        print("  ", f)
 print("built", len(PAGES), "pages")
