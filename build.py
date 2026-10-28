@@ -466,7 +466,7 @@ def video_html(c):
     li = "".join(f'<li><span>{jd(i["date"])}</span>　<span class="muted">{E(i["meeting"])} {E(i["kind"])}</span>　<a href="{E(i["url"])}" rel="noopener" target="_blank" style="white-space:nowrap">動画を見る</a></li>' for i in v["items"])
     return f"""<section><h2>議会での一般質問（この任期・動画）</h2>
 <ul class="news">{li}</ul>
-<p class="note"><a href="{E(v["speaker_url"])}" rel="noopener" target="_blank">区議会の中継サイトで、この議員の一般質問の一覧を見る</a>（文京区議会インターネット議会中継。{E(VIDEOS["fetched"])}確認）。一般質問は各議員年1回ですが、議長・副議長を務めた期間によって回数が変わります。動画は正式な記録ではなく、正式な記録は<a href="https://www.city.bunkyo.tokyo.dbsr.jp/" rel="noopener" target="_blank">会議録</a>です。</p></section>"""
+<p class="note"><a href="{E(v["speaker_url"])}" rel="noopener" target="_blank">区議会の中継サイトで、この議員の一般質問の一覧を見る</a>（文京区議会インターネット議会中継。{E(VIDEOS["fetched"])}確認）。一般質問は各議員年1回ですが、議長・副議長や会派内の割り当てによって回数・時期が変わります。動画は正式な記録ではなく、正式な記録は<a href="https://www.city.bunkyo.tokyo.dbsr.jp/" rel="noopener" target="_blank">会議録</a>です。</p></section>"""
 
 
 def page_candidate(c):
