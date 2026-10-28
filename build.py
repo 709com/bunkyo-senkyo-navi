@@ -90,7 +90,7 @@ section{padding:28px 0 6px}
 tr.cut td{background:var(--ac2);color:var(--ac);font-weight:700;text-align:center;font-size:13px}
 tr.lose td{color:var(--mu)}
 .bar{display:block;height:6px;border-radius:3px;background:var(--ac);margin-top:4px;margin-left:auto}tr.lose .bar{background:var(--gr)}
-.news{list-style:none;padding:0}.news li{padding:8px 0;border-bottom:1px solid var(--ln)}.news time{color:var(--mu);font-size:13px;margin-right:12px}
+.news{list-style:none;padding:0}.news li{padding:8px 0;border-bottom:1px solid var(--ln)}.news time{color:var(--mu);font-size:13px;margin-right:12px}.news details.more{margin-top:4px}.news details.more summary{font-size:13px;color:var(--ac);cursor:pointer}.news details.more ul{margin:4px 0 0;padding-left:1.2em}.news details.more li{border:0;padding:3px 0;font-size:14px}
 .box{background:var(--cd);border:1px solid var(--ln);border-radius:12px;padding:16px 18px;font-size:15px}.box ol,.box ul{padding-left:20px;margin:6px 0}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;list-style:none;padding:0;margin:10px 0}
 .cards li{background:var(--cd);border:1px solid var(--ln);border-radius:12px;padding:14px 16px}.cards a.t{display:block;font-weight:700;font-size:17px;text-decoration:none;margin-bottom:4px}
@@ -272,7 +272,16 @@ def page_index():
         # 「出典」の列はやめ、公認情報の文そのものを出典へのリンクにする（2026-10-28 先生の指示）
         nt = f'<a href="{E(p["source"])}" rel="noopener" target="_blank">{E(p["note"])}</a>' if p["source"] else E(p["note"])
         prow.append(f"<tr><th scope=row>{E(p['party'])}</th><td class='n'>{E(p['count'])}</td><td>{nt}</td></tr>")
-    news = "".join(f"<li><time>{E(n['date'])}</time>{E(n['text'])}</li>" for n in cand_data["news"])
+    # 更新情報は1日1行まで。同じ日の2件目からは「続きを見る」の中に入れる（2026-10-28 先生の指示）
+    _days = {}
+    for n in cand_data["news"]:
+        _days.setdefault(n["date"], []).append(n["text"])
+    news = ""
+    for day, items in _days.items():
+        more = ""
+        if len(items) > 1:
+            more = '<details class="more"><summary>続きを見る（ほか' + str(len(items) - 1) + '件）</summary><ul>' + "".join(f"<li>{E(t)}</li>" for t in items[1:]) + "</ul></details>"
+        news += f"<li><time>{E(day)}</time>{E(items[0])}{more}</li>"
     links = "".join(f'<li><a href="{E(l["url"])}" rel="noopener" target="_blank">{E(l["label"])}</a></li>' for l in cand_data["links"])
     el = cand_data["election"]
     body = f"""
