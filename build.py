@@ -368,11 +368,11 @@ def unconfirmed_html():
     ms = UNC["members"]
     if not ms:
         return ""
-    chips = "".join(f'<li><span>{E(m["name"])}<span class="muted">（当選{m["terms"]}回）</span></span></li>' for m in ms)
+    chips = "".join(f'<li><span>{E(m["name"])}</span></li>' for m in ms)
     return f"""<section><h2>立候補の意向をまだ確認できていない現職議員（{len(ms)}人）</h2>
 {say("次の選挙に出るか、まだわからない現職だよ。立候補予定者ではないよ。")}
 <ul class="chips shuffle unc">{chips}</ul>
-<p class="src">出典：{src_link(UNC)}　当選回数：{src_link(TERMS)}</p></section>"""
+<p class="src">出典：{src_link(UNC)}</p></section>"""
 
 
 def open_card():
