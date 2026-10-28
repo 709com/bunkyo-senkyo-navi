@@ -279,7 +279,7 @@ def page_index():
 <p class="lead">政党の公認発表など、公開されている情報だけで作った一覧です。すべてに出典と確認日を付けています。</p>
 <div class="facts"><div>投票日 <b>{E(el['date_note'])}</b></div><div>定数 <b>{el['seats']}</b></div><div>掲載中の予定者 <b>{len(cands)}人</b></div></div></div>
 <section><h2>挑戦者（現職ではない立候補予定者・{len(challengers)}人）</h2>
-{say("挑戦者（いまは議員ではない人）は、現職より知られる機会が少ないよね。だから、本人の公表や政党の発表から、経歴や本人の言葉を紹介しているよ。基準は全員同じで、並び順は開くたびに入れ替わるよ。名前は敬称略だよ。")}
+{say("挑戦者は知られる機会が少ないから、経歴や本人の言葉を厚めに紹介しているよ。")}
 <ul class="grid shuffle">{''.join(challenger_card(c) for c in challengers)}{open_card()}</ul></section>
 <ul class="cards">
 <li><a class="t" href="/kouho/">区議選2027</a>立候補予定者{len(cands)}人の一覧（出典と確認日つき）、報道、過去{NE}回の結果とグラフ。</li>
@@ -357,7 +357,7 @@ def unconfirmed_html():
         return ""
     chips = "".join(f'<li><span>{E(m["name"])}<span class="muted">（当選{m["terms"]}回）</span></span></li>' for m in ms)
     return f"""<section><h2>立候補の意向をまだ確認できていない現職議員（{len(ms)}人）</h2>
-{say("ここに並んでいるのは、いまの区議会議員で、次の選挙に出るかどうかが、まだわからない人たちだよ。立候補予定者ではないから注意してね。出るとわかったら上の一覧に移すし、引退を表明したらこの欄から外すよ。名前は敬称略で、並び順は開くたびに入れ替わるよ。")}
+{say("次の選挙に出るか、まだわからない現職だよ。立候補予定者ではないよ。")}
 <ul class="chips shuffle unc">{chips}</ul>
 <p class="src">出典：{src_link(UNC)}　当選回数：{src_link(TERMS)}</p></section>"""
 
@@ -391,7 +391,7 @@ def page_kouho():
     body = f"""<div class="hero"><h1>文京区議会議員選挙2027 立候補予定者一覧</h1>
 <p class="lead">{len(cands)}人（挑戦者{len(challengers)}人・現職{len(incumbents)}人）。敬称略。並び順は開くたびに入れ替わります。本人の公表や政党の発表があり次第、追加します。</p></div>
 <section><h2>挑戦者（{len(challengers)}人）</h2>
-{say("挑戦者（いまは議員ではない人）は、現職より知られる機会が少ないよね。だから、本人の公表や政党の発表から、経歴や本人の言葉を厚めに紹介しているよ。基準は全員同じだよ。")}
+{say("挑戦者は知られる機会が少ないから、経歴や本人の言葉を厚めに紹介しているよ。")}
 <ul class="grid shuffle">{''.join(challenger_card(c) for c in challengers)}{open_card()}</ul></section>
 <section><h2>現職（{len(incumbents)}人）</h2>
 <p class="note">氏名は、選挙で使われている表記（選挙ドットコムや政党の発表などの表記）を優先しています。当選回数は{src_link(TERMS)}によります。</p>
@@ -552,7 +552,7 @@ def kekka_html():
     ylinks = "".join(f'<li><a href="/kekka/{e["year"]}/">{E(e["label"])}の全候補の得票</a></li>' for e in reversed(elections))
     srcs = "、".join(f'<a href="{E(e["source"])}" rel="noopener" target="_blank">{e["year"]}年</a>' for e in NEWEST_FIRST)
     first, last = elections[0], elections[-1]
-    body = f"""{say(f"区の選挙管理委員会が発表した、{Y0}年から{Y1}年までの{NE}回の結果をまとめたよ。次の選挙の予想じゃなくて、本当にあった数字だよ。表と棒グラフは、新しい選挙が上に来るように並べたよ。")}
+    body = f"""{say(f"区の選管が発表した、{Y0}〜{Y1}年の{NE}回分の本当の結果だよ。新しい選挙が上だよ。")}
 <section><h2>{NE}回の比較</h2><div class="tbl"><table><thead><tr><th>選挙</th><th class="n">候補者</th><th class="n">定数</th><th class="n">倍率</th><th class="n">投票率</th><th class="n">有権者数</th><th class="n">最下位当選の得票</th><th class="n">次点の得票</th><th class="n">差</th></tr></thead><tbody>{overview}</tbody></table></div>
 <p class="note">倍率＝候補者数÷定数。得票数は公式の数字で、按分票による小数点以下を含みます（「差」は小数点以下を四捨五入）。2003年の有権者数は、2007年の結果ページの「前回」欄の数字です。</p></section>
 <section><h2>投票率の推移</h2><div class="chart">{turnout_svg}<p class="note">縦軸は40〜60%です。左が古い選挙、右が新しい選挙です。</p></div></section>
@@ -757,7 +757,7 @@ def page_kucho():
 <p class="lead">区議選と同じ基準で、公開されている情報だけをまとめています。すべてに出典と確認日を付けています。</p>
 <div class="facts"><div>投票日 <b>{E(el['date_note'])}</b></div><div>区長の任期満了 <b>2027年4月26日</b></div><div>立候補予定者 <b>{len(kc_cands)}人</b></div></div></div>
 <section><h2>立候補予定者（{len(kc_cands)}人・敬称略）</h2>
-{say("ここは、本人の公表や会見の報道などで、区長選に出る意向が確かめられた人だよ。全員同じ基準で紹介していて、並び順は開くたびに入れ替わるよ。")}
+{say("区長選に出る意向が確かめられた人を、同じ基準で紹介しているよ。")}
 <ul class="grid shuffle">{cards}</ul></section>
 <section><h2>現在の区長</h2><div class="box"><p><b>{E(m['name'])}</b>（{E(m['kana'])}）<br>{E(m['note'])}</p>
 <p>{E(m['intention'])}</p><ul class="prof">{msrc}</ul><a class="fix" href="{E(teisei_href(m['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></div>
@@ -798,7 +798,7 @@ FAQ = [
     ("このサイトは、誰が作っているのですか？",
      "たかはま なおきが、文京区の選挙の投票率向上を目指し、個人で運営しています。私自身も、2027年の文京区議選の立候補予定者です。文京区や公的機関の公式サイトではありません。"),
     ("立候補予定者が運営していて、中立なのですか？",
-     "載せる中身は、できる限り公平にしています。全員を同じ基準・同じ形式で載せ、運営者本人も特別扱いしていません。並び順は開くたびに入れ替わります。評価や得票の予想、投票のお願いは載せません。すべての情報に出典と確認日を付けています。"),
+     "全員を同じ基準・同じ形式で載せ、運営者本人も特別扱いしていません。並び順は開くたびに入れ替わります。評価や得票の予想、投票のお願いは載せません。ただし、このサイトが広まると、運営者である私の名前も知られるという課題があることは承知しています。"),
     ("どうやって、載せる人を決めているのですか？",
      "本人の公表、政党の発表、本人の会見や表明を伝えた報道、選挙ドットコムの「予想される顔ぶれ」のどれかで確認できた方を載せています。本人の表明をまだ確認できていない方には、その旨を書き添えています。"),
     ("ここに載っていない人は、立候補しないのですか？",
