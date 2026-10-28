@@ -1,0 +1,510 @@
+{
+ "source": "https://www.city.bunkyo.lg.jp/documents/10880/r5kiroku.pdf",
+ "source_label": "文京区選挙管理委員会「令和5年執行 文京区議会議員選挙及び文京区長選挙の記録」",
+ "election": "2023年 文京区議会議員選挙",
+ "total": {
+  "electorate": 178703,
+  "voters": 93212,
+  "turnout": 52.16
+ },
+ "age": [
+  {
+   "age": "18～19",
+   "electorate": 3080,
+   "voters": 1389,
+   "turnout": 45.1
+  },
+  {
+   "age": "20～24",
+   "electorate": 10026,
+   "voters": 3373,
+   "turnout": 33.64
+  },
+  {
+   "age": "25～29",
+   "electorate": 13854,
+   "voters": 4825,
+   "turnout": 34.83
+  },
+  {
+   "age": "30～34",
+   "electorate": 14624,
+   "voters": 6173,
+   "turnout": 42.21
+  },
+  {
+   "age": "35～39",
+   "electorate": 16124,
+   "voters": 7794,
+   "turnout": 48.34
+  },
+  {
+   "age": "40～44",
+   "electorate": 17186,
+   "voters": 8907,
+   "turnout": 51.83
+  },
+  {
+   "age": "45～49",
+   "electorate": 18128,
+   "voters": 9709,
+   "turnout": 53.56
+  },
+  {
+   "age": "50～54",
+   "electorate": 17157,
+   "voters": 9708,
+   "turnout": 56.58
+  },
+  {
+   "age": "55～59",
+   "electorate": 14358,
+   "voters": 8509,
+   "turnout": 59.26
+  },
+  {
+   "age": "60～64",
+   "electorate": 11249,
+   "voters": 6959,
+   "turnout": 61.86
+  },
+  {
+   "age": "65～69",
+   "electorate": 9131,
+   "voters": 6004,
+   "turnout": 65.75
+  },
+  {
+   "age": "70～74",
+   "electorate": 10043,
+   "voters": 6661,
+   "turnout": 66.32
+  },
+  {
+   "age": "75～79",
+   "electorate": 8638,
+   "voters": 5742,
+   "turnout": 66.47
+  },
+  {
+   "age": "80以上",
+   "electorate": 15105,
+   "voters": 7459,
+   "turnout": 49.38
+  }
+ ],
+ "town": [
+  {
+   "town": "後楽1丁目",
+   "electorate": 413,
+   "voters": 157,
+   "turnout": 38.01
+  },
+  {
+   "town": "後楽2丁目",
+   "electorate": 1168,
+   "voters": 539,
+   "turnout": 46.15
+  },
+  {
+   "town": "春日1丁目",
+   "electorate": 1220,
+   "voters": 604,
+   "turnout": 49.51
+  },
+  {
+   "town": "春日2丁目",
+   "electorate": 3230,
+   "voters": 1756,
+   "turnout": 54.37
+  },
+  {
+   "town": "小石川1丁目",
+   "electorate": 3848,
+   "voters": 1994,
+   "turnout": 51.82
+  },
+  {
+   "town": "小石川2丁目",
+   "electorate": 3271,
+   "voters": 1786,
+   "turnout": 54.6
+  },
+  {
+   "town": "小石川3丁目",
+   "electorate": 4322,
+   "voters": 2365,
+   "turnout": 54.72
+  },
+  {
+   "town": "小石川4丁目",
+   "electorate": 3066,
+   "voters": 1732,
+   "turnout": 56.49
+  },
+  {
+   "town": "小石川5丁目",
+   "electorate": 4510,
+   "voters": 2386,
+   "turnout": 52.9
+  },
+  {
+   "town": "白山1丁目",
+   "electorate": 4049,
+   "voters": 2044,
+   "turnout": 50.48
+  },
+  {
+   "town": "白山2丁目",
+   "electorate": 3471,
+   "voters": 1825,
+   "turnout": 52.58
+  },
+  {
+   "town": "白山3丁目",
+   "electorate": 778,
+   "voters": 431,
+   "turnout": 55.4
+  },
+  {
+   "town": "白山4丁目",
+   "electorate": 3574,
+   "voters": 1845,
+   "turnout": 51.62
+  },
+  {
+   "town": "白山5丁目",
+   "electorate": 2977,
+   "voters": 1414,
+   "turnout": 47.5
+  },
+  {
+   "town": "千石1丁目",
+   "electorate": 3229,
+   "voters": 1837,
+   "turnout": 56.89
+  },
+  {
+   "town": "千石2丁目",
+   "electorate": 3723,
+   "voters": 2121,
+   "turnout": 56.97
+  },
+  {
+   "town": "千石3丁目",
+   "electorate": 3746,
+   "voters": 2021,
+   "turnout": 53.95
+  },
+  {
+   "town": "千石4丁目",
+   "electorate": 4588,
+   "voters": 2127,
+   "turnout": 46.36
+  },
+  {
+   "town": "水道1丁目",
+   "electorate": 2133,
+   "voters": 1030,
+   "turnout": 48.29
+  },
+  {
+   "town": "水道2丁目",
+   "electorate": 3045,
+   "voters": 1444,
+   "turnout": 47.42
+  },
+  {
+   "town": "小日向1丁目",
+   "electorate": 1932,
+   "voters": 1076,
+   "turnout": 55.69
+  },
+  {
+   "town": "小日向2丁目",
+   "electorate": 2081,
+   "voters": 1171,
+   "turnout": 56.27
+  },
+  {
+   "town": "小日向3丁目",
+   "electorate": 1109,
+   "voters": 545,
+   "turnout": 49.14
+  },
+  {
+   "town": "小日向4丁目",
+   "electorate": 1515,
+   "voters": 757,
+   "turnout": 49.97
+  },
+  {
+   "town": "大塚1丁目",
+   "electorate": 921,
+   "voters": 461,
+   "turnout": 50.05
+  },
+  {
+   "town": "大塚2丁目",
+   "electorate": 1837,
+   "voters": 875,
+   "turnout": 47.63
+  },
+  {
+   "town": "大塚3丁目",
+   "electorate": 3184,
+   "voters": 1599,
+   "turnout": 50.22
+  },
+  {
+   "town": "大塚4丁目",
+   "electorate": 2592,
+   "voters": 1248,
+   "turnout": 48.15
+  },
+  {
+   "town": "大塚5丁目",
+   "electorate": 3575,
+   "voters": 1866,
+   "turnout": 52.2
+  },
+  {
+   "town": "大塚6丁目",
+   "electorate": 3197,
+   "voters": 1722,
+   "turnout": 53.86
+  },
+  {
+   "town": "関口1丁目",
+   "electorate": 4208,
+   "voters": 2030,
+   "turnout": 48.24
+  },
+  {
+   "town": "関口2丁目",
+   "electorate": 944,
+   "voters": 513,
+   "turnout": 54.34
+  },
+  {
+   "town": "関口3丁目",
+   "electorate": 839,
+   "voters": 437,
+   "turnout": 52.09
+  },
+  {
+   "town": "目白台1丁目",
+   "electorate": 1537,
+   "voters": 757,
+   "turnout": 49.25
+  },
+  {
+   "town": "目白台2丁目",
+   "electorate": 1792,
+   "voters": 958,
+   "turnout": 53.46
+  },
+  {
+   "town": "目白台3丁目",
+   "electorate": 2204,
+   "voters": 1189,
+   "turnout": 53.95
+  },
+  {
+   "town": "音羽1丁目",
+   "electorate": 3450,
+   "voters": 1718,
+   "turnout": 49.8
+  },
+  {
+   "town": "音羽2丁目",
+   "electorate": 1478,
+   "voters": 768,
+   "turnout": 51.96
+  },
+  {
+   "town": "本郷1丁目",
+   "electorate": 3545,
+   "voters": 1779,
+   "turnout": 50.18
+  },
+  {
+   "town": "本郷2丁目",
+   "electorate": 2807,
+   "voters": 1386,
+   "turnout": 49.38
+  },
+  {
+   "town": "本郷3丁目",
+   "electorate": 2699,
+   "voters": 1240,
+   "turnout": 45.94
+  },
+  {
+   "town": "本郷4丁目",
+   "electorate": 3588,
+   "voters": 1950,
+   "turnout": 54.35
+  },
+  {
+   "town": "本郷5丁目",
+   "electorate": 2842,
+   "voters": 1594,
+   "turnout": 56.09
+  },
+  {
+   "town": "本郷6丁目",
+   "electorate": 1536,
+   "voters": 831,
+   "turnout": 54.1
+  },
+  {
+   "town": "本郷7丁目",
+   "electorate": 328,
+   "voters": 91,
+   "turnout": 27.74
+  },
+  {
+   "town": "湯島1丁目",
+   "electorate": 710,
+   "voters": 262,
+   "turnout": 36.9
+  },
+  {
+   "town": "湯島2丁目",
+   "electorate": 2709,
+   "voters": 1235,
+   "turnout": 45.59
+  },
+  {
+   "town": "湯島3丁目",
+   "electorate": 3275,
+   "voters": 1360,
+   "turnout": 41.53
+  },
+  {
+   "town": "湯島4丁目",
+   "electorate": 1806,
+   "voters": 848,
+   "turnout": 46.95
+  },
+  {
+   "town": "西片1丁目",
+   "electorate": 1968,
+   "voters": 1002,
+   "turnout": 50.91
+  },
+  {
+   "town": "西片2丁目",
+   "electorate": 2284,
+   "voters": 1223,
+   "turnout": 53.55
+  },
+  {
+   "town": "向丘1丁目",
+   "electorate": 2596,
+   "voters": 1415,
+   "turnout": 54.51
+  },
+  {
+   "town": "向丘2丁目",
+   "electorate": 2652,
+   "voters": 1404,
+   "turnout": 52.94
+  },
+  {
+   "town": "弥生1丁目",
+   "electorate": 349,
+   "voters": 201,
+   "turnout": 57.59
+  },
+  {
+   "town": "弥生2丁目",
+   "electorate": 1224,
+   "voters": 669,
+   "turnout": 54.66
+  },
+  {
+   "town": "根津1丁目",
+   "electorate": 2192,
+   "voters": 1329,
+   "turnout": 60.63
+  },
+  {
+   "town": "根津2丁目",
+   "electorate": 3134,
+   "voters": 1765,
+   "turnout": 56.32
+  },
+  {
+   "town": "千駄木1丁目",
+   "electorate": 1360,
+   "voters": 784,
+   "turnout": 57.65
+  },
+  {
+   "town": "千駄木2丁目",
+   "electorate": 3718,
+   "voters": 2129,
+   "turnout": 57.26
+  },
+  {
+   "town": "千駄木3丁目",
+   "electorate": 5117,
+   "voters": 2727,
+   "turnout": 53.29
+  },
+  {
+   "town": "千駄木4丁目",
+   "electorate": 2429,
+   "voters": 1269,
+   "turnout": 52.24
+  },
+  {
+   "town": "千駄木5丁目",
+   "electorate": 3816,
+   "voters": 2189,
+   "turnout": 57.36
+  },
+  {
+   "town": "本駒込1丁目",
+   "electorate": 3801,
+   "voters": 2075,
+   "turnout": 54.59
+  },
+  {
+   "town": "本駒込2丁目",
+   "electorate": 3944,
+   "voters": 2097,
+   "turnout": 53.17
+  },
+  {
+   "town": "本駒込3丁目",
+   "electorate": 2751,
+   "voters": 1510,
+   "turnout": 54.89
+  },
+  {
+   "town": "本駒込4丁目",
+   "electorate": 3150,
+   "voters": 1767,
+   "turnout": 56.1
+  },
+  {
+   "town": "本駒込5丁目",
+   "electorate": 4564,
+   "voters": 2391,
+   "turnout": 52.39
+  },
+  {
+   "town": "本駒込6丁目",
+   "electorate": 3053,
+   "voters": 1542,
+   "turnout": 50.51
+  }
+ ],
+ "town_check": {
+  "electorate": 178703,
+  "voters": 93212
+ }
+}

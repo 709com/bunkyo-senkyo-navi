@@ -15,7 +15,9 @@ NOINDEX = True
 KUCHO_PAGES = True  # 2026-10-28 先生OK
 # トップページを「選挙の案内と投票率」中心にした新しい形（2026-10-28 試作。先生のOKが出たら True にする）
 import os
-TOP_V2 = os.environ.get("NAVI_TOP_V2", "1") == "1"  # 2026-10-28 先生OK。旧トップに戻すときは NAVI_TOP_V2=0
+TOP_V2 = os.environ.get("NAVI_TOP_V2", "1") == "1"
+# 選挙コラム（2026-10-28 試作。先生のOKが出るまで公開しない。試作を見るときだけ NAVI_COLUMN=1）
+COLUMN = os.environ.get("NAVI_COLUMN") == "1"  # 2026-10-28 先生OK。旧トップに戻すときは NAVI_TOP_V2=0
 SITE_NAME = "文京区議選ナビ2027"
 # 訂正・削除・苦情の受付（Googleフォーム。先生のアカウントで作成、2026-10-27）
 # 迷惑メール対策のため、メールアドレスはサイトに出さない。
@@ -887,6 +889,45 @@ def page_kucho_candidate(c):
                     body, crumbs=[("/kucho/", "区長選"), (None, c["name"])], active="/kucho/"))
 
 
+# ------------------------------------------------------------ 選挙コラム
+def page_column_age():
+    """コラム：2023年の区議選を年代別に見る。数字は選管の「選挙の記録」から（tools/import_kiroku.py）。
+    投票率と投票のしかただけを扱い、候補者や政党の話はしない。"""
+    k = json.loads((ROOT / "data/kiroku_r5.json").read_text(encoding="utf-8"))
+    ag = k["age"]
+    def grp(names):
+        e = sum(a["electorate"] for a in ag if a["age"] in names)
+        v = sum(a["voters"] for a in ag if a["age"] in names)
+        return e, v, v / e * 100
+    e20, v20, t20 = grp(["20～24", "25～29"])
+    e70, v70, t70 = grp(["70～74", "75～79"])
+    tot = k["total"]
+    more = round(e20 * tot["turnout"] / 100 - v20)
+    top = 75
+    li = "".join(f"""<li><div class="yr">{E(a['age'])}歳</div>
+<div class="tr"><i class="grow{' lo' if a['turnout'] < tot['turnout'] else ''}" style="width:{a['turnout'] / top * 100:.1f}%"></i><b class="sq" style="left:{tot['turnout'] / top * 100:.1f}%"></b></div>
+<div class="cap"><strong>{a['turnout']:.2f}%</strong>　有権者 {a['electorate']:,}人のうち {a['voters']:,}人が投票</div></li>""" for a in ag)
+    body = f"""<div class="hero"><p class="note">選挙コラム｜数字で見る文京区の選挙</p><h1>20代と70代、投票率はほぼ2倍の差</h1>
+<p class="lead">2023年の文京区議会議員選挙を、年代別に見てみます。数字は、文京区選挙管理委員会の「選挙の記録」によります。</p></div>
+<div class="turn"><div class="big"><div><span>20代の投票率</span><b class="no">{t20:.2f}%</b></div><div><span>70代の投票率</span><b>{t70:.2f}%</b></div></div></div>
+<section><h2>年代が上がるほど、投票率が高い</h2>
+<p>2023年の区議選の投票率は、区全体で{tot['turnout']:.2f}%でした。年代別に見ると、20代前半がいちばん低く、そこから70代後半まで、年代が上がるほど高くなっています。80歳以上では、また下がります。</p>
+<div class="chart"><ul class="vb">{li}</ul><div class="lg"><span><i style="background:var(--ac)"></i>区全体より高い</span><span><i style="background:var(--gr)"></i>区全体より低い</span><span><i class="dash" style="border-color:var(--fg)"></i>区全体（{tot['turnout']:.2f}%）</span></div></div></section>
+<section><h2>人数で見ると</h2>
+<p>20代の有権者は{e20:,}人で、70代の{e70:,}人より多くいます。それでも、実際に投票した人は、20代が{v20:,}人、70代が{v70:,}人でした。</p>
+<p>もし20代が区全体と同じ割合で投票していたら、投票する人はあと約{more:,}人増えていた計算になります。</p></section>
+{say("期日前投票なら、投票日より前に、区役所などで投票できるよ。くわしくは投票ガイドを見てね。")}
+<section><h2>数字の出典</h2><div class="box"><ul>
+<li><a href="{E(k['source'])}" rel="noopener" target="_blank">{E(k['source_label'])}</a>（「年齢階層別当日有権者数・投票者数・投票率」の表）。</li>
+<li>20代・70代の投票率は、表の人数（20〜24歳と25〜29歳、70〜74歳と75〜79歳）を足して計算しました。年代ごとの合計は、公表された区全体の人数（有権者{tot['electorate']:,}人、投票者{tot['voters']:,}人）と一致することを確かめています。</li>
+<li>このコラムは、投票率と投票のしかたについて書くものです。特定の候補者や政党の評価はしません。</li></ul></div></section>
+<p><a href="/">← トップにもどる</a></p>"""
+    p = "/column/2023-age/"
+    write(p, layout(p, "20代と70代、投票率はほぼ2倍の差｜2023年文京区議選を年代別に見る",
+                    f"2023年の文京区議会議員選挙の投票率を年代別に。20代{t20:.1f}%、70代{t70:.1f}%。文京区選挙管理委員会「選挙の記録」より。",
+                    body, crumbs=[(None, "選挙コラム")]))
+
+
 # ------------------------------------------------------------ 訂正・削除・苦情の受付
 def page_teisei():
     how = f"""<p><a class="btn" style="font-size:17px;padding:12px 20px" href="{E(FORM_URL)}" rel="noopener" target="_blank">受付フォームを開く</a></p>
@@ -973,6 +1014,8 @@ def _out(name):
     WRITTEN.add(p.resolve())
     return p
 page_index(); page_kouho(); page_kucho(); page_touhyou(); page_teisei(); page_about()
+if COLUMN:
+    page_column_age()
 n_pages = len(PAGES)
 _out("404.html").write_text(layout("/404", "ページが見つかりません", "お探しのページは見つかりませんでした。", '<div class="hero"><h1>ページが見つかりません</h1><p><a href="/">トップにもどる</a></p></div>'), encoding="utf-8")
 PAGES.remove("/404")
