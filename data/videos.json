@@ -1,0 +1,876 @@
+{
+ "fetched": "2026-10-28",
+ "source": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_list",
+ "members": {
+  "浅川のぼる": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=359",
+   "label": "浅川　のぼる",
+   "items": [
+    {
+     "date": "2026-02-16",
+     "meeting": "令和8年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=672"
+    },
+    {
+     "date": "2025-02-14",
+     "meeting": "令和7年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=627"
+    },
+    {
+     "date": "2024-02-15",
+     "meeting": "令和6年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=582"
+    }
+   ]
+  },
+  "浅田保雄": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=322",
+   "label": "浅田　保雄",
+   "items": [
+    {
+     "date": "2026-09-15",
+     "meeting": "令和8年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=692"
+    },
+    {
+     "date": "2025-11-27",
+     "meeting": "令和7年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=658"
+    },
+    {
+     "date": "2025-02-12",
+     "meeting": "令和7年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=621"
+    },
+    {
+     "date": "2023-11-08",
+     "meeting": "令和5年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=567"
+    }
+   ]
+  },
+  "石沢のりゆき": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=297",
+   "label": "石沢　のりゆき",
+   "items": [
+    {
+     "date": "2026-09-15",
+     "meeting": "令和8年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=691"
+    },
+    {
+     "date": "2025-11-27",
+     "meeting": "令和7年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=657"
+    },
+    {
+     "date": "2025-02-13",
+     "meeting": "令和7年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=626"
+    },
+    {
+     "date": "2023-11-10",
+     "meeting": "令和5年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=573"
+    }
+   ]
+  },
+  "板倉美千代": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=324",
+   "label": "板倉　美千代",
+   "items": [
+    {
+     "date": "2026-02-13",
+     "meeting": "令和8年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=671"
+    },
+    {
+     "date": "2024-09-09",
+     "meeting": "令和6年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=599"
+    },
+    {
+     "date": "2023-11-09",
+     "meeting": "令和5年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=571"
+    }
+   ]
+  },
+  "市村やすとし": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=370",
+   "label": "市村　やすとし（議長）",
+   "items": [
+    {
+     "date": "2025-06-09",
+     "meeting": "令和7年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=641"
+    },
+    {
+     "date": "2024-06-10",
+     "meeting": "令和6年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=596"
+    },
+    {
+     "date": "2023-06-12",
+     "meeting": "令和5年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=551"
+    }
+   ]
+  },
+  "上田ゆきこ": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=338",
+   "label": "上田　ゆきこ",
+   "items": [
+    {
+     "date": "2025-09-08",
+     "meeting": "令和7年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=644"
+    },
+    {
+     "date": "2024-11-26",
+     "meeting": "令和6年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=618"
+    },
+    {
+     "date": "2023-06-12",
+     "meeting": "令和5年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=553"
+    }
+   ]
+  },
+  "岡崎義顕": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=326",
+   "label": "岡崎　義顕",
+   "items": [
+    {
+     "date": "2026-06-04",
+     "meeting": "令和8年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=681"
+    },
+    {
+     "date": "2025-06-05",
+     "meeting": "令和7年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=635"
+    },
+    {
+     "date": "2024-06-07",
+     "meeting": "令和6年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=595"
+    },
+    {
+     "date": "2023-06-13",
+     "meeting": "令和5年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=554"
+    }
+   ]
+  },
+  "海津敦子": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=366",
+   "label": "海津　敦子",
+   "items": [
+    {
+     "date": "2026-06-08",
+     "meeting": "令和8年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=688"
+    },
+    {
+     "date": "2025-09-11",
+     "meeting": "令和7年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=649"
+    },
+    {
+     "date": "2024-06-07",
+     "meeting": "令和6年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=594"
+    },
+    {
+     "date": "2023-09-07",
+     "meeting": "令和5年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=560"
+    }
+   ]
+  },
+  "金子てるよし": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=340",
+   "label": "金子　てるよし",
+   "items": [
+    {
+     "date": "2026-06-05",
+     "meeting": "令和8年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=684"
+    },
+    {
+     "date": "2025-06-06",
+     "meeting": "令和7年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=639"
+    },
+    {
+     "date": "2024-06-10",
+     "meeting": "令和6年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=597"
+    },
+    {
+     "date": "2023-06-12",
+     "meeting": "令和5年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=552"
+    }
+   ]
+  },
+  "小林れい子": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=372",
+   "label": "小林　れい子",
+   "items": [
+    {
+     "date": "2026-02-16",
+     "meeting": "令和8年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=673"
+    },
+    {
+     "date": "2024-11-21",
+     "meeting": "令和6年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=612"
+    },
+    {
+     "date": "2024-02-14",
+     "meeting": "令和6年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=580"
+    }
+   ]
+  },
+  "佐藤 豪一": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=375",
+   "label": "豪一",
+   "items": [
+    {
+     "date": "2025-12-01",
+     "meeting": "令和7年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=663"
+    },
+    {
+     "date": "2025-02-13",
+     "meeting": "令和7年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=625"
+    },
+    {
+     "date": "2023-11-09",
+     "meeting": "令和5年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=570"
+    }
+   ]
+  },
+  "沢田けいじ": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=351",
+   "label": "沢田　けいじ",
+   "items": [
+    {
+     "date": "2026-06-05",
+     "meeting": "令和8年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=685"
+    },
+    {
+     "date": "2026-02-12",
+     "meeting": "令和8年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=666"
+    },
+    {
+     "date": "2024-11-21",
+     "meeting": "令和6年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=613"
+    },
+    {
+     "date": "2024-02-15",
+     "meeting": "令和6年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=583"
+    }
+   ]
+  },
+  "品田ひでこ": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=325",
+   "label": "品田　ひでこ",
+   "items": [
+    {
+     "date": "2025-06-06",
+     "meeting": "令和7年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=638"
+    },
+    {
+     "date": "2024-09-09",
+     "meeting": "令和6年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=600"
+    },
+    {
+     "date": "2024-02-14",
+     "meeting": "令和6年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=581"
+    }
+   ]
+  },
+  "白石英行": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=368",
+   "label": "白石　英行",
+   "items": [
+    {
+     "date": "2026-06-04",
+     "meeting": "令和8年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=683"
+    },
+    {
+     "date": "2025-09-08",
+     "meeting": "令和7年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=642"
+    }
+   ]
+  },
+  "関川けさ子": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=307",
+   "label": "関川　けさ子",
+   "items": [
+    {
+     "date": "2025-09-08",
+     "meeting": "令和7年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=643"
+    },
+    {
+     "date": "2025-02-14",
+     "meeting": "令和7年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=628"
+    },
+    {
+     "date": "2023-09-07",
+     "meeting": "令和5年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=559"
+    }
+   ]
+  },
+  "千田恵美子": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=298",
+   "label": "千田　恵美子",
+   "items": [
+    {
+     "date": "2026-06-08",
+     "meeting": "令和8年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=687"
+    },
+    {
+     "date": "2025-09-11",
+     "meeting": "令和7年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=648"
+    },
+    {
+     "date": "2024-06-07",
+     "meeting": "令和6年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=593"
+    },
+    {
+     "date": "2023-09-11",
+     "meeting": "令和5年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=565"
+    }
+   ]
+  },
+  "たかはまなおき": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=352",
+   "label": "たかはま　なおき",
+   "items": [
+    {
+     "date": "2026-09-16",
+     "meeting": "令和8年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=695"
+    },
+    {
+     "date": "2025-11-28",
+     "meeting": "令和7年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=661"
+    },
+    {
+     "date": "2024-09-10",
+     "meeting": "令和6年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=603"
+    },
+    {
+     "date": "2023-06-15",
+     "meeting": "令和5年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=557"
+    }
+   ]
+  },
+  "高山かずひろ": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=299",
+   "label": "高山　かずひろ",
+   "items": [
+    {
+     "date": "2026-02-13",
+     "meeting": "令和8年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=669"
+    },
+    {
+     "date": "2024-09-10",
+     "meeting": "令和6年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=602"
+    },
+    {
+     "date": "2024-02-13",
+     "meeting": "令和6年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=577"
+    }
+   ]
+  },
+  "高山泰三": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=371",
+   "label": "高山　泰三（副議長）",
+   "items": [
+    {
+     "date": "2025-06-05",
+     "meeting": "令和7年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=636"
+    },
+    {
+     "date": "2024-06-06",
+     "meeting": "令和6年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=590"
+    },
+    {
+     "date": "2023-06-13",
+     "meeting": "令和5年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=555"
+    }
+   ]
+  },
+  "田中 かすみ": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=369",
+   "label": "田中　香澄",
+   "items": [
+    {
+     "date": "2026-09-16",
+     "meeting": "令和8年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=693"
+    },
+    {
+     "date": "2025-09-10",
+     "meeting": "令和7年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=645"
+    }
+   ]
+  },
+  "田中としかね": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=328",
+   "label": "田中　としかね",
+   "items": [
+    {
+     "date": "2026-09-17",
+     "meeting": "令和8年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=696"
+    },
+    {
+     "date": "2025-09-10",
+     "meeting": "令和7年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=647"
+    },
+    {
+     "date": "2024-06-06",
+     "meeting": "令和6年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=591"
+    },
+    {
+     "date": "2023-06-15",
+     "meeting": "令和5年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=558"
+    }
+   ]
+  },
+  "名取顕一": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=333",
+   "label": "名取　顕一",
+   "items": [
+    {
+     "date": "2026-02-13",
+     "meeting": "令和8年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=670"
+    },
+    {
+     "date": "2024-11-22",
+     "meeting": "令和6年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=617"
+    },
+    {
+     "date": "2024-02-14",
+     "meeting": "令和6年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=579"
+    }
+   ]
+  },
+  "のぐちけんたろう": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=353",
+   "label": "のぐち　けんたろう",
+   "items": [
+    {
+     "date": "2026-06-08",
+     "meeting": "令和8年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=689"
+    },
+    {
+     "date": "2026-02-16",
+     "meeting": "令和8年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=674"
+    },
+    {
+     "date": "2024-06-06",
+     "meeting": "令和6年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=592"
+    },
+    {
+     "date": "2023-11-10",
+     "meeting": "令和5年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=574"
+    }
+   ]
+  },
+  "ほかり吉紀": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=365",
+   "label": "ほかり　吉紀",
+   "items": [
+    {
+     "date": "2025-09-10",
+     "meeting": "令和7年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=646"
+    },
+    {
+     "date": "2024-11-22",
+     "meeting": "令和6年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=616"
+    },
+    {
+     "date": "2024-02-13",
+     "meeting": "令和6年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=578"
+    }
+   ]
+  },
+  "松平雄一郎": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=354",
+   "label": "松平　雄一郎",
+   "items": [
+    {
+     "date": "2026-09-15",
+     "meeting": "令和8年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=690"
+    },
+    {
+     "date": "2025-09-11",
+     "meeting": "令和7年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=650"
+    },
+    {
+     "date": "2024-09-11",
+     "meeting": "令和6年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=604"
+    },
+    {
+     "date": "2023-09-11",
+     "meeting": "令和5年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=566"
+    }
+   ]
+  },
+  "松丸昌史": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=317",
+   "label": "松丸　昌史",
+   "items": [
+    {
+     "date": "2026-02-12",
+     "meeting": "令和8年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=667"
+    },
+    {
+     "date": "2025-02-12",
+     "meeting": "令和7年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=622"
+    },
+    {
+     "date": "2024-02-13",
+     "meeting": "令和6年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=576"
+    }
+   ]
+  },
+  "宮崎こうき": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=355",
+   "label": "宮崎　こうき",
+   "items": [
+    {
+     "date": "2026-09-16",
+     "meeting": "令和8年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=694"
+    },
+    {
+     "date": "2025-06-05",
+     "meeting": "令和7年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=637"
+    },
+    {
+     "date": "2024-11-22",
+     "meeting": "令和6年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=615"
+    },
+    {
+     "date": "2023-06-13",
+     "meeting": "令和5年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=556"
+    }
+   ]
+  },
+  "宮野ゆみこ": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=356",
+   "label": "宮野　ゆみこ",
+   "items": [
+    {
+     "date": "2026-06-04",
+     "meeting": "令和8年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=682"
+    },
+    {
+     "date": "2025-11-28",
+     "meeting": "令和7年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=662"
+    },
+    {
+     "date": "2024-09-11",
+     "meeting": "令和6年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=605"
+    },
+    {
+     "date": "2023-09-08",
+     "meeting": "令和5年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=563"
+    }
+   ]
+  },
+  "宮本伸一": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=357",
+   "label": "宮本　伸一",
+   "items": [
+    {
+     "date": "2025-11-27",
+     "meeting": "令和7年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=659"
+    },
+    {
+     "date": "2024-11-21",
+     "meeting": "令和6年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=614"
+    },
+    {
+     "date": "2023-09-07",
+     "meeting": "令和5年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=561"
+    }
+   ]
+  },
+  "山田ひろこ": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=349",
+   "label": "山田　ひろこ",
+   "items": [
+    {
+     "date": "2025-06-09",
+     "meeting": "令和7年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=640"
+    },
+    {
+     "date": "2024-09-09",
+     "meeting": "令和6年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=598"
+    },
+    {
+     "date": "2023-09-08",
+     "meeting": "令和5年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=564"
+    }
+   ]
+  },
+  "山本一仁": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=308",
+   "label": "山本　一仁",
+   "items": [
+    {
+     "date": "2026-02-12",
+     "meeting": "令和8年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=668"
+    },
+    {
+     "date": "2025-02-12",
+     "meeting": "令和7年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=623"
+    },
+    {
+     "date": "2023-11-08",
+     "meeting": "令和5年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=568"
+    }
+   ]
+  },
+  "吉村美紀": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=358",
+   "label": "吉村　美紀",
+   "items": [
+    {
+     "date": "2026-06-05",
+     "meeting": "令和8年6月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=686"
+    },
+    {
+     "date": "2025-12-01",
+     "meeting": "令和7年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=664"
+    },
+    {
+     "date": "2024-11-26",
+     "meeting": "令和6年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=619"
+    },
+    {
+     "date": "2023-11-09",
+     "meeting": "令和5年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=572"
+    }
+   ]
+  },
+  "依田翼": {
+   "speaker_url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=speaker_result&speaker_id=373",
+   "label": "依田　翼",
+   "items": [
+    {
+     "date": "2026-09-17",
+     "meeting": "令和8年9月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=697"
+    },
+    {
+     "date": "2025-11-28",
+     "meeting": "令和7年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=660"
+    },
+    {
+     "date": "2025-02-13",
+     "meeting": "令和7年2月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=624"
+    },
+    {
+     "date": "2023-11-08",
+     "meeting": "令和5年11月定例議会",
+     "kind": "本会議 一般質問",
+     "url": "https://bunkyo-city.stream.jfit.co.jp/?tpl=play_vod&inquiry_id=569"
+    }
+   ]
+  }
+ }
+}

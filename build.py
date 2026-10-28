@@ -58,6 +58,9 @@ def chk(date):
 
 cand_data = json.loads((ROOT / "data/candidates.json").read_text(encoding="utf-8"))
 res_data = json.loads((ROOT / "data/results.json").read_text(encoding="utf-8"))
+# 区議会の公式の中継サイトから集めた、現職の一般質問の録画（tools/import_videos.py で作る）
+_vp = ROOT / "data/videos.json"
+VIDEOS = json.loads(_vp.read_text(encoding="utf-8")) if _vp.exists() else {"members": {}}
 UPDATED = cand_data["updated"]
 E = lambda s: html.escape(str(s), quote=True)
 
@@ -451,6 +454,21 @@ def last_election_html(c):
 <p class="note">文京区選挙管理委員会が公表した結果です。全員の氏名は<a href="/kekka/{e['year']}/">{e['year']}年の結果のページ</a>にあります。投票率の推移などは<a href="/kouho/#kekka">過去の結果</a>にまとめています。</p></section>'''
 
 
+def video_html(c):
+    """現職の、この任期の一般質問の動画（区議会の公式中継へのリンク）。現職全員に同じ形で出す。
+    日付・会議名・リンクだけを載せ、質問の題名や中身の要約・評価は載せない。"""
+    v = VIDEOS["members"].get(c["name"].replace(" ", "")) or VIDEOS["members"].get(c["name"])
+    if c["status"] != "現" or not v:
+        return ""
+    def jd(d):
+        y, m, dd = d.split("-")
+        return f"{int(y)}年{int(m)}月{int(dd)}日"
+    li = "".join(f'<li><span>{jd(i["date"])}</span>　<span class="muted">{E(i["meeting"])} {E(i["kind"])}</span>　<a href="{E(i["url"])}" rel="noopener" target="_blank" style="white-space:nowrap">動画を見る</a></li>' for i in v["items"])
+    return f"""<section><h2>議会での一般質問（この任期・動画）</h2>
+<ul class="news">{li}</ul>
+<p class="note"><a href="{E(v["speaker_url"])}" rel="noopener" target="_blank">区議会の中継サイトで、この議員の一般質問の一覧を見る</a>（文京区議会インターネット議会中継。{E(VIDEOS["fetched"])}確認）。一般質問は各議員年1回ですが、議長・副議長を務めた期間によって回数が変わります。動画は正式な記録ではなく、正式な記録は<a href="https://www.city.bunkyo.tokyo.dbsr.jp/" rel="noopener" target="_blank">会議録</a>です。</p></section>"""
+
+
 def page_candidate(c):
     lk = cand_links(c)
     rows = []
@@ -495,6 +513,7 @@ def page_candidate(c):
 {extra}{('<dt>インタビュー</dt><dd>' + interview_html(c) + '</dd>') if c.get('interview') else ''}
 <dt>掲載の根拠</dt><dd>{src_link(c)}</dd></dl>
 <p class="note">立候補を正式に表明しているか、党の公認が出ているかは「掲載の根拠」のとおりです。{'点線の枠は推薦などの参考情報で、政党の所属ではありません。' if c.get('endorse') else ''}{who}</p><a class="fix" href="{E(teisei_href(c['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></section>
+{video_html(c)}
 {last_election_html(c)}
 <section><h2>過去の文京区議選の結果（公式・新しい順）</h2>{hist}</section>
 <p><a href="/kouho/">← 立候補予定者の一覧にもどる</a></p>"""
