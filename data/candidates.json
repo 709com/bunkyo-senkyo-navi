@@ -21,7 +21,8 @@
       "slug": "asakawa-noboru",
       "result_names": [
         "浅川 のぼる"
-      ]
+      ],
+      "terms": 2
     },
     {
       "name": "市村 やすとし",
@@ -36,7 +37,8 @@
       "slug": "ichimura-yasutoshi",
       "result_names": [
         "市村 やすとし"
-      ]
+      ],
+      "terms": 3
     },
     {
       "name": "依田 翼",
@@ -51,7 +53,8 @@
       "slug": "yoda-tsubasa",
       "result_names": [
         "依田 翼"
-      ]
+      ],
+      "terms": 1
     },
     {
       "name": "佐藤 豪一",
@@ -67,7 +70,8 @@
       "result_names": [
         "佐藤 豪一",
         "佐藤 ごういち"
-      ]
+      ],
+      "terms": 3
     },
     {
       "name": "沢田 けいじ",
@@ -82,7 +86,8 @@
       "slug": "sawada-keiji",
       "result_names": [
         "沢田 けいじ"
-      ]
+      ],
+      "terms": 2
     },
     {
       "name": "品田 ひでこ",
@@ -97,7 +102,8 @@
       "slug": "shinada-hideko",
       "result_names": [
         "品田 ひでこ"
-      ]
+      ],
+      "terms": 9
     },
     {
       "name": "高山 かずひろ",
@@ -112,7 +118,8 @@
       "slug": "takayama-kazuhiro",
       "result_names": [
         "高山 かずひろ"
-      ]
+      ],
+      "terms": 1
     },
     {
       "name": "高山 泰三",
@@ -127,13 +134,14 @@
       "slug": "takayama-taizo",
       "result_names": [
         "高山 たいぞう"
-      ]
+      ],
+      "terms": 6
     },
     {
       "name": "たかはま なおき",
       "kana": "たかはま なおき",
       "status": "現",
-      "party": "無所属（自由を守る会 推薦）",
+      "party": "無所属",
       "basis": "党推薦",
       "source": "https://freedom-ea.com/news/%e5%9c%b0%e5%9f%9f%e6%94%bf%e5%85%9a%e8%87%aa%e7%94%b1%e3%82%92%e5%ae%88%e3%82%8b%e4%bc%9a%e4%b8%80%e6%ac%a1%e6%8e%a8%e8%96%a6%e6%b1%ba%e5%ae%9a",
       "source_label": "地域政党自由を守る会「一次推薦決定」（2026-04-10。推薦名：たかはま直樹）",
@@ -143,7 +151,9 @@
       "slug": "takahama-naoki",
       "result_names": [
         "たかはま なおき"
-      ]
+      ],
+      "terms": 2,
+      "endorse": "地域政党自由を守る会 推薦"
     },
     {
       "name": "田中 としかね",
@@ -158,7 +168,8 @@
       "slug": "tanaka-toshikane",
       "result_names": [
         "田中 としかね"
-      ]
+      ],
+      "terms": 5
     },
     {
       "name": "名取 顕一",
@@ -173,7 +184,8 @@
       "slug": "natori-kenichi",
       "result_names": [
         "名取 けんいち"
-      ]
+      ],
+      "terms": 6
     },
     {
       "name": "のぐち けんたろう",
@@ -188,7 +200,8 @@
       "slug": "noguchi-kentaro",
       "result_names": [
         "のぐち けんたろう"
-      ]
+      ],
+      "terms": 2
     },
     {
       "name": "ほかり 吉紀",
@@ -203,7 +216,8 @@
       "slug": "hokari-yoshinori",
       "result_names": [
         "ほかり 吉紀"
-      ]
+      ],
+      "terms": 1
     },
     {
       "name": "松平 雄一郎",
@@ -218,7 +232,8 @@
       "slug": "matsudaira-yuichiro",
       "result_names": [
         "松平 雄一郎"
-      ]
+      ],
+      "terms": 2
     },
     {
       "name": "宮崎 こうき",
@@ -233,7 +248,8 @@
       "slug": "miyazaki-koki",
       "result_names": [
         "宮崎 こうき"
-      ]
+      ],
+      "terms": 2
     },
     {
       "name": "山田 ひろこ",
@@ -248,7 +264,8 @@
       "slug": "yamada-hiroko",
       "result_names": [
         "山田 ひろこ"
-      ]
+      ],
+      "terms": 3
     },
     {
       "name": "吉村 美紀",
@@ -264,7 +281,8 @@
       "result_names": [
         "吉村 美紀",
         "よしむら 美紀"
-      ]
+      ],
+      "terms": 2
     },
     {
       "name": "川畑 あやこ",
@@ -341,7 +359,8 @@
         "宮本 伸一"
       ],
       "checked": "2026-10-26",
-      "links": {}
+      "links": {},
+      "terms": 2
     },
     {
       "name": "田中 かすみ",
@@ -356,7 +375,8 @@
         "田中 かすみ"
       ],
       "checked": "2026-10-26",
-      "links": {}
+      "links": {},
+      "terms": 4
     },
     {
       "name": "本田 かおり",
@@ -538,60 +558,79 @@
     "members": [
       {
         "name": "宮野 ゆみこ",
-        "kana": "みやの ゆみこ"
+        "kana": "みやの ゆみこ",
+        "terms": 2
       },
       {
         "name": "石沢 のりゆき",
-        "kana": "いしざわ のりゆき"
+        "kana": "いしざわ のりゆき",
+        "terms": 1
       },
       {
         "name": "千田 恵美子",
-        "kana": "せんだ えみこ"
+        "kana": "せんだ えみこ",
+        "terms": 1
       },
       {
         "name": "小林 れい子",
-        "kana": "こばやし れいこ"
+        "kana": "こばやし れいこ",
+        "terms": 2
       },
       {
         "name": "金子 てるよし",
-        "kana": "かねこ てるよし"
+        "kana": "かねこ てるよし",
+        "terms": 4
       },
       {
         "name": "白石 英行",
-        "kana": "しらいし ひでゆき"
+        "kana": "しらいし ひでゆき",
+        "terms": 7
       },
       {
         "name": "松丸 昌史",
-        "kana": "まつまる まさし"
+        "kana": "まつまる まさし",
+        "terms": 6
       },
       {
         "name": "岡崎 義顕",
-        "kana": "おかざき よしあき"
+        "kana": "おかざき よしあき",
+        "terms": 7
       },
       {
         "name": "上田 ゆきこ",
-        "kana": "うえだ ゆきこ"
+        "kana": "うえだ ゆきこ",
+        "terms": 5
       },
       {
         "name": "浅田 保雄",
-        "kana": "あさだ やすお"
+        "kana": "あさだ やすお",
+        "terms": 5
       },
       {
         "name": "海津 敦子",
-        "kana": "かいづ あつこ"
+        "kana": "かいづ あつこ",
+        "terms": 4
       },
       {
         "name": "山本 一仁",
-        "kana": "やまもと かずひと"
+        "kana": "やまもと かずひと",
+        "terms": 7
       },
       {
         "name": "板倉 美千代",
-        "kana": "いたくら みちよ"
+        "kana": "いたくら みちよ",
+        "terms": 8
       },
       {
         "name": "関川 けさ子",
-        "kana": "せきかわ けさこ"
+        "kana": "せきかわ けさこ",
+        "terms": 8
       }
     ]
+  },
+  "terms_source": {
+    "source": "https://www.city.bunkyo.lg.jp/kugikai/p007041.html",
+    "source_label": "文京区議会「議員名簿（議席番号順）」の当選回数（2026-04-30更新）",
+    "checked": "2026-10-28"
   }
 }

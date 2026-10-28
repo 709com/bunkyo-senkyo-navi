@@ -1,6 +1,762 @@
 {
- "fetched": "2026-10-26",
+ "fetched": "2026-10-26（2003・2007年は2026-10-28）",
  "elections": [
+  {
+   "label": "平成15年（2003年）",
+   "date": "2003年4月27日",
+   "seats": 34,
+   "turnout": 47.57,
+   "electorate": 146176,
+   "voters": 69540,
+   "invalid": null,
+   "shortage": null,
+   "total": null,
+   "source": "https://www.city.bunkyo.lg.jp/b045/p006459.html",
+   "year": 2003,
+   "candidates": 45,
+   "elected_n": 34,
+   "sum_votes": 67555.997,
+   "rows": [
+    {
+     "rank": 1,
+     "name": "高山たいぞう",
+     "party": "自由党",
+     "votes": 2761.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 2,
+     "name": "白石英行",
+     "party": "無所属",
+     "votes": 2210.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 3,
+     "name": "若井のりかず",
+     "party": "公明党",
+     "votes": 2208.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 4,
+     "name": "岡崎よしあき",
+     "party": "公明党",
+     "votes": 2059.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 5,
+     "name": "松丸まさし",
+     "party": "公明党",
+     "votes": 1958.055,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 6,
+     "name": "堀内きしお",
+     "party": "公明党",
+     "votes": 1917.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 7,
+     "name": "ふじのよし子",
+     "party": "公明党",
+     "votes": 1896.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 8,
+     "name": "前田くにひろ",
+     "party": "無所属",
+     "votes": 1888.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 9,
+     "name": "田口孝一",
+     "party": "自由民主党",
+     "votes": 1851.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 10,
+     "name": "高畑ひさ子",
+     "party": "日本共産党",
+     "votes": 1831.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 11,
+     "name": "すみのひでき",
+     "party": "自由民主党",
+     "votes": 1789.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 12,
+     "name": "増子ひろき",
+     "party": "民主党",
+     "votes": 1751.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 13,
+     "name": "渡辺まさし",
+     "party": "民主党",
+     "votes": 1750.944,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 14,
+     "name": "いいだ康治",
+     "party": "公明党",
+     "votes": 1716.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 15,
+     "name": "品田ひでこ",
+     "party": "無所属",
+     "votes": 1709.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 16,
+     "name": "成沢ひろのぶ",
+     "party": "民主党",
+     "votes": 1706.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 17,
+     "name": "はしもと直和",
+     "party": "自由民主党",
+     "votes": 1697.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 18,
+     "name": "こうだ久美子",
+     "party": "日本共産党",
+     "votes": 1691.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 19,
+     "name": "たけざわ房吉",
+     "party": "自由民主党",
+     "votes": 1680.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 20,
+     "name": "しかくらたいすけ",
+     "party": "社会民主党",
+     "votes": 1632.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 21,
+     "name": "山本かずひと",
+     "party": "民主党",
+     "votes": 1597.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 22,
+     "name": "宮崎文雄",
+     "party": "無所属",
+     "votes": 1591.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 23,
+     "name": "島元雅夫",
+     "party": "日本共産党",
+     "votes": 1549.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 24,
+     "name": "小林進",
+     "party": "日本共産党",
+     "votes": 1497.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 25,
+     "name": "東村昭平",
+     "party": "民主党",
+     "votes": 1454.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 26,
+     "name": "木村民子",
+     "party": "無所属",
+     "votes": 1378.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 27,
+     "name": "戸井田ひろし",
+     "party": "民主党",
+     "votes": 1367.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 28,
+     "name": "名取けんいち",
+     "party": "自由民主党",
+     "votes": 1348.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 29,
+     "name": "佐藤のりかず",
+     "party": "日本共産党",
+     "votes": 1313.549,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 30,
+     "name": "関川けさ子",
+     "party": "日本共産党",
+     "votes": 1291.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 31,
+     "name": "斉田宗一",
+     "party": "民主党",
+     "votes": 1288.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 32,
+     "name": "田中和子",
+     "party": "無所属",
+     "votes": 1278.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 33,
+     "name": "村越まり子",
+     "party": "無所属",
+     "votes": 1256.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 34,
+     "name": "根本じゅん",
+     "party": "無所属",
+     "votes": 1256.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 35,
+     "name": "いたくら美千代",
+     "party": "日本共産党",
+     "votes": 1249.0,
+     "elected": false,
+     "runnerup": true
+    },
+    {
+     "rank": 36,
+     "name": "さいとう国一",
+     "party": "無所属",
+     "votes": 1238.0,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 37,
+     "name": "佐藤ジロー",
+     "party": "民主党",
+     "votes": 1228.449,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 38,
+     "name": "楠山正雄",
+     "party": "民主党",
+     "votes": 1179.0,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 39,
+     "name": "中内てる男",
+     "party": "自由民主党",
+     "votes": 1066.0,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 40,
+     "name": "万立みきお",
+     "party": "日本共産党",
+     "votes": 1028.0,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 41,
+     "name": "大村あつし",
+     "party": "日本共産党",
+     "votes": 998.0,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 42,
+     "name": "松原くにひろ",
+     "party": "無所属",
+     "votes": 739.0,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 43,
+     "name": "高橋知之",
+     "party": "無所属",
+     "votes": 668.0,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 44,
+     "name": "くにえだ正人",
+     "party": "無所属",
+     "votes": 628.0,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 45,
+     "name": "岡戸ともひろ",
+     "party": "無所属",
+     "votes": 370.0,
+     "elected": false,
+     "runnerup": false
+    }
+   ]
+  },
+  {
+   "label": "平成19年（2007年）",
+   "date": "2007年4月22日",
+   "seats": 34,
+   "turnout": 51.05,
+   "electorate": 154874,
+   "voters": 79057,
+   "invalid": 2048,
+   "shortage": 1,
+   "total": 77007.996,
+   "source": "https://www.city.bunkyo.lg.jp/b045/p006458.html",
+   "year": 2007,
+   "candidates": 45,
+   "elected_n": 34,
+   "sum_votes": 77007.996,
+   "rows": [
+    {
+     "rank": 1,
+     "name": "高山 たいぞう",
+     "party": "民主党",
+     "votes": 3702.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 2,
+     "name": "えびさわ けいこ",
+     "party": "自由民主党",
+     "votes": 2665.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 3,
+     "name": "上田 ゆきこ",
+     "party": "無所属",
+     "votes": 2473.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 4,
+     "name": "渡辺 まさし",
+     "party": "民主党",
+     "votes": 2270.406,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 5,
+     "name": "いたくら 美千代",
+     "party": "日本共産党",
+     "votes": 2248.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 6,
+     "name": "松下 純子",
+     "party": "民主党",
+     "votes": 2216.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 7,
+     "name": "高畑 ひさ子",
+     "party": "日本共産党",
+     "votes": 2211.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 8,
+     "name": "山本 かずひと",
+     "party": "民主党",
+     "votes": 2195.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 9,
+     "name": "田中 和子",
+     "party": "無所属",
+     "votes": 2094.798,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 10,
+     "name": "白石 ひでゆき",
+     "party": "自由民主党",
+     "votes": 2086.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 11,
+     "name": "こうだ 久美子",
+     "party": "日本共産党",
+     "votes": 2041.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 12,
+     "name": "岡崎 よしあき",
+     "party": "公明党",
+     "votes": 2013.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 13,
+     "name": "小林 進",
+     "party": "日本共産党",
+     "votes": 1996.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 14,
+     "name": "前田 くにひろ",
+     "party": "無所属",
+     "votes": 1989.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 15,
+     "name": "松丸 まさし",
+     "party": "公明党",
+     "votes": 1960.463,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 16,
+     "name": "戸井田 ひろし",
+     "party": "民主党",
+     "votes": 1940.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 17,
+     "name": "若井 のりかず",
+     "party": "公明党",
+     "votes": 1897.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 18,
+     "name": "田中 としかね",
+     "party": "自由民主党",
+     "votes": 1893.433,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 19,
+     "name": "渡辺 とも子",
+     "party": "公明党",
+     "votes": 1876.025,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 20,
+     "name": "宮崎 文雄",
+     "party": "自由民主党",
+     "votes": 1853.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 21,
+     "name": "島元 雅夫",
+     "party": "日本共産党",
+     "votes": 1814.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 22,
+     "name": "堀内 きしお",
+     "party": "公明党",
+     "votes": 1788.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 23,
+     "name": "たけざわ 房吉",
+     "party": "自由民主党",
+     "votes": 1779.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 24,
+     "name": "ふじの よし子",
+     "party": "公明党",
+     "votes": 1736.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 25,
+     "name": "関川 けさ子",
+     "party": "日本共産党",
+     "votes": 1719.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 26,
+     "name": "まんだち 幹夫",
+     "party": "日本共産党",
+     "votes": 1668.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 27,
+     "name": "田口 孝一",
+     "party": "自由民主党",
+     "votes": 1644.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 28,
+     "name": "菊見 なおひろ",
+     "party": "自由民主党",
+     "votes": 1576.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 29,
+     "name": "村越 まり子",
+     "party": "無所属",
+     "votes": 1543.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 30,
+     "name": "品田 ひでこ",
+     "party": "民主党",
+     "votes": 1541.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 31,
+     "name": "はしもと 直和",
+     "party": "自由民主党",
+     "votes": 1491.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 32,
+     "name": "すみの ひでき",
+     "party": "無所属",
+     "votes": 1463.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 33,
+     "name": "浅田 やすお",
+     "party": "社会民主党",
+     "votes": 1420.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 34,
+     "name": "名取 けんいち",
+     "party": "自由民主党",
+     "votes": 1370.0,
+     "elected": true,
+     "runnerup": false
+    },
+    {
+     "rank": 35,
+     "name": "春山 まさる",
+     "party": "民主党",
+     "votes": 1344.0,
+     "elected": false,
+     "runnerup": true
+    },
+    {
+     "rank": 36,
+     "name": "土屋 たけし",
+     "party": "民主党",
+     "votes": 1287.0,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 37,
+     "name": "根本 純",
+     "party": "無所属",
+     "votes": 1235.0,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 38,
+     "name": "あべ 正明",
+     "party": "自由民主党",
+     "votes": 1109.0,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 39,
+     "name": "森 まもる",
+     "party": "自由民主党",
+     "votes": 1109.0,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 40,
+     "name": "おぎわら 知康",
+     "party": "民主党",
+     "votes": 1031.0,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 41,
+     "name": "木村 民子",
+     "party": "無所属",
+     "votes": 1025.0,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 42,
+     "name": "渡辺 よしひろ",
+     "party": "無所属",
+     "votes": 980.103,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 43,
+     "name": "塩野 拓",
+     "party": "無所属",
+     "votes": 648.0,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 44,
+     "name": "くにえだ 正人",
+     "party": "無所属",
+     "votes": 644.0,
+     "elected": false,
+     "runnerup": false
+    },
+    {
+     "rank": 45,
+     "name": "田中 誠一郎",
+     "party": "無所属",
+     "votes": 423.768,
+     "elected": false,
+     "runnerup": false
+    }
+   ]
+  },
   {
    "label": "平成23年（2011年）",
    "date": "2011年4月",

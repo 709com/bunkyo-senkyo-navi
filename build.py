@@ -105,7 +105,12 @@ svg text{fill:var(--fg);font-size:13px}svg .ax{stroke:var(--ln)}svg .lnx{stroke:
 .card.open{border:2px dashed var(--ln);background:transparent;box-shadow:none}.card.open p{margin:6px 0}
 .vb{list-style:none;padding:0;margin:10px 0}.vb li{padding:8px 0;border-bottom:1px solid var(--ln)}.vb .yr{font-weight:700;font-size:15px}
 .vb .tr{position:relative;height:26px;background:var(--ac2);border-radius:5px;margin:6px 0 4px}.vb .tr i{display:block;height:100%;border-radius:5px;background:var(--ac)}.vb .tr i.lo{background:var(--gr)}
-.vb .tr b{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px dashed var(--nw)}.vb .cap{font-size:13px;color:var(--mu)}.vb .cap strong{color:var(--fg);font-size:15px}
+.vb .tr b{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px dashed var(--nw)}.vb .tr i.ov{position:absolute;left:0;top:0;background:var(--nw)}.vb .tr b.sq{border-left-color:var(--fg)}
+.endorse{font-size:12px;color:var(--mu);border:1px dashed var(--ln);border-radius:999px;padding:1px 8px;margin-left:6px;white-space:nowrap}.terms{font-size:13px;color:var(--mu);margin-top:2px}
+.all{list-style:none;padding:0;margin:8px 0}.all li{display:grid;grid-template-columns:2.4em 1fr 5.2em;gap:6px;align-items:center;font-size:12px;line-height:1.25;color:var(--mu)}
+.all .t{height:7px;background:var(--ac2);border-radius:3px;position:relative}.all .t i{display:block;height:100%;border-radius:3px;background:var(--gr)}.all li.w .t i{background:var(--ac)}
+.all li.me{color:var(--fg);font-weight:700;font-size:14px;padding:3px 0}.all li.me .t{height:12px}.all li.me .t i{background:var(--nw)}.all li.cut{display:block;border-top:2px dashed var(--nw);margin:3px 0;font-size:11px;color:var(--nw)}
+.pg{list-style:none;padding:0;margin:8px 0}.pg>li{padding:8px 0;border-bottom:1px solid var(--ln)}.pg .pn{font-weight:700;margin-bottom:4px}.pg .hb li{grid-template-columns:4em 1fr;gap:0 10px;padding:3px 0}.pg .hb .t{margin-right:0}.pg .pv{grid-column:2;font-size:12px;color:var(--mu)}.pg .pv b{color:var(--fg);font-size:13px}.vb .cap{font-size:13px;color:var(--mu)}.vb .cap strong{color:var(--fg);font-size:15px}
 .lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--mu)}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}.lg i.dash{width:0;height:14px;border-left:2px dashed var(--nw);border-radius:0}
 .duel{margin:14px 0 18px}.duel .yr{font-weight:700;font-size:15px;margin-bottom:4px}.duel .tr{display:flex;height:34px;border-radius:6px;overflow:hidden}
 .duel .tr i{display:block;height:100%}.duel .tr i:nth-child(1){background:var(--ac)}.duel .tr i:nth-child(2){background:var(--nw)}.duel .tr i:nth-child(3){background:var(--gr)}
@@ -188,7 +193,9 @@ for e in elections:
     e["ratio"] = e["candidates"] / e["seats"]
 
 for c in cands:
-    c["hist"] = [(e, r) for e in elections for r in e["rows"] if r["name"] in c["result_names"]]
+    # 新しい選挙から順に並べる（閲覧者の関心が高い順。2026-10-28 先生の指示）
+    _rn = {n.replace(" ", "") for n in c["result_names"]}
+    c["hist"] = [(e, r) for e in reversed(elections) for r in e["rows"] if r["name"].replace(" ", "") in _rn]
     if c["status"] == "現":
         assert any(e["year"] == 2023 for e, _ in c["hist"]), c["name"]
 challengers = [c for c in cands if c["status"] != "現"]
@@ -197,6 +204,23 @@ _kana = {c["kana"].replace(" ", "") for c in cands}
 for m in UNC["members"]:
     assert m["kana"].replace(" ", "") not in _kana, m["name"]
 incumbents = [c for c in cands if c["status"] == "現"]
+NEWEST_FIRST = list(reversed(elections))  # 表やグラフは新しい選挙を上に（2026-10-28 先生の指示）
+Y0, Y1, NE = elections[0]["year"], elections[-1]["year"], len(elections)
+TERMS = cand_data.get("terms_source")
+
+
+def party_html(c):
+    """党派。推薦などは政党の所属ではない参考情報なので、点線の枠で別に示す。"""
+    en = f'<span class="endorse">{E(c["endorse"])}</span>' if c.get("endorse") else ""
+    return f'<span class="party">{E(c["party"])}</span>{en}'
+
+
+def party_text(c):
+    return c["party"] + (f"（{c['endorse']}）" if c.get("endorse") else "")
+
+
+def terms_html(c):
+    return f'<div class="terms">当選{c["terms"]}回</div>' if c.get("terms") else ""
 
 
 def hbars(items, maxv, fmt, orange=()):
@@ -240,7 +264,7 @@ def page_index():
 <p class="note">現職に比べて知られる機会が少ないため、本人の公表や政党の発表から、経歴や本人の言葉を紹介しています。敬称略。全員同じ基準です。並び順は開くたびに入れ替わります。</p>
 <ul class="grid shuffle">{''.join(challenger_card(c) for c in challengers)}{open_card()}</ul></section>
 <ul class="cards">
-<li><a class="t" href="/kouho/">区議選2027</a>立候補予定者{len(cands)}人の一覧（出典と確認日つき）、報道、過去4回の結果とグラフ。</li>
+<li><a class="t" href="/kouho/">区議選2027</a>立候補予定者{len(cands)}人の一覧（出典と確認日つき）、報道、過去{NE}回の結果とグラフ。</li>
 <li><a class="t" href="/kucho/">区長選挙2027</a>立候補予定者{len(kc_cands)}人、現在の区長の状況、報道、過去4回の結果。</li>
 <li><a class="t" href="/touhyou/">投票ガイド</a>選管の場所、期日前投票、入場券をなくしたとき、投票できる人。</li>
 </ul>
@@ -297,14 +321,14 @@ def votematch_html(data):
 
 def challenger_card(c, base="/kouho/"):
     """挑戦者（現職ではない方）を厚めに紹介するカード。全員同じ形。"""
-    lk = " ".join(cand_links(c)) or '<span class="muted">確認中</span>'
+    lk = " ".join(cand_links(c))
     st = c.get("statement")
     quote = f'<blockquote class="q">「{E(st["text"])}」<cite>{src_link(st)}</cite></blockquote>' if st else ""
     prof = "".join(f'<li>{E(p["text"])}<span class="muted">（{src_link(p)}）</span></li>' for p in c.get("profile", []))
     prof = f'<ul class="prof">{prof}</ul>' if prof else ""
-    return f"""<li class="card fade{' ch' if c['status'] != '現' else ''}"><div class="top"><span class="st {'st-cur' if c['status'] == '現' else 'st-new'}">{stl(c)}</span><span class="party">{E(c['party'])}</span></div>
-<div class="nm">{f'<a href="{base}{c["slug"]}/">{E(c["name"])}</a>' if base else E(c["name"])}</div><div class="kana">{E(c['kana'])}</div>
-{quote}{prof}{c.get('hist_html', '')}{interview_html(c)}<div class="ln">{lk}</div>
+    return f"""<li class="card fade{' ch' if c['status'] != '現' else ''}"><div class="top"><span class="st {'st-cur' if c['status'] == '現' else 'st-new'}">{stl(c)}</span>{party_html(c)}</div>
+<div class="nm">{f'<a href="{base}{c["slug"]}/">{E(c["name"])}</a>' if base else E(c["name"])}</div><div class="kana">{E(c['kana'])}</div>{terms_html(c)}
+{quote}{prof}{c.get('hist_html', '')}{interview_html(c)}{f'<div class="ln">{lk}</div>' if lk else ''}
 <div class="src">根拠：{src_link(c)}</div><a class="fix" href="{E(teisei_href(c['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></li>"""
 
 
@@ -313,11 +337,11 @@ def unconfirmed_html():
     ms = UNC["members"]
     if not ms:
         return ""
-    chips = "".join(f'<li><span>{E(m["name"])}</span></li>' for m in ms)
+    chips = "".join(f'<li><span>{E(m["name"])}<span class="muted">（当選{m["terms"]}回）</span></span></li>' for m in ms)
     return f"""<section><h2>立候補の意向をまだ確認できていない現職議員（{len(ms)}人）</h2>
 <p class="note">現在の文京区議会議員のうち、上の一覧に載っていない方です。立候補予定者ではありません。意向が確認でき次第、上の一覧に移します。引退を表明された方は、この欄から外します。敬称略。並び順は開くたびに入れ替わります。</p>
 <ul class="chips shuffle unc">{chips}</ul>
-<p class="src">出典：{src_link(UNC)}</p></section>"""
+<p class="src">出典：{src_link(UNC)}　当選回数：{src_link(TERMS)}</p></section>"""
 
 
 def open_card():
@@ -340,11 +364,11 @@ def cand_links(c):
 def page_kouho():
     cards = []
     for c in incumbents:
-        lk = " ".join(cand_links(c)) or '<span class="muted">確認中</span>'
+        lk = " ".join(cand_links(c))
         op = '<span class="tag">運営者</span>' if c.get("operator") else ""
-        cards.append(f"""<li class="card fade"><div class="top"><span class="st st-cur">現職</span><span class="party">{E(c['party'])}</span>{op}</div>
-<div class="nm"><a href="/kouho/{c['slug']}/">{E(c['name'])}</a></div><div class="kana">{E(c['kana'])}</div>
-{interview_html(c)}<div class="ln">{lk}</div>
+        cards.append(f"""<li class="card fade"><div class="top"><span class="st st-cur">現職</span>{party_html(c)}{op}</div>
+<div class="nm"><a href="/kouho/{c['slug']}/">{E(c['name'])}</a></div><div class="kana">{E(c['kana'])}</div>{terms_html(c)}
+{interview_html(c)}{f'<div class="ln">{lk}</div>' if lk else ''}
 <div class="src">根拠：{src_link(c)}</div><a class="fix" href="{E(teisei_href(c['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></li>""")
     body = f"""<div class="hero"><h1>文京区議会議員選挙2027 立候補予定者一覧</h1>
 <p class="lead">{len(cands)}人（挑戦者{len(challengers)}人・現職{len(incumbents)}人）。敬称略。並び順は開くたびに入れ替わります。本人の公表や政党の発表があり次第、追加します。</p></div>
@@ -352,15 +376,15 @@ def page_kouho():
 <p class="note">現職ではない立候補予定者です。現職に比べて知られる機会が少ないため、本人の公表や政党の発表から、経歴や本人の言葉を厚めに紹介しています。全員同じ基準です。</p>
 <ul class="grid shuffle">{''.join(challenger_card(c) for c in challengers)}{open_card()}</ul></section>
 <section><h2>現職（{len(incumbents)}人）</h2>
-<p class="note">氏名は、選挙で使われている表記（選挙ドットコムや政党の発表などの表記）を優先しています。</p>
+<p class="note">氏名は、選挙で使われている表記（選挙ドットコムや政党の発表などの表記）を優先しています。当選回数は{src_link(TERMS)}によります。点線の枠は推薦などの参考情報で、政党の所属ではありません。</p>
 <ul class="grid shuffle">{''.join(cards)}</ul></section>
 {unconfirmed_html()}
 <p class="note">掲載されていない方も立候補する可能性があります。</p>
 {votematch_html(cand_data)}<section><h2>区議選に関する報道</h2>
 <p class="note">文京区議選の情勢などを伝える報道機関の記事です。</p>{article_list(cand_data.get('articles', []))}</section>
-<section id="kekka"><h2>過去の文京区議選の結果（公式・2011〜2023年）</h2>{kekka_html()}</section>"""
+<section id="kekka"><h2>過去の文京区議選の結果（公式・{Y0}〜{Y1}年）</h2>{kekka_html()}</section>"""
     write("/kouho/", layout("/kouho/", "文京区議会議員選挙2027 立候補予定者と過去の結果",
-                            f"文京区議会議員選挙（2027年4月予定）の立候補予定者{len(cands)}人の一覧。党派・公式リンク・出典・確認日つき。過去4回（2011〜2023年）の公式結果も。",
+                            f"文京区議会議員選挙（2027年4月予定）の立候補予定者{len(cands)}人の一覧。党派・公式リンク・出典・確認日つき。過去{NE}回（{Y0}〜{Y1}年）の公式結果も。",
                             body, crumbs=[(None, "区議選")], active="/kouho/"))
     for c in cands:
         page_candidate(c)
@@ -372,9 +396,35 @@ KOHO_2023 = "https://www.city.bunkyo.lg.jp/documents/6195/202341782855.pdf"
 KOHO_2023_KUCHO = "https://www.city.bunkyo.lg.jp/documents/6195/202341782930.pdf"
 
 
+def last_election_html(c):
+    """前回（最新）の区議選の概要。全員同じ形。本人の結果を先に、全体の数字とグラフを後に。"""
+    e = elections[-1]
+    mine = [r for ee, r in c["hist"] if ee is e]
+    me = mine[0] if mine else None
+    lead = ""
+    if me:
+        res = "当選" if me["elected"] else ("次点" if me["runnerup"] else "落選")
+        lead = f'<p class="lead"><strong>{E(c["name"])}：{fv(me["votes"])}票・{me["rank"]}位／{e["candidates"]}人・{res}</strong>　<span class="muted">（当時の党派：{E(me["party"])}）</span></p>'
+    else:
+        lead = f'<p class="note">{E(c["name"])}は、{e["year"]}年の文京区議選の候補者の中には見つかりませんでした（届出名で照合）。</p>'
+    facts = f'''<div class="facts"><div>投票率 <b>{e['turnout']:.2f}%</b></div><div>候補者 <b>{e['candidates']}人</b></div><div>定数 <b>{e['seats']}</b></div><div>最下位当選 <b>{fv(e['last_win']['votes'])}票</b></div><div>次点 <b>{fv(e['next']['votes'])}票</b></div></div>'''
+    maxv = max(r["votes"] for r in e["rows"])
+    li = []
+    for i, r in enumerate(e["rows"]):
+        if i == e["seats"]:
+            li.append(f'<li class="cut">▲ 当選（定数{e["seats"]}）／ ▼ 落選</li>')
+        cls = " ".join(x for x in ("w" if r["elected"] else "", "me" if me is r else "") if x)
+        nm = f'{E(c["name"])}　' if me is r else ""
+        li.append(f'<li class="{cls}"><span>{r["rank"]}位</span><span class="t"><i class="grow" style="width:{r["votes"] / maxv * 100:.1f}%"></i></span><span>{nm}{fv(r["votes"])}</span></li>')
+    chart = f'''<div class="chart"><ul class="all">{"".join(li)}</ul>
+<div class="lg"><span><i style="background:var(--ac)"></i>当選した人</span><span><i style="background:var(--gr)"></i>落選した人</span>{'<span><i style="background:var(--nw)"></i>' + E(c["name"]) + '</span>' if me else ''}</div></div>'''
+    return f'''<section><h2>前回（{e['year']}年）の文京区議選</h2>{lead}{facts}
+<h3>全{e['candidates']}人の得票（得票順）</h3>{chart}
+<p class="note">文京区選挙管理委員会が公表した結果です。全員の氏名は<a href="/kekka/{e['year']}/">{e['year']}年の結果のページ</a>にあります。投票率の推移などは<a href="/kouho/#kekka">過去の結果</a>にまとめています。</p></section>'''
+
+
 def page_candidate(c):
     lk = cand_links(c)
-    lk_html = "　".join(lk) if lk else f'確認中です。公式のサイトやSNSをお持ちの場合は、{CONTACT}からお知らせください。'
     rows = []
     for e, r in c["hist"]:
         res = "当選" if r["elected"] else ("次点" if r["runnerup"] else "落選")
@@ -384,38 +434,46 @@ def page_candidate(c):
         bars = []
         for e, r in c["hist"]:
             res = "当選" if r["elected"] else ("次点" if r["runnerup"] else "落選")
-            bars.append(f"""<li><div class="yr"><a href="/kekka/{e['year']}/">{e['year']}年</a>　<span class="muted">{E(r['party'])}</span></div>
+            bars.append(f"""<li><div class="yr"><a href="/kekka/{e['year']}/">{e['year']}年</a>　<span class="muted">（当時の党派：{E(r['party'])}）</span></div>
 <div class="tr"><i class="grow{'' if r['elected'] else ' lo'}" style="width:{r['votes'] / top * 100:.1f}%"></i><b style="left:{e['last_win']['votes'] / top * 100:.1f}%"></b></div>
 <div class="cap"><strong>{fv(r['votes'])}票</strong>　{r['rank']}位／{e['candidates']}人・{res}　（最下位当選 {fv(e['last_win']['votes'])}票）</div></li>""")
         hist = f"""<div class="chart"><ul class="vb">{''.join(bars)}</ul>
 <div class="lg"><span><i style="background:var(--ac)"></i>得票（当選）</span><span><i style="background:var(--gr)"></i>得票（落選）</span><span><i class="dash"></i>その回の最下位当選の得票</span></div></div>
 <details><summary class="note">表で見る</summary><div class="tbl"><table><thead><tr><th>選挙</th><th>当時の党派</th><th class="n">得票数</th><th class="n">順位</th><th>結果</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div></details>
-<p class="note">文京区選挙管理委員会が公表した結果です。党派は当時の表記のまま掲載しています。得票数の小数点以下は公式の按分票です。</p>"""
+<p class="note">文京区選挙管理委員会が公表した結果です。新しい選挙から順に並べています。党派は当時の届出の表記で、いまの所属とは限りません。得票数の小数点以下は公式の按分票です。</p>"""
     else:
-        hist = '<p class="note">2011〜2023年の4回の文京区議選の公式結果に、該当する届出名は見つかりませんでした。</p>'
+        hist = f'<p class="note">{Y0}〜{Y1}年の{NE}回の文京区議選の公式結果に、該当する届出名は見つかりませんでした。</p>'
+    won = sum(1 for _, r in c["hist"] if r["elected"])
+    if c.get("terms") and c["terms"] > won:
+        hist += f'<p class="note">当選回数は{c["terms"]}回です（{src_link(TERMS)}）。このサイトに載せている{Y0}年以降の結果では、そのうち{won}回分を確認できます。{Y0}年より前の結果は、区の記録で確認を進めています。</p>'
     if any(e["year"] == 2023 for e, _ in c["hist"]):
         hist += f'<p class="note">2023年の選挙のときの本人の主張は、文京区選挙管理委員会が公開している<a href="{KOHO_2023}" rel="noopener" target="_blank">選挙公報（PDF・約9MB・全候補分）</a>で読めます。</p>'
     hist += '<p class="note">このサイトでは、文京区議選の公式結果だけを掲載しています。ほかの選挙への立候補歴は扱っていません。</p>'
     who = "このサイトの運営者です。" if c.get("operator") else ""
     st = c.get("statement")
     extra = ""
+    if c.get("terms"):
+        extra += f'<dt>当選回数</dt><dd>{c["terms"]}回<br><span class="muted">出典：{src_link(TERMS)}</span></dd>'
     if st:
         extra += f'<dt>本人の言葉</dt><dd>「{E(st["text"])}」（{src_link(st)}）</dd>'
     if c.get("profile"):
         extra += "<dt>経歴など</dt><dd><ul class=\"prof\">" + "".join(f'<li>{E(p["text"])}<span class="muted">（{src_link(p)}）</span></li>' for p in c["profile"]) + "</ul></dd>"
+    if lk:
+        extra += f'<dt>公式サイト・SNS</dt><dd>{"　".join(lk)}</dd>'
     body = f"""<div class="hero"><h1>{E(c['name'])}（{stl(c)}）</h1>
-<p class="lead">{E(c['kana'])}｜{E(c['party'])}｜文京区議会議員選挙2027の立候補予定者</p></div>
+<p class="lead">{E(c['kana'])}｜{E(party_text(c))}｜文京区議会議員選挙2027の立候補予定者</p></div>
 <section><h2>基本情報</h2><dl class="kv">
-<dt>党派</dt><dd>{E(c['party'])}</dd><dt>区分</dt><dd>{'現職議員' if c['status']=='現' else '挑戦者（現職ではない立候補予定者）'}</dd>
-{extra}<dt>公式サイト・SNS</dt><dd>{lk_html}</dd>{('<dt>インタビュー</dt><dd>' + interview_html(c) + '</dd>') if c.get('interview') else ''}
+<dt>党派</dt><dd>{party_html(c)}</dd><dt>区分</dt><dd>{'現職議員' if c['status']=='現' else '挑戦者（現職ではない立候補予定者）'}</dd>
+{extra}{('<dt>インタビュー</dt><dd>' + interview_html(c) + '</dd>') if c.get('interview') else ''}
 <dt>掲載の根拠</dt><dd>{src_link(c)}</dd></dl>
-<p class="note">立候補を正式に表明しているか、党の公認が出ているかは「掲載の根拠」のとおりです。{who}</p><a class="fix" href="{E(teisei_href(c['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></section>
-<section><h2>過去の文京区議選の結果（公式）</h2>{hist}</section>
+<p class="note">立候補を正式に表明しているか、党の公認が出ているかは「掲載の根拠」のとおりです。{'点線の枠は推薦などの参考情報で、政党の所属ではありません。' if c.get('endorse') else ''}{who}</p><a class="fix" href="{E(teisei_href(c['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></section>
+{last_election_html(c)}
+<section><h2>過去の文京区議選の結果（公式・新しい順）</h2>{hist}</section>
 <p><a href="/kouho/">← 立候補予定者の一覧にもどる</a></p>"""
     ld = {"@context": "https://schema.org", "@type": "ProfilePage", "name": f"{c['name']}｜文京区議会議員選挙2027", "url": f"{SITE_URL}/kouho/{c['slug']}/", "inLanguage": "ja"}
     p = f"/kouho/{c['slug']}/"
-    write(p, layout(p, f"{c['name']}（{c['party']}）文京区議会議員選挙2027",
-                    f"{c['name']}（{c['party']}・{stl(c)}）の基本情報、公式リンク、過去の文京区議選の結果。出典と確認日つき。",
+    write(p, layout(p, f"{c['name']}（{party_text(c)}）文京区議会議員選挙2027",
+                    f"{c['name']}（{party_text(c)}・{stl(c)}）の基本情報、公式リンク、過去の文京区議選の結果。出典と確認日つき。",
                     body, crumbs=[("/kouho/", "区議選"), (None, c["name"])], jsonld=ld, active="/kouho/"))
 
 
@@ -430,47 +488,61 @@ def party_stats():
 
 
 def kekka_html():
-    """区議選の過去4回の結果（比較・グラフ・党派別）。/kouho/ の下に載せる。"""
-    ys =[e["year"] for e in elections]
+    """区議選の過去の結果（比較・グラフ・党派別）。/kouho/ の下に載せる。表とグラフは新しい選挙が上。"""
+    ys = [e["year"] for e in NEWEST_FIRST]
     st = party_stats()
-    overview = "".join(f"""<tr><th scope=row><a href="/kekka/{e['year']}/">{E(e['label'])}</a></th><td class="n">{e['candidates']}人</td><td class="n">{e['seats']}</td><td class="n">{e['ratio']:.2f}倍</td><td class="n">{e['turnout']:.2f}%</td><td class="n">{e['electorate']:,}</td><td class="n">{fv(e['last_win']['votes'])}</td><td class="n">{fv(e['next']['votes'])}</td><td class="n">{e['gap']:,.0f}</td></tr>""" for e in elections)
+    overview = "".join(f"""<tr><th scope=row><a href="/kekka/{e['year']}/">{E(e['label'])}</a></th><td class="n">{e['candidates']}人</td><td class="n">{e['seats']}</td><td class="n">{e['ratio']:.2f}倍</td><td class="n">{e['turnout']:.2f}%</td><td class="n">{e['electorate']:,}</td><td class="n">{fv(e['last_win']['votes'])}</td><td class="n">{fv(e['next']['votes'])}</td><td class="n">{e['gap']:,.0f}</td></tr>""" for e in NEWEST_FIRST)
     turnout_svg = line_chart([(e["year"], e["turnout"]) for e in elections], 40, 60, 5, "%", "文京区議選の投票率の推移")
-    items, orange = [], []
-    for e in elections:
-        items.append((f"{e['year']} 最下位当選", e["last_win"]["votes"]))
-        items.append((f"{e['year']} 次点", e["next"]["votes"])); orange.append(len(items) - 1)
-    lastwin = hbars(items, max(v for _, v in items), fv, tuple(orange))
-    cb = [(f"{e['year']}年 候補者", e["candidates"]) for e in elections] + [("定数", 34)]
-    candbars = hbars(cb, 50, lambda v: f"{int(v)}人", (len(cb) - 1,))
-    allp = sorted(st, key=lambda p: (-sum(st[p][y][1] for y in st[p]), p))
+    # 最下位当選と次点を1本の棒に重ねる（緑＝最下位当選、橙＝次点。緑だけの部分が差）
+    top = max(e["last_win"]["votes"] for e in elections) * 1.1
+    lw = []
+    for e in NEWEST_FIRST:
+        lw.append(f"""<li><div class="yr"><a href="/kekka/{e['year']}/">{e['year']}年</a></div>
+<div class="tr"><i class="grow" style="width:{e['last_win']['votes'] / top * 100:.1f}%"></i><i class="grow ov" style="width:{e['next']['votes'] / top * 100:.1f}%"></i></div>
+<div class="cap">最下位当選 <strong>{fv(e['last_win']['votes'])}票</strong>　次点 <strong>{fv(e['next']['votes'])}票</strong>　差 {e['gap']:,.0f}票</div></li>""")
+    lastwin = f'<ul class="vb">{"".join(lw)}</ul><div class="lg"><span><i style="background:var(--ac)"></i>最下位で当選した人の得票</span><span><i style="background:var(--nw)"></i>次点（落選した中で最多）の得票</span></div>'
+    # 立候補者数の棒に、定数を点線で重ねる
+    cmax = max(e["candidates"] for e in elections) * 1.1
+    cbl = []
+    for e in NEWEST_FIRST:
+        cbl.append(f"""<li><div class="yr"><a href="/kekka/{e['year']}/">{e['year']}年</a></div>
+<div class="tr"><i class="grow" style="width:{e['candidates'] / cmax * 100:.1f}%"></i><b class="sq" style="left:{e['seats'] / cmax * 100:.1f}%"></b></div>
+<div class="cap">立候補 <strong>{e['candidates']}人</strong>　定数 {e['seats']}　倍率 {e['ratio']:.2f}倍</div></li>""")
+    candbars = f'<ul class="vb">{"".join(cbl)}</ul><div class="lg"><span><i style="background:var(--ac)"></i>立候補者数</span><span><i class="dash" style="border-color:var(--fg)"></i>定数</span></div>'
+    # 無所属は一つの団体ではないので、表の一番下に置く
+    allp = sorted(st, key=lambda p: (p == "無所属", -sum(st[p][y][1] for y in st[p]), p))
     prow = []
     for p in allp:
         cells = "".join(f'<td class="n">{st[p][y][1]}／{st[p][y][0]}</td>' if y in st[p] else '<td class="n muted">—</td>' for y in ys)
         prow.append(f"<tr><th scope=row>{E(p)}</th>{cells}</tr>")
     same = [p for p in allp if all(y in st[p] for y in ys)]
-    srow = []
+    srow, pgl = [], []
+    smax = max(st[p][y][2] for p in same for y in ys)
     for p in same:
         cells = "".join(f'<td class="n">当選 {st[p][y][1]}／候補 {st[p][y][0]}<br>得票合計 {st[p][y][2]:,.0f}</td>' for y in ys)
         srow.append(f"<tr><th scope=row>{E(p)}</th>{cells}</tr>")
+        bars = "".join(f'<li><span>{y}年</span><span class="t"><i class="grow" style="width:{st[p][y][2] / smax * 100:.1f}%"></i></span><span class="pv"><b>{st[p][y][2]:,.0f}票</b>　当選{st[p][y][1]}人／候補{st[p][y][0]}人</span></li>' for y in ys)
+        pgl.append(f'<li><div class="pn">{E(p)}</div><ul class="hb">{bars}</ul></li>')
     head = "".join(f'<th class="n">{y}年</th>' for y in ys)
     ylinks = "".join(f'<li><a href="/kekka/{e["year"]}/">{E(e["label"])}の全候補の得票</a></li>' for e in reversed(elections))
-    srcs = "、".join(f'<a href="{E(e["source"])}" rel="noopener" target="_blank">{e["year"]}年</a>' for e in elections)
+    srcs = "、".join(f'<a href="{E(e["source"])}" rel="noopener" target="_blank">{e["year"]}年</a>' for e in NEWEST_FIRST)
     first, last = elections[0], elections[-1]
-    body = f"""<p class="note">文京区選挙管理委員会が公表した4回分の結果を、グラフと表にまとめました。今回の予想ではなく、過去の公式の数字です。</p>
-<section><h2>4回の比較</h2><div class="tbl"><table><thead><tr><th>選挙</th><th class="n">候補者</th><th class="n">定数</th><th class="n">倍率</th><th class="n">投票率</th><th class="n">有権者数</th><th class="n">最下位当選の得票</th><th class="n">次点の得票</th><th class="n">差</th></tr></thead><tbody>{overview}</tbody></table></div>
-<p class="note">倍率＝候補者数÷定数。得票数は公式の数字で、按分票による小数点以下を含みます（「差」は小数点以下を四捨五入）。</p></section>
-<section><h2>投票率の推移</h2><div class="chart">{turnout_svg}<p class="note">縦軸は40〜60%です。4回続けて上がっています。</p></div></section>
+    body = f"""<p class="note">文京区選挙管理委員会が公表した{NE}回分（{Y0}〜{Y1}年）の結果を、グラフと表にまとめました。今回の予想ではなく、過去の公式の数字です。表と棒グラフは新しい選挙が上です。</p>
+<section><h2>{NE}回の比較</h2><div class="tbl"><table><thead><tr><th>選挙</th><th class="n">候補者</th><th class="n">定数</th><th class="n">倍率</th><th class="n">投票率</th><th class="n">有権者数</th><th class="n">最下位当選の得票</th><th class="n">次点の得票</th><th class="n">差</th></tr></thead><tbody>{overview}</tbody></table></div>
+<p class="note">倍率＝候補者数÷定数。得票数は公式の数字で、按分票による小数点以下を含みます（「差」は小数点以下を四捨五入）。2003年の有権者数は、2007年の結果ページの「前回」欄の数字です。</p></section>
+<section><h2>投票率の推移</h2><div class="chart">{turnout_svg}<p class="note">縦軸は40〜60%です。左が古い選挙、右が新しい選挙です。</p></div></section>
 <section><h2>何票で当選したか（最下位当選と次点）</h2><div class="chart">{lastwin}
-<p class="note">緑が最下位で当選した人、橙が次点（落選した中で最多）の得票数です。{first['year']}年は差が{first['gap']:,.0f}票、{last['year']}年は{last['gap']:,.0f}票でした。</p></div></section>
-<section><h2>立候補者数と定数</h2><div class="chart">{candbars}<p class="note">定数は4回とも34です。立候補者数は{first['year']}年の{first['candidates']}人から、{last['year']}年の{last['candidates']}人まで減っています。</p></div></section>
+<p class="note">1本の棒に、最下位で当選した人（緑）と次点の人（橙）の得票を重ねています。緑だけの部分が、当落を分けた差です。</p></div></section>
+<section><h2>立候補者数と定数</h2><div class="chart">{candbars}<p class="note">点線が定数（{NE}回とも34）です。棒が点線より長い分だけ、落選する人が出ます。</p></div></section>
 <section><h2>党派別の当選者数と候補者数</h2><p class="note">「当選／候補」の人数です。党派名は当時の公式の表記のままで、名称が変わった党は別の行に分かれています（合算していません）。</p>
 <div class="tbl"><table><thead><tr><th>党派</th>{head}</tr></thead><tbody>{''.join(prow)}</tbody></table></div></section>
-<section><h2>4回とも同じ名前で続く党派の得票</h2><p class="note">得票合計は、その党派の候補者の得票を足した数字です（無所属は個人の得票の合計で、一つの団体ではありません）。</p>
-<div class="tbl"><table><thead><tr><th>党派</th>{head}</tr></thead><tbody>{''.join(srow)}</tbody></table></div></section>
+<section><h2>{NE}回とも同じ名前で続く党派の得票</h2><p class="note">得票合計は、その党派の候補者の得票を足した数字です（無所属は個人の得票の合計で、一つの団体ではありません）。</p>
+<div class="chart"><ul class="pg">{''.join(pgl)}</ul></div>
+<details><summary class="note">表で見る</summary><div class="tbl"><table><thead><tr><th>党派</th>{head}</tr></thead><tbody>{''.join(srow)}</tbody></table></div></details></section>
 <section><h2>回ごとの全候補の得票</h2><ul>{ylinks}</ul></section>
 <section><h2>数字の出典と読み方</h2><div class="box"><ul>
 <li>出典：文京区選挙管理委員会の各回の結果ページ（{srcs}）。取得日 {E(res_data['fetched'])}。</li>
-<li>取り込んだ数字は、公式の投票者数・無効票などから求めた有効票と、全候補の得票の合計が一致することを確認しています。</li>
+<li>取り込んだ数字は、公式の投票者数・無効票などから求めた有効票と、全候補の得票の合計が一致することを確認しています（2003年は無効票の数が公表ページにないため、この確認はしていません）。</li>
 <li>この表やグラフは過去の結果です。次の選挙の当落を予想するものではありません。</li></ul></div></section>"""
     # 区議選ページの中の小見出しにする
     return body.replace("<h2>", "<h3>").replace("</h2>", "</h3>")
@@ -490,14 +562,14 @@ def page_year(e):
     for r in e["rows"]:
         s = pv.setdefault(r["party"], [0, 0, 0.0]); s[0] += 1; s[1] += r["elected"]; s[2] += r["votes"]
     prow = "".join(f'<tr><th scope=row>{E(p)}</th><td class="n">{v[1]}／{v[0]}</td><td class="n">{v[2]:,.0f}</td></tr>' for p, v in sorted(pv.items(), key=lambda kv: (-kv[1][1], -kv[1][2])))
-    nav = " ・ ".join(f'<a href="/kekka/{x["year"]}/">{x["year"]}年</a>' for x in elections if x["year"] != y)
+    nav = " ・ ".join(f'<a href="/kekka/{x["year"]}/">{x["year"]}年</a>' for x in NEWEST_FIRST if x["year"] != y)
     body = f"""<div class="hero"><h1>{E(e['label'])}文京区議会議員選挙の結果（全候補の得票）</h1>
 <p class="lead">{E(e['date'])}執行。{e['candidates']}人が立候補し、定数{e['seats']}人が当選しました。</p></div>
 <div class="facts"><div>投票率 <b>{e['turnout']:.2f}%</b></div><div>当日有権者数 <b>{e['electorate']:,}人</b></div><div>投票者数 <b>{e['voters']:,}人</b></div><div>最下位当選 <b>{fv(e['last_win']['votes'])}票</b></div><div>次点 <b>{fv(e['next']['votes'])}票</b></div></div>
 <section><h2>全候補の得票（得票順）</h2><div class="tbl"><table><thead><tr><th class="n">順位</th><th>氏名・党派</th><th class="n">得票数</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div>
-<p class="note">氏名・党派は当時の届出の表記のままです。得票数の小数点以下は公式の按分票です。無効票 {e['invalid']:,}票。</p></section>
+<p class="note">氏名・党派は当時の届出の表記のままです。得票数の小数点以下は公式の按分票です。{f"無効票 {e['invalid']:,}票。" if e['invalid'] is not None else ""}</p></section>
 <section><h2>党派別（この回の公式の党派名）</h2><div class="tbl"><table><thead><tr><th>党派</th><th class="n">当選／候補</th><th class="n">得票合計</th></tr></thead><tbody>{prow}</tbody></table></div></section>
-<section><div class="box">出典：<a href="{E(e['source'])}" rel="noopener" target="_blank">文京区選挙管理委員会 {E(e['label'])}の結果</a>（取得日 {E(res_data['fetched'])}）<br>他の年：{nav}　／　<a href="/kouho/#kekka">4回の比較にもどる</a></div></section>"""
+<section><div class="box">出典：<a href="{E(e['source'])}" rel="noopener" target="_blank">文京区選挙管理委員会 {E(e['label'])}の結果</a>（取得日 {E(res_data['fetched'])}）<br>他の年：{nav}　／　<a href="/kouho/#kekka">過去の結果の比較にもどる</a></div></section>"""
     p = f"/kekka/{y}/"
     write(p, layout(p, f"{e['label']}文京区議会議員選挙の結果 全候補の得票",
                     f"{e['label']}の文京区議選の結果。{e['candidates']}人の得票、投票率{e['turnout']:.2f}%、最下位当選{fv(e['last_win']['votes'])}票。出典は文京区選管。",
@@ -627,7 +699,7 @@ kc_results = sorted(kucho["results"], key=lambda r: r["year"])
 for r in kc_results:  # 検算：候補の得票合計＝投票者数−無効票−不足票
     assert sum(x["votes"] for x in r["rows"]) == r["voters"] - r["invalid"] - r["shortage"], r["year"]
 for c in kc_cands:
-    hist = [(r, x) for r in kc_results for x in r["rows"] if x["name"] in c.get("result_names", [])]
+    hist = [(r, x) for r in reversed(kc_results) for x in r["rows"] if x["name"] in c.get("result_names", [])]
     if hist:
         c["hist_html"] = '<ul class="prof">' + "".join(
             f'<li>{r["year"]}年の文京区長選：{x["votes"]:,}票（{"当選" if x["elected"] else "落選"}）<span class="muted">（<a href="{E(r["source"])}" rel="noopener" target="_blank">文京区選挙管理委員会</a>）</span></li>'
