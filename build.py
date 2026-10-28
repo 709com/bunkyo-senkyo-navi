@@ -291,7 +291,7 @@ def page_index():
 <div class="hero"><h1>文京区議会議員選挙2027<br>立候補予定者まとめ</h1>
 <p class="lead">政党の公認発表など、公開されている情報だけで作った一覧です。すべてに出典と確認日を付けています。</p>
 <div class="facts"><div>投票日 <b>{E(el['date_note'])}</b></div><div>定数 <b>{el['seats']}</b></div><div>掲載中の予定者 <b>{len(cands)}人</b></div></div></div>
-<section><h2>挑戦者（現職ではない立候補予定者・{len(challengers)}人）</h2>
+<section><h2>挑戦者（新人の立候補予定者・{len(challengers)}人）</h2>
 {say("挑戦者は知られる機会が少ないから、経歴や本人の言葉を厚めに紹介しているよ。")}
 <ul class="grid shuffle">{''.join(challenger_card(c) for c in challengers)}{open_card()}</ul></section>
 <ul class="cards">
@@ -509,7 +509,7 @@ def page_candidate(c):
     body = f"""<div class="hero"><h1>{E(c['name'])}（{stl(c)}）</h1>
 <p class="lead">{E(c['kana'])}｜{E(party_text(c))}｜文京区議会議員選挙2027の立候補予定者</p></div>
 <section><h2>基本情報</h2><dl class="kv">
-<dt>党派</dt><dd>{party_html(c)}</dd><dt>区分</dt><dd>{'現職議員' if c['status']=='現' else '挑戦者（現職ではない立候補予定者）'}</dd>
+<dt>党派</dt><dd>{party_html(c)}</dd><dt>区分</dt><dd>{'現職議員' if c['status']=='現' else '挑戦者（新人の立候補予定者）'}</dd>
 {extra}{('<dt>インタビュー</dt><dd>' + interview_html(c) + '</dd>') if c.get('interview') else ''}
 <dt>掲載の根拠</dt><dd>{src_link(c)}</dd></dl>
 <p class="note">立候補を正式に表明しているか、党の公認が出ているかは「掲載の根拠」のとおりです。{'点線の枠は推薦などの参考情報で、政党の所属ではありません。' if c.get('endorse') else ''}{who}</p><a class="fix" href="{E(teisei_href(c['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></section>
