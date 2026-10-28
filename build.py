@@ -739,8 +739,19 @@ def page_about():
                             body, crumbs=[(None, "このサイトについて")], active="/about/"))
 
 
-# マスタールール：ファイルを削除しない。public/ は消さずに上書きで作り直し、
-# 今回作らなかった古いファイルは最後に一覧で知らせる（削除は先生が行う）
+# マスタールール：ファイルを削除しない。
+# 作り直す前に、今の public/ を _old_builds/public_日時/ へ名前を変えて保管し、まっさらな public/ に作る。
+# 古い版は消さずに残る（_old_builds は GitHub に入れない。整理が必要になったら先生が消す）
+import datetime as _dt0
+OLD_BUILDS = ROOT / "_old_builds"
+if OUT.exists() and any(OUT.iterdir()):
+    OLD_BUILDS.mkdir(exist_ok=True)
+    _keep = OLD_BUILDS / ("public_" + _dt0.datetime.now().strftime("%Y%m%d-%H%M%S"))
+    try:
+        OUT.rename(_keep)
+    except OSError as _e:
+        raise SystemExit(f"public/ の名前を変えられませんでした（確認用サーバーなどが使っている可能性）。消さずに止めます：{_e}")
+    print("前の版を保管しました：", _keep.relative_to(ROOT))
 OUT.mkdir(parents=True, exist_ok=True)
 WRITTEN = set()
 

@@ -3,3 +3,4 @@ __pycache__/
 .env
 patrol/
 naibu/
+_old_builds/
