@@ -12,7 +12,10 @@ SITE_URL = "https://bunkyo-senkyo.jp"
 # True の間は検索エンジンに載せない（noindex）。本格公開するときに False にして build → push
 NOINDEX = True
 # 区長選の立候補予定者の個人ページ（2026-10-28 試作。先生のOKが出たら True にする）
-KUCHO_PAGES = False
+KUCHO_PAGES = True  # 2026-10-28 先生OK
+# トップページを「選挙の案内と投票率」中心にした新しい形（2026-10-28 試作。先生のOKが出たら True にする）
+import os
+TOP_V2 = os.environ.get("NAVI_TOP_V2", "1") == "1"  # 2026-10-28 先生OK。旧トップに戻すときは NAVI_TOP_V2=0
 SITE_NAME = "文京区議選ナビ2027"
 # 訂正・削除・苦情の受付（Googleフォーム。先生のアカウントで作成、2026-10-27）
 # 迷惑メール対策のため、メールアドレスはサイトに出さない。
@@ -121,7 +124,9 @@ svg text{fill:var(--fg);font-size:13px}svg .ax{stroke:var(--ln)}svg .lnx{stroke:
 .bub:before{content:"";position:absolute;left:-9px;bottom:18px;border:8px solid transparent;border-right-color:var(--ln);border-left:0}
 .bub:after{content:"";position:absolute;left:-6px;bottom:19px;border:7px solid transparent;border-right-color:var(--ac2);border-left:0}
 .bub .nm{display:block;font-size:12px;font-weight:700;color:var(--ac)}
-.pg .pn{font-weight:700;margin-bottom:4px}.pg>li.ind{border:2px dashed var(--mu);border-radius:10px;padding:10px 12px;margin-top:14px}.pg>li.ind .t i{background:var(--mu)}.pg>li.ind .note{margin:0 0 6px}
+.pg .pn{font-weight:700;margin-bottom:4px}
+.turn .big{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}.turn .big div{background:var(--ac2);border-radius:12px;padding:12px 14px}.turn .big span{display:block;font-size:13px;color:var(--mu)}.turn .big b{font-size:34px;line-height:1.2;color:var(--ac)}.turn .big b.no{color:var(--nw)}
+.cards.gate a.t{font-size:19px}.pg>li.ind{border:2px dashed var(--mu);border-radius:10px;padding:10px 12px;margin-top:14px}.pg>li.ind .t i{background:var(--mu)}.pg>li.ind .note{margin:0 0 6px}
 tr.ind-sep td{border-top:2px dashed var(--mu);font-size:12px;color:var(--mu);padding-top:10px}tr.ind th,tr.ind td{background:var(--ac2)}.pg .hb li{grid-template-columns:4em 1fr;gap:0 10px;padding:3px 0}.pg .hb .t{margin-right:0}.pg .pv{grid-column:2;font-size:12px;color:var(--mu)}.pg .pv b{color:var(--fg);font-size:13px}.vb .cap{font-size:13px;color:var(--mu)}.vb .cap strong{color:var(--fg);font-size:15px}
 .lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--mu)}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}.lg i.dash{width:0;height:14px;border-left:2px dashed var(--nw);border-radius:0}
 .duel{margin:14px 0 18px}.duel .yr{font-weight:700;font-size:15px;margin-bottom:4px}.duel .tr{display:flex;height:34px;border-radius:6px;overflow:hidden}
@@ -309,6 +314,28 @@ def page_index():
 <section id="news"><h2>更新情報</h2><ul class="news">{news}</ul></section>
 <section><h2>公式の情報へのリンク</h2><ul>{links}</ul></section>
 """
+    if TOP_V2:
+        last = elections[-1]
+        kc_last = kc_results[-1]
+        not_vote = 100 - last["turnout"]
+        tchart = line_chart([(e["year"], e["turnout"]) for e in elections], 40, 60, 5, "%", "文京区議選の投票率の推移")
+        body = f"""
+<div class="hero"><h1>2027年4月、文京区で<br>2つの選挙があります</h1>
+<p class="lead">文京区議会議員選挙と文京区長選挙です。このサイトは、立候補予定者や過去の結果など、公開されている情報だけをまとめています。</p>
+<div class="facts"><div>投票日 <b>{E(el['date_note'])}</b></div><div>区議会議員 <b>定数{el['seats']}</b></div><div>区長 <b>1人</b></div></div></div>
+<section class="turn"><h2>前回の区議選、投票したのは約2人に1人</h2>
+<div class="big"><div><span>{last['year']}年の区議選の投票率</span><b>{last['turnout']:.2f}%</b></div><div><span>投票しなかった人</span><b class="no">{not_vote:.2f}%</b></div></div>
+<div class="chart">{tchart}<p class="note">文京区議選の投票率の推移（{Y0}〜{Y1}年、文京区選挙管理委員会の公表値）。区長選は{kc_last['year']}年に{kc_last['turnout']:.2f}%でした。</p></div>
+<p><b>このサイトは、文京区の選挙の投票率を上げることを目指しています。</b>まずは、誰が立候補を予定しているかを知るところから始めてみてください。</p></section>
+<ul class="cards gate">
+<li><a class="t" href="/kouho/">区議選2027 →</a>立候補予定者{len(cands)}人（定数{el['seats']}）。政党の公認状況、報道、過去{NE}回の結果とグラフ。</li>
+<li><a class="t" href="/kucho/">区長選2027 →</a>立候補予定者{len(kc_cands)}人、現在の区長の状況、報道、過去の結果。</li>
+<li><a class="t" href="/touhyou/">投票ガイド →</a>期日前投票、入場券をなくしたとき、投票できる人。</li>
+</ul>
+{say("前回の2023年は、区議選と区長選を同じ日に投票したよ。気になるほうのページを開いてみてね。")}
+<section id="news"><h2>更新情報</h2><ul class="news">{news}</ul></section>
+<section><h2>公式の情報へのリンク</h2><ul>{links}</ul></section>
+"""
     ld = {"@context": "https://schema.org", "@type": "WebSite", "name": SITE_NAME, "url": SITE_URL + "/", "inLanguage": "ja"}
     write("/", layout("/", "文京区議会議員選挙2027 立候補予定者まとめ｜文京区議選ナビ2027",
                       f"2027年4月の文京区議会議員選挙（定数{el['seats']}）の立候補予定者{len(cands)}人を、政党の公認発表など公開情報だけで一覧に。過去の結果と投票ガイドも。",
@@ -394,6 +421,15 @@ def cand_links(c):
     return out
 
 
+def party_section():
+    prow = []
+    for p in cand_data["parties"]:
+        nt = f'<a href="{E(p["source"])}" rel="noopener" target="_blank">{E(p["note"])}</a>' if p["source"] else E(p["note"])
+        prow.append(f"<tr><th scope=row>{E(p['party'])}</th><td class='n'>{E(p['count'])}</td><td>{nt}</td></tr>")
+    return f'''<section id="party"><h2>政党の公認状況</h2><p class="note">各党の公式発表で確認できた範囲です。</p>
+<div class="tbl"><table><tbody>{''.join(prow)}</tbody></table></div></section>'''
+
+
 def page_kouho():
     cards = []
     for c in incumbents:
@@ -415,7 +451,7 @@ def page_kouho():
 <p class="note">掲載されていない方も立候補する可能性があります。</p>
 {votematch_html(cand_data)}<section><h2>区議選に関する報道</h2>
 <p class="note">文京区議選の情勢などを伝える報道機関の記事です。</p>{article_list(cand_data.get('articles', []))}</section>
-<section id="kekka"><h2>過去の文京区議選の結果（公式・{Y0}〜{Y1}年）</h2>{kekka_html()}</section>"""
+{party_section() if TOP_V2 else ""}<section id="kekka"><h2>過去の文京区議選の結果（公式・{Y0}〜{Y1}年）</h2>{kekka_html()}</section>"""
     write("/kouho/", layout("/kouho/", "文京区議会議員選挙2027 立候補予定者と過去の結果",
                             f"文京区議会議員選挙（2027年4月予定）の立候補予定者{len(cands)}人の一覧。党派・公式リンク・出典・確認日つき。過去{NE}回（{Y0}〜{Y1}年）の公式結果も。",
                             body, crumbs=[(None, "区議選")], active="/kouho/"))
