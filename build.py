@@ -269,8 +269,9 @@ def page_index():
     chips = "".join(f'<li><a href="/kouho/{c["slug"]}/">{E(c["name"])}</a></li>' for c in cands)
     prow = []
     for p in cand_data["parties"]:
-        s = f'<a href="{E(p["source"])}" rel="noopener" target="_blank">出典</a>' if p["source"] else "—"
-        prow.append(f"<tr><th scope=row>{E(p['party'])}</th><td class='n'>{E(p['count'])}</td><td>{E(p['note'])}</td><td>{s}</td></tr>")
+        # 「出典」の列はやめ、公認情報の文そのものを出典へのリンクにする（2026-10-28 先生の指示）
+        nt = f'<a href="{E(p["source"])}" rel="noopener" target="_blank">{E(p["note"])}</a>' if p["source"] else E(p["note"])
+        prow.append(f"<tr><th scope=row>{E(p['party'])}</th><td class='n'>{E(p['count'])}</td><td>{nt}</td></tr>")
     news = "".join(f"<li><time>{E(n['date'])}</time>{E(n['text'])}</li>" for n in cand_data["news"])
     links = "".join(f'<li><a href="{E(l["url"])}" rel="noopener" target="_blank">{E(l["label"])}</a></li>' for l in cand_data["links"])
     el = cand_data["election"]
