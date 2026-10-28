@@ -366,7 +366,7 @@ def page_kouho():
     cards = []
     for c in incumbents:
         lk = " ".join(cand_links(c))
-        op = '<span class="tag">運営者</span>' if c.get("operator") else ""
+        op = ""  # 運営者も皆さんと同じ形で並べる（2026-10-28 先生の指示。運営者であることは「このサイトについて」で説明）
         cards.append(f"""<li class="card fade"><div class="top"><span class="st st-cur">現職</span>{party_html(c)}{op}</div>
 <div class="nm"><a href="/kouho/{c['slug']}/">{E(c['name'])}</a></div><div class="kana">{E(c['kana'])}</div>{terms_html(c)}
 {interview_html(c)}{f'<div class="ln">{lk}</div>' if lk else ''}
@@ -450,7 +450,7 @@ def page_candidate(c):
     if any(e["year"] == 2023 for e, _ in c["hist"]):
         hist += f'<p class="note">2023年の選挙のときの本人の主張は、文京区選挙管理委員会が公開している<a href="{KOHO_2023}" rel="noopener" target="_blank">選挙公報（PDF・約9MB・全候補分）</a>で読めます。</p>'
     hist += '<p class="note">このサイトでは、文京区議選の公式結果だけを掲載しています。ほかの選挙への立候補歴は扱っていません。</p>'
-    who = "このサイトの運営者です。" if c.get("operator") else ""
+    who = ""  # 運営者も皆さんと同じ形にする（2026-10-28）
     st = c.get("statement")
     extra = ""
     if c.get("terms"):
