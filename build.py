@@ -3,6 +3,7 @@
 データの更新は data/ を直し、このスクリプトで作り直す（ページを直接書き換えない）。
 """
 import json, html, pathlib, unicodedata
+import robo  # とうひょうくん（ヒョウ柄の投票箱ロボ）の絵
 from collections import defaultdict
 
 ROOT = pathlib.Path(__file__).parent
@@ -110,7 +111,12 @@ svg text{fill:var(--fg);font-size:13px}svg .ax{stroke:var(--ln)}svg .lnx{stroke:
 .all{list-style:none;padding:0;margin:8px 0}.all li>span:last-child{text-align:right;font-variant-numeric:tabular-nums}.all li{display:grid;grid-template-columns:2.4em 1fr 5.2em;gap:6px;align-items:center;font-size:12px;line-height:1.25;color:var(--mu)}
 .all .t{height:7px;background:var(--ac2);border-radius:3px;position:relative}.all .t i{display:block;height:100%;border-radius:3px;background:var(--gr)}.all li.win .t i{background:var(--ac)}
 .all li.me{color:var(--fg);font-weight:700}.all li.me .t i{background:var(--nw)}.all li.cut{display:block;border-top:2px dashed var(--nw);margin:4px 0 2px;padding-top:2px;font-size:11px;line-height:1.4;color:var(--nw)}
-.pg{list-style:none;padding:0;margin:8px 0}.pg>li{padding:8px 0;border-bottom:1px solid var(--ln)}.pg .pn{font-weight:700;margin-bottom:4px}.pg>li.ind{border:2px dashed var(--mu);border-radius:10px;padding:10px 12px;margin-top:14px}.pg>li.ind .t i{background:var(--mu)}.pg>li.ind .note{margin:0 0 6px}
+.pg{list-style:none;padding:0;margin:8px 0}.pg>li{padding:8px 0;border-bottom:1px solid var(--ln)}.say{display:flex;gap:10px;align-items:flex-end;margin:6px 0 14px}.say svg{flex:0 0 58px;width:58px;height:76px}
+.bub{position:relative;background:var(--ac2);border:1.5px solid var(--ln);border-radius:14px;padding:9px 13px;font-size:14px;line-height:1.7}
+.bub:before{content:"";position:absolute;left:-9px;bottom:18px;border:8px solid transparent;border-right-color:var(--ln);border-left:0}
+.bub:after{content:"";position:absolute;left:-6px;bottom:19px;border:7px solid transparent;border-right-color:var(--ac2);border-left:0}
+.bub .nm{display:block;font-size:12px;font-weight:700;color:var(--ac)}
+.pg .pn{font-weight:700;margin-bottom:4px}.pg>li.ind{border:2px dashed var(--mu);border-radius:10px;padding:10px 12px;margin-top:14px}.pg>li.ind .t i{background:var(--mu)}.pg>li.ind .note{margin:0 0 6px}
 tr.ind-sep td{border-top:2px dashed var(--mu);font-size:12px;color:var(--mu);padding-top:10px}tr.ind th,tr.ind td{background:var(--ac2)}.pg .hb li{grid-template-columns:4em 1fr;gap:0 10px;padding:3px 0}.pg .hb .t{margin-right:0}.pg .pv{grid-column:2;font-size:12px;color:var(--mu)}.pg .pv b{color:var(--fg);font-size:13px}.vb .cap{font-size:13px;color:var(--mu)}.vb .cap strong{color:var(--fg);font-size:15px}
 .lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--mu)}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}.lg i.dash{width:0;height:14px;border-left:2px dashed var(--nw);border-radius:0}
 .duel{margin:14px 0 18px}.duel .yr{font-weight:700;font-size:15px;margin-bottom:4px}.duel .tr{display:flex;height:34px;border-radius:6px;overflow:hidden}
@@ -210,6 +216,17 @@ Y0, Y1, NE = elections[0]["year"], elections[-1]["year"], len(elections)
 TERMS = cand_data.get("terms_source")
 
 
+_SAY = [0]
+
+
+def say(text):
+    """とうひょうくんが説明する吹き出し。使い方や数字の読み方の説明だけに使う
+    （特定の候補や政党をほめたり、すすめたりしない。1ページに3か所まで）。"""
+    _SAY[0] += 1
+    return (f'<div class="say"><svg viewBox="0 0 64 84" role="img" aria-label="とうひょうくん（ヒョウ柄の投票箱のキャラクター）">'
+            f'{robo.robot(f"s{_SAY[0]}")}</svg><div class="bub"><span class="nm">とうひょうくん</span>{text}</div></div>')
+
+
 def party_html(c):
     """党派。推薦などは政党の所属ではない参考情報なので、点線の枠で別に示す。"""
     en = f'<span class="endorse">{E(c["endorse"])}</span>' if c.get("endorse") else ""
@@ -262,7 +279,7 @@ def page_index():
 <p class="lead">政党の公認発表など、公開されている情報だけで作った一覧です。すべてに出典と確認日を付けています。</p>
 <div class="facts"><div>投票日 <b>{E(el['date_note'])}</b></div><div>定数 <b>{el['seats']}</b></div><div>掲載中の予定者 <b>{len(cands)}人</b></div></div></div>
 <section><h2>挑戦者（現職ではない立候補予定者・{len(challengers)}人）</h2>
-<p class="note">現職に比べて知られる機会が少ないため、本人の公表や政党の発表から、経歴や本人の言葉を紹介しています。敬称略。全員同じ基準です。並び順は開くたびに入れ替わります。</p>
+{say("挑戦者（いまは議員ではない人）は、現職より知られる機会が少ないよね。だから、本人の公表や政党の発表から、経歴や本人の言葉を紹介しているよ。基準は全員同じで、並び順は開くたびに入れ替わるよ。名前は敬称略だよ。")}
 <ul class="grid shuffle">{''.join(challenger_card(c) for c in challengers)}{open_card()}</ul></section>
 <ul class="cards">
 <li><a class="t" href="/kouho/">区議選2027</a>立候補予定者{len(cands)}人の一覧（出典と確認日つき）、報道、過去{NE}回の結果とグラフ。</li>
@@ -340,7 +357,7 @@ def unconfirmed_html():
         return ""
     chips = "".join(f'<li><span>{E(m["name"])}<span class="muted">（当選{m["terms"]}回）</span></span></li>' for m in ms)
     return f"""<section><h2>立候補の意向をまだ確認できていない現職議員（{len(ms)}人）</h2>
-<p class="note">現在の文京区議会議員のうち、上の一覧に載っていない方です。立候補予定者ではありません。意向が確認でき次第、上の一覧に移します。引退を表明された方は、この欄から外します。敬称略。並び順は開くたびに入れ替わります。</p>
+{say("ここに並んでいるのは、いまの区議会議員で、次の選挙に出るかどうかが、まだわからない人たちだよ。立候補予定者ではないから注意してね。出るとわかったら上の一覧に移すし、引退を表明したらこの欄から外すよ。名前は敬称略で、並び順は開くたびに入れ替わるよ。")}
 <ul class="chips shuffle unc">{chips}</ul>
 <p class="src">出典：{src_link(UNC)}　当選回数：{src_link(TERMS)}</p></section>"""
 
@@ -374,10 +391,10 @@ def page_kouho():
     body = f"""<div class="hero"><h1>文京区議会議員選挙2027 立候補予定者一覧</h1>
 <p class="lead">{len(cands)}人（挑戦者{len(challengers)}人・現職{len(incumbents)}人）。敬称略。並び順は開くたびに入れ替わります。本人の公表や政党の発表があり次第、追加します。</p></div>
 <section><h2>挑戦者（{len(challengers)}人）</h2>
-<p class="note">現職ではない立候補予定者です。現職に比べて知られる機会が少ないため、本人の公表や政党の発表から、経歴や本人の言葉を厚めに紹介しています。全員同じ基準です。</p>
+{say("挑戦者（いまは議員ではない人）は、現職より知られる機会が少ないよね。だから、本人の公表や政党の発表から、経歴や本人の言葉を厚めに紹介しているよ。基準は全員同じだよ。")}
 <ul class="grid shuffle">{''.join(challenger_card(c) for c in challengers)}{open_card()}</ul></section>
 <section><h2>現職（{len(incumbents)}人）</h2>
-<p class="note">氏名は、選挙で使われている表記（選挙ドットコムや政党の発表などの表記）を優先しています。当選回数は{src_link(TERMS)}によります。点線の枠は推薦などの参考情報で、政党の所属ではありません。</p>
+<p class="note">氏名は、選挙で使われている表記（選挙ドットコムや政党の発表などの表記）を優先しています。当選回数は{src_link(TERMS)}によります。</p>
 <ul class="grid shuffle">{''.join(cards)}</ul></section>
 {unconfirmed_html()}
 <p class="note">掲載されていない方も立候補する可能性があります。</p>
@@ -535,7 +552,7 @@ def kekka_html():
     ylinks = "".join(f'<li><a href="/kekka/{e["year"]}/">{E(e["label"])}の全候補の得票</a></li>' for e in reversed(elections))
     srcs = "、".join(f'<a href="{E(e["source"])}" rel="noopener" target="_blank">{e["year"]}年</a>' for e in NEWEST_FIRST)
     first, last = elections[0], elections[-1]
-    body = f"""<p class="note">文京区選挙管理委員会が公表した{NE}回分（{Y0}〜{Y1}年）の結果を、グラフと表にまとめました。今回の予想ではなく、過去の公式の数字です。表と棒グラフは新しい選挙が上です。</p>
+    body = f"""{say(f"区の選挙管理委員会が発表した、{Y0}年から{Y1}年までの{NE}回の結果をまとめたよ。次の選挙の予想じゃなくて、本当にあった数字だよ。表と棒グラフは、新しい選挙が上に来るように並べたよ。")}
 <section><h2>{NE}回の比較</h2><div class="tbl"><table><thead><tr><th>選挙</th><th class="n">候補者</th><th class="n">定数</th><th class="n">倍率</th><th class="n">投票率</th><th class="n">有権者数</th><th class="n">最下位当選の得票</th><th class="n">次点の得票</th><th class="n">差</th></tr></thead><tbody>{overview}</tbody></table></div>
 <p class="note">倍率＝候補者数÷定数。得票数は公式の数字で、按分票による小数点以下を含みます（「差」は小数点以下を四捨五入）。2003年の有権者数は、2007年の結果ページの「前回」欄の数字です。</p></section>
 <section><h2>投票率の推移</h2><div class="chart">{turnout_svg}<p class="note">縦軸は40〜60%です。左が古い選挙、右が新しい選挙です。</p></div></section>
@@ -740,7 +757,7 @@ def page_kucho():
 <p class="lead">区議選と同じ基準で、公開されている情報だけをまとめています。すべてに出典と確認日を付けています。</p>
 <div class="facts"><div>投票日 <b>{E(el['date_note'])}</b></div><div>区長の任期満了 <b>2027年4月26日</b></div><div>立候補予定者 <b>{len(kc_cands)}人</b></div></div></div>
 <section><h2>立候補予定者（{len(kc_cands)}人・敬称略）</h2>
-<p class="note">本人の公表や会見の報道などで、区長選への立候補の意向が確認できた方です。全員同じ基準で紹介しています。並び順は開くたびに入れ替わります。</p>
+{say("ここは、本人の公表や会見の報道などで、区長選に出る意向が確かめられた人だよ。全員同じ基準で紹介していて、並び順は開くたびに入れ替わるよ。")}
 <ul class="grid shuffle">{cards}</ul></section>
 <section><h2>現在の区長</h2><div class="box"><p><b>{E(m['name'])}</b>（{E(m['kana'])}）<br>{E(m['note'])}</p>
 <p>{E(m['intention'])}</p><ul class="prof">{msrc}</ul><a class="fix" href="{E(teisei_href(m['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></div>
