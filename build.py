@@ -110,7 +110,8 @@ svg text{fill:var(--fg);font-size:13px}svg .ax{stroke:var(--ln)}svg .lnx{stroke:
 .all{list-style:none;padding:0;margin:8px 0}.all li{display:grid;grid-template-columns:2.4em 1fr 5.2em;gap:6px;align-items:center;font-size:12px;line-height:1.25;color:var(--mu)}
 .all .t{height:7px;background:var(--ac2);border-radius:3px;position:relative}.all .t i{display:block;height:100%;border-radius:3px;background:var(--gr)}.all li.w .t i{background:var(--ac)}
 .all li.me{color:var(--fg);font-weight:700;font-size:14px;padding:3px 0}.all li.me .t{height:12px}.all li.me .t i{background:var(--nw)}.all li.cut{display:block;border-top:2px dashed var(--nw);margin:3px 0;font-size:11px;color:var(--nw)}
-.pg{list-style:none;padding:0;margin:8px 0}.pg>li{padding:8px 0;border-bottom:1px solid var(--ln)}.pg .pn{font-weight:700;margin-bottom:4px}.pg .hb li{grid-template-columns:4em 1fr;gap:0 10px;padding:3px 0}.pg .hb .t{margin-right:0}.pg .pv{grid-column:2;font-size:12px;color:var(--mu)}.pg .pv b{color:var(--fg);font-size:13px}.vb .cap{font-size:13px;color:var(--mu)}.vb .cap strong{color:var(--fg);font-size:15px}
+.pg{list-style:none;padding:0;margin:8px 0}.pg>li{padding:8px 0;border-bottom:1px solid var(--ln)}.pg .pn{font-weight:700;margin-bottom:4px}.pg>li.ind{border:2px dashed var(--mu);border-radius:10px;padding:10px 12px;margin-top:14px}.pg>li.ind .t i{background:var(--mu)}.pg>li.ind .note{margin:0 0 6px}
+tr.ind-sep td{border-top:2px dashed var(--mu);font-size:12px;color:var(--mu);padding-top:10px}tr.ind th,tr.ind td{background:var(--ac2)}.pg .hb li{grid-template-columns:4em 1fr;gap:0 10px;padding:3px 0}.pg .hb .t{margin-right:0}.pg .pv{grid-column:2;font-size:12px;color:var(--mu)}.pg .pv b{color:var(--fg);font-size:13px}.vb .cap{font-size:13px;color:var(--mu)}.vb .cap strong{color:var(--fg);font-size:15px}
 .lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--mu)}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}.lg i.dash{width:0;height:14px;border-left:2px dashed var(--nw);border-radius:0}
 .duel{margin:14px 0 18px}.duel .yr{font-weight:700;font-size:15px;margin-bottom:4px}.duel .tr{display:flex;height:34px;border-radius:6px;overflow:hidden}
 .duel .tr i{display:block;height:100%}.duel .tr i:nth-child(1){background:var(--ac)}.duel .tr i:nth-child(2){background:var(--nw)}.duel .tr i:nth-child(3){background:var(--gr)}
@@ -514,7 +515,11 @@ def kekka_html():
     prow = []
     for p in allp:
         cells = "".join(f'<td class="n">{st[p][y][1]}／{st[p][y][0]}</td>' if y in st[p] else '<td class="n muted">—</td>' for y in ys)
-        prow.append(f"<tr><th scope=row>{E(p)}</th>{cells}</tr>")
+        if p == "無所属":  # 無所属は政党ではないので、区切って参考値として示す（2026-10-28 先生の指示）
+            prow.append(f'<tr class="ind-sep"><td colspan="{len(ys) + 1}">▼ 参考：無所属は政党ではありません。無所属で立候補した人の人数を足した参考値です。</td></tr>')
+            prow.append(f'<tr class="ind"><th scope=row>無所属（参考）</th>{cells}</tr>')
+        else:
+            prow.append(f"<tr><th scope=row>{E(p)}</th>{cells}</tr>")
     same = [p for p in allp if all(y in st[p] for y in ys)]
     srow, pgl = [], []
     smax = max(st[p][y][2] for p in same for y in ys)
@@ -522,7 +527,10 @@ def kekka_html():
         cells = "".join(f'<td class="n">当選 {st[p][y][1]}／候補 {st[p][y][0]}<br>得票合計 {st[p][y][2]:,.0f}</td>' for y in ys)
         srow.append(f"<tr><th scope=row>{E(p)}</th>{cells}</tr>")
         bars = "".join(f'<li><span>{y}年</span><span class="t"><i class="grow" style="width:{st[p][y][2] / smax * 100:.1f}%"></i></span><span class="pv"><b>{st[p][y][2]:,.0f}票</b>　当選{st[p][y][1]}人／候補{st[p][y][0]}人</span></li>' for y in ys)
-        pgl.append(f'<li><div class="pn">{E(p)}</div><ul class="hb">{bars}</ul></li>')
+        if p == "無所属":
+            pgl.append(f'<li class="ind"><div class="pn">無所属（参考）</div><p class="note">政党ではありません。無所属で立候補した一人ひとりの得票を足した参考値です。</p><ul class="hb">{bars}</ul></li>')
+        else:
+            pgl.append(f'<li><div class="pn">{E(p)}</div><ul class="hb">{bars}</ul></li>')
     head = "".join(f'<th class="n">{y}年</th>' for y in ys)
     ylinks = "".join(f'<li><a href="/kekka/{e["year"]}/">{E(e["label"])}の全候補の得票</a></li>' for e in reversed(elections))
     srcs = "、".join(f'<a href="{E(e["source"])}" rel="noopener" target="_blank">{e["year"]}年</a>' for e in NEWEST_FIRST)
