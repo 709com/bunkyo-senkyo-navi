@@ -493,14 +493,14 @@ def kekka_html():
     st = party_stats()
     overview = "".join(f"""<tr><th scope=row><a href="/kekka/{e['year']}/">{E(e['label'])}</a></th><td class="n">{e['candidates']}人</td><td class="n">{e['seats']}</td><td class="n">{e['ratio']:.2f}倍</td><td class="n">{e['turnout']:.2f}%</td><td class="n">{e['electorate']:,}</td><td class="n">{fv(e['last_win']['votes'])}</td><td class="n">{fv(e['next']['votes'])}</td><td class="n">{e['gap']:,.0f}</td></tr>""" for e in NEWEST_FIRST)
     turnout_svg = line_chart([(e["year"], e["turnout"]) for e in elections], 40, 60, 5, "%", "文京区議選の投票率の推移")
-    # 最下位当選と次点を1本の棒に重ねる（緑＝最下位当選、橙＝次点。緑だけの部分が差）
+    # 最下位当選の得票を棒、次点の得票を点線で示す（立候補者数のグラフと同じ形。2026-10-28 先生の指示）
     top = max(e["last_win"]["votes"] for e in elections) * 1.1
     lw = []
     for e in NEWEST_FIRST:
         lw.append(f"""<li><div class="yr"><a href="/kekka/{e['year']}/">{e['year']}年</a></div>
-<div class="tr"><i class="grow" style="width:{e['last_win']['votes'] / top * 100:.1f}%"></i><i class="grow ov" style="width:{e['next']['votes'] / top * 100:.1f}%"></i></div>
+<div class="tr"><i class="grow" style="width:{e['last_win']['votes'] / top * 100:.1f}%"></i><b class="sq" style="left:{e['next']['votes'] / top * 100:.1f}%"></b></div>
 <div class="cap">最下位当選 <strong>{fv(e['last_win']['votes'])}票</strong>　次点 <strong>{fv(e['next']['votes'])}票</strong>　差 {e['gap']:,.0f}票</div></li>""")
-    lastwin = f'<ul class="vb">{"".join(lw)}</ul><div class="lg"><span><i style="background:var(--ac)"></i>最下位で当選した人の得票</span><span><i style="background:var(--nw)"></i>次点（落選した中で最多）の得票</span></div>'
+    lastwin = f'<ul class="vb">{"".join(lw)}</ul><div class="lg"><span><i style="background:var(--ac)"></i>最下位で当選した人の得票</span><span><i class="dash" style="border-color:var(--fg)"></i>次点（落選した中で最多）の得票</span></div>'
     # 立候補者数の棒に、定数を点線で重ねる
     cmax = max(e["candidates"] for e in elections) * 1.1
     cbl = []
@@ -532,7 +532,7 @@ def kekka_html():
 <p class="note">倍率＝候補者数÷定数。得票数は公式の数字で、按分票による小数点以下を含みます（「差」は小数点以下を四捨五入）。2003年の有権者数は、2007年の結果ページの「前回」欄の数字です。</p></section>
 <section><h2>投票率の推移</h2><div class="chart">{turnout_svg}<p class="note">縦軸は40〜60%です。左が古い選挙、右が新しい選挙です。</p></div></section>
 <section><h2>何票で当選したか（最下位当選と次点）</h2><div class="chart">{lastwin}
-<p class="note">1本の棒に、最下位で当選した人（緑）と次点の人（橙）の得票を重ねています。緑だけの部分が、当落を分けた差です。</p></div></section>
+<p class="note">棒が最下位で当選した人の得票、点線が次点の人の得票です。点線から棒の先までが、当落を分けた差です。</p></div></section>
 <section><h2>立候補者数と定数</h2><div class="chart">{candbars}<p class="note">点線が定数（{NE}回とも34）です。棒が点線より長い分だけ、落選する人が出ます。</p></div></section>
 <section><h2>党派別の当選者数と候補者数</h2><p class="note">「当選／候補」の人数です。党派名は当時の公式の表記のままで、名称が変わった党は別の行に分かれています（合算していません）。</p>
 <div class="tbl"><table><thead><tr><th>党派</th>{head}</tr></thead><tbody>{''.join(prow)}</tbody></table></div></section>
