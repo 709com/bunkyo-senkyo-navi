@@ -11,6 +11,8 @@ OUT = ROOT / "public"
 SITE_URL = "https://bunkyo-senkyo.jp"
 # True の間は検索エンジンに載せない（noindex）。本格公開するときに False にして build → push
 NOINDEX = True
+# 区長選の立候補予定者の個人ページ（2026-10-28 試作。先生のOKが出たら True にする）
+KUCHO_PAGES = False
 SITE_NAME = "文京区議選ナビ2027"
 # 訂正・削除・苦情の受付（Googleフォーム。先生のアカウントで作成、2026-10-27）
 # 迷惑メール対策のため、メールアドレスはサイトに出さない。
@@ -168,12 +170,12 @@ def layout(path, title, desc, body, crumbs=None, jsonld=None, active=None):
 <style>{CSS}</style></head>
 <body>
 <header class="site"><div class="w"><a class="brand" href="/">{SITE_NAME}</a><nav class="main">{nav}</nav></div></header>
-<div class="notice"><div class="w">公式サイトではありません。運営者が公開情報から集めた範囲で、運営者の責任で掲載しています。<a class="btn" href="/teisei/">訂正・削除・苦情の受付</a></div></div>
+<div class="notice"><div class="w">このサイトは文京区、文京区議会、選挙管理委員会等の公式サイトではありません。公開情報から集めた範囲で運営者の責任において掲載しています。<a class="btn" href="/teisei/">訂正・削除・苦情の受付</a></div></div>
 <main class="w">{cr}{body}</main>
 <footer class="site"><div class="w">
 <p><a class="btn" href="/teisei/">掲載内容の訂正・削除・苦情はこちら</a></p>
 <p>運営：たかはま なおき（文京区議会議員）／連絡先：{CONTACT}<br>
-このサイトは文京区・文京区議会・文京区選挙管理委員会の公式サイトではありません。運営者が公開情報から集めた範囲で、運営者の責任において掲載しています。<br>
+このサイトは文京区、文京区議会、選挙管理委員会等の公式サイトではありません。公開情報から集めた範囲で運営者の責任において掲載しています。<br>
 最終更新 {E(UPDATED)}</p></div></footer>
 {SHUFFLE_JS}
 {MOTION_JS}
@@ -781,7 +783,7 @@ def page_kucho():
         more = "".join(f'<br>ほか {E(x["name"])} {x["votes"]:,}票（{x["votes"] / tot * 100:.1f}%）' for x in xs[2:])
         duels.append(f"""<div class="duel"><div class="yr">{E(r['label'])}</div><div class="tr grow">{segs}</div>
 <div class="nm2">{names}</div><div class="gap">1位と2位の差 {xs[0]['votes'] - xs[1]['votes']:,}票{more}</div></div>""")
-    cards = "".join(challenger_card(c, base=None) for c in kc_cands) or '<li class="card">まだいません。</li>'
+    cards = "".join(challenger_card(c, base="/kucho/" if KUCHO_PAGES else None) for c in kc_cands) or '<li class="card">まだいません。</li>'
     body = f"""<div class="hero"><h1>文京区長選挙2027</h1>
 <p class="lead">区議選と同じ基準で、公開されている情報だけをまとめています。すべてに出典と確認日を付けています。</p>
 <div class="facts"><div>投票日 <b>{E(el['date_note'])}</b></div><div>区長の任期満了 <b>2027年4月26日</b></div><div>立候補予定者 <b>{len(kc_cands)}人</b></div></div></div>
@@ -801,6 +803,52 @@ def page_kucho():
     write("/kucho/", layout("/kucho/", "文京区長選挙2027 立候補予定者と過去の結果",
                             f"2027年4月の文京区長選挙の立候補予定者{len(kc_cands)}人、現在の区長の状況、報道、過去4回（2011〜2023年）の公式結果。出典と確認日つき。",
                             body, crumbs=[(None, "区長選")], active="/kucho/"))
+    if KUCHO_PAGES:
+        for c in kc_cands:
+            page_kucho_candidate(c)
+
+
+def page_kucho_candidate(c):
+    """区長選の立候補予定者の個人ページ（2026-10-28 先生の指示）。区議選の候補者ページと同じ基準・同じ順番で作る。"""
+    lk = cand_links(c)
+    st = c.get("statement")
+    extra = ""
+    if st:
+        extra += f'<dt>本人の言葉</dt><dd>「{E(st["text"])}」（{src_link(st)}）</dd>'
+    if c.get("profile"):
+        extra += "<dt>経歴など</dt><dd><ul class=\"prof\">" + "".join(f'<li>{E(p["text"])}<span class="muted">（{src_link(p)}）</span></li>' for p in c["profile"]) + "</ul></dd>"
+    if lk:
+        extra += f'<dt>公式サイト・SNS</dt><dd>{"　".join(lk)}</dd>'
+    # 過去の文京区長選（公式・新しい順）
+    rn = {n.replace(" ", "") for n in c.get("result_names", [])}
+    kh = [(r, x) for r in reversed(kc_results) for x in r["rows"] if x["name"].replace(" ", "") in rn]
+    if kh:
+        rows = "".join(f'<tr><td>{r["year"]}年</td><td>{E(x["party"])}</td><td class="n">{x["votes"]:,}</td><td>{"当選" if x["elected"] else "落選"}</td></tr>' for r, x in kh)
+        kucho_hist = f'''<div class="tbl"><table><thead><tr><th>選挙</th><th>当時の党派</th><th class="n">得票数</th><th>結果</th></tr></thead><tbody>{rows}</tbody></table></div>
+<p class="note">文京区選挙管理委員会が公表した結果です。党派は当時の届出の表記です。全候補の得票は<a href="/kucho/">区長選のページ</a>にあります。</p>'''
+    else:
+        kucho_hist = f'<p class="note">{kc_results[0]["year"]}〜{kc_results[-1]["year"]}年の文京区長選の公式結果に、該当する届出名は見つかりませんでした。</p>'
+    # 過去の文京区議選（公式・新しい順）
+    gh = [(e, r) for e in reversed(elections) for r in e["rows"] if r["name"].replace(" ", "") in rn]
+    gikai_hist = ""
+    if gh:
+        rows = "".join(f'<tr><td><a href="/kekka/{e["year"]}/">{e["year"]}年</a></td><td>{E(r["party"])}</td><td class="n">{fv(r["votes"])}</td><td class="n">{r["rank"]}位／{e["candidates"]}人</td><td>{"当選" if r["elected"] else "落選"}</td></tr>' for e, r in gh)
+        gikai_hist = f'''<section><h2>過去の文京区議選の結果（公式・新しい順）</h2><div class="tbl"><table><thead><tr><th>選挙</th><th>当時の党派</th><th class="n">得票数</th><th class="n">順位</th><th>結果</th></tr></thead><tbody>{rows}</tbody></table></div>
+<p class="note">文京区選挙管理委員会が公表した結果です（{Y0}年以降）。党派は当時の届出の表記です。</p></section>'''
+    body = f"""<div class="hero"><h1>{E(c['name'])}（{stl(c)}）</h1>
+<p class="lead">{E(c['kana'])}｜{E(party_text(c))}｜文京区長選挙2027の立候補予定者</p></div>
+<section><h2>基本情報</h2><dl class="kv">
+<dt>党派</dt><dd>{party_html(c)}</dd><dt>区分</dt><dd>{'現職の区長' if c['status']=='現' else '挑戦者（新人の立候補予定者）'}</dd>
+{extra}<dt>掲載の根拠</dt><dd>{src_link(c)}</dd></dl>
+<p class="note">立候補を正式に表明しているかは「掲載の根拠」のとおりです。</p><a class="fix" href="{E(teisei_href(c['name']))}" rel="noopener" target="_blank">この掲載の訂正・削除を依頼</a></section>
+<section><h2>過去の文京区長選の結果（公式・新しい順）</h2>{kucho_hist}</section>
+{gikai_hist}
+<p class="note">このサイトでは、文京区長選と文京区議選の公式結果だけを掲載しています。ほかの選挙への立候補歴は扱っていません。</p>
+<p><a href="/kucho/">← 区長選の立候補予定者の一覧にもどる</a></p>"""
+    p = f"/kucho/{c['slug']}/"
+    write(p, layout(p, f"{c['name']}（{party_text(c)}）文京区長選挙2027",
+                    f"{c['name']}（{party_text(c)}・{stl(c)}）の基本情報、公式リンク、過去の文京区長選・区議選の結果。出典と確認日つき。",
+                    body, crumbs=[("/kucho/", "区長選"), (None, c["name"])], active="/kucho/"))
 
 
 # ------------------------------------------------------------ 訂正・削除・苦情の受付
@@ -808,7 +856,7 @@ def page_teisei():
     how = f"""<p><a class="btn" style="font-size:17px;padding:12px 20px" href="{E(FORM_URL)}" rel="noopener" target="_blank">受付フォームを開く</a></p>
 <p class="note">Googleフォームが開きます。Googleへのログインは不要です。ご用件と内容だけで送れます（お名前・ご連絡先は任意）。各候補の欄にある「この掲載の訂正・削除を依頼」から開くと、対象の欄にその方のお名前が入った状態で開きます。</p>"""
     body = f"""<div class="hero"><h1>訂正・削除・苦情の受付</h1>
-<p class="lead">このサイトは公式サイトではなく、運営者が公開情報から集めた範囲で、運営者の責任において掲載しています。誤りのご指摘、掲載の削除のご依頼、苦情やご意見を、どなたからでも受け付けます。</p></div>
+<p class="lead">このサイトは文京区、文京区議会、選挙管理委員会等の公式サイトではありません。公開情報から集めた範囲で運営者の責任において掲載しています。誤りのご指摘、掲載の削除のご依頼、苦情やご意見を、どなたからでも受け付けます。</p></div>
 <section><h2>受付</h2>{how}</section>
 <section><h2>対応の方針</h2><div class="box"><ul>
 <li><b>ご本人からの削除のご依頼</b>：ご本人であることを確認できたものは、原則としてすぐに掲載を取り下げます。</li>
@@ -846,21 +894,23 @@ FAQ = [
 def page_about():
     faq = "".join(f"<details><summary>{E(q)}</summary><p>{E(a.replace('{STALE_DAYS}', str(STALE_DAYS)))}</p></details>" for q, a in FAQ)
     faq = faq.replace("受付フォーム", f'<a href="{E(FORM_URL)}" rel="noopener" target="_blank">受付フォーム</a>', 1).replace("「投票ガイド」", '<a href="/touhyou/">「投票ガイド」</a>', 1)
-    body = f"""<div class="hero"><h1>このサイトについて</h1><p class="lead">よくある質問と、このサイトが何をどういう基準で載せているかの説明です。このサイトは公式サイトではなく、運営者が公開情報から集めた範囲で、運営者の責任において掲載しています。誤りや削除のご依頼は<a href="/teisei/">受付ページ</a>からお寄せください。</p></div>
+    body = f"""<div class="hero"><h1>このサイトについて</h1><p class="lead">よくある質問と、このサイトが何をどういう基準で載せているかの説明です。このサイトは文京区、文京区議会、選挙管理委員会等の公式サイトではありません。公開情報から集めた範囲で運営者の責任において掲載しています。誤りや削除のご依頼は<a href="/teisei/">受付ページ</a>からお寄せください。</p></div>
 <section class="faq"><h2>よくある質問</h2>{faq}</section>
 <section><h2>掲載の基準</h2><div class="box"><ol>
-<li>掲載するのは、本人の公表、政党の公式発表、本人の会見や表明を報じた報道機関の記事のいずれかで確認できた方と、選挙ドットコムの「予想される顔ぶれ」に載っている方です（区議選・区長選とも同じ基準）。後者は「本人の立候補表明は未確認」と明記し、表明を確認でき次第、表記を改めます。うわさや推測では掲載しません。</li>
+<li>掲載するのは、本人の公表、政党の公式発表、本人の会見や表明を報じた報道機関の記事のいずれかで確認できた方と、選挙ドットコムの「予想される顔ぶれ」に載っている方です（区議選・区長選とも同じ基準）。後者は「本人の立候補表明は未確認」と明記し、表明を確認でき次第、表記を改めます。うわさや推測では掲載しません。政党の推薦は、全員について調べきれないため載せず、政党の公認だけを載せます。</li>
 <li>並び順は、ページを開くたびにランダムに入れ替わります。実際の選挙で届出の順番をくじ引きで決めるのにならい、特定の人が常に先頭にならないようにするためです。運営者本人も他の方とまったく同じ形式で掲載しています。</li>
-<li>現職ではない立候補予定者を「挑戦者」として先に紹介し、本人の公表や政党の発表にある経歴・本人の言葉を厚めに載せます。現職に比べて知られる機会が少ないためで、挑戦者は全員同じ基準です。過去の立候補歴は、文京区議選の公式結果だけを載せ、ほかの選挙への立候補歴は扱いません。</li>
+<li>現職ではない立候補予定者（新人）を「挑戦者」として先に紹介し、本人の公表や政党の発表にある経歴・本人の言葉を厚めに載せます。現職は任期中の議会での発言が会議録に残りますが、挑戦者にはその場がありません。有権者が全員を同じくらい知ったうえで選べるようにするためで、挑戦者は全員同じ基準です。</li>
+<li>現職には、区議会の議員名簿にある当選回数と、この任期の本会議での一般質問の動画（文京区議会の公式中継）へのリンクを載せます。載せるのは日付・会議名・リンクだけで、質問の中身の要約や評価はしません。</li>
+<li>過去の立候補歴は、文京区議選（2003年以降）と文京区長選の公式結果だけを載せ、ほかの選挙への立候補歴は扱いません。</li>
 <li>評価・論評・得票予想・順位づけは載せません。</li>
 <li>公約や選挙公報は転載せず、文京区選挙管理委員会の公式のページへのリンクで紹介します。</li>
 <li>公式サイトやSNSへのリンクは、ご本人のものと確かめられたものだけを載せます（なりすまし防止）。</li>
 <li>報道機関の記事は、文京区の区長選・区議選と、その立候補予定者の立候補・支援・公約・経歴に触れたものを、見出しに区名がなくても、特定の候補に有利・不利かを問わず、見つけたものをすべて載せます。載せるのは日付・媒体・見出し（原文のまま）・リンクだけで、要約や論評は付けません。記事の数は報道の量を映したもので、候補の評価ではありません。立候補予定者全員の名前で毎日記事を探し、その記録を残しています。</li>
-<li>すべての情報に、出典と確認日を付けます。定期的に出典を見直して更新します。</li></ol></div></section>
+<li>すべての情報に、出典と確認日を付けます。定期的に出典を見直して更新します。</li>
+<li>説明役の「とうひょうくん」は、サイトの使い方や数字の読み方だけを説明し、特定の候補者や政党が有利になる言い方はしません。</li></ol></div></section>
 <section><h2>過去の結果と投票ガイドについて</h2><p>過去の結果は文京区選挙管理委員会が公表した数字を使い、公式の合計と一致することを確認しています。投票ガイドは文京区・東京都の選挙管理委員会の公式ページを出典としています。</p></section>
-<section><h2>運営者</h2><div class="box"><p>たかはま なおき（文京区議会議員・無所属）<br>このサイトの運営者は、2027年の文京区議会議員選挙の立候補予定者です。そのため、中立であることを最優先にして運営しています。</p>
-<p>誤りのご指摘、掲載・修正・削除のご希望は、受付フォームからお寄せください。確認のうえ、速やかに対応します。<br>連絡先：{CONTACT}</p>
-<p class="muted">このサイトは、文京区・文京区議会・文京区選挙管理委員会の公式サイトではありません。</p></div></section>"""
+<section><h2>運営者</h2><div class="box"><p>たかはま なおき（文京区議会議員）<br>このサイトの運営者は、2027年の文京区議会議員選挙の立候補予定者です。そのため、中立であることを最優先にして運営しています。</p>
+<p>誤りのご指摘、掲載・修正・削除のご希望は、受付フォームからお寄せください。確認のうえ、速やかに対応します。<br>連絡先：{CONTACT}</p></div></section>"""
     write("/about/", layout("/about/", "このサイトについて（よくある質問・掲載基準・運営者）", "文京区議選ナビ2027のよくある質問、掲載基準、情報の出典、運営者と連絡先。運営者は立候補予定者本人で、全員を同じ形式で掲載しています。",
                             body, crumbs=[(None, "このサイトについて")], active="/about/"))
 
