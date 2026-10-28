@@ -890,6 +890,59 @@ def page_kucho_candidate(c):
 
 
 # ------------------------------------------------------------ 選挙コラム
+# 公開済み（または公開予定）のコラム。新しいものを上に足す。date は公開日。
+COLUMNS = [
+    {"slug": "2023-age", "date": "", "title": "20代と70代、投票率はほぼ2倍の差", "lead": "2023年の文京区議選を、年代別に見てみます。"},
+    {"slug": "2023-top", "date": "", "title": "文京区は東京で投票率1位。それでも約8万5千人が投票しなかった", "lead": "2023年の文京区議選の投票率を、東京のほかの区や市と比べます。"},
+]
+KIROKU_R5 = ("文京区選挙管理委員会「令和5年執行 文京区議会議員選挙及び文京区長選挙の記録」", "https://www.city.bunkyo.lg.jp/documents/10880/r5kiroku.pdf")
+TOKYO_TURNOUT = ("東京都選挙管理委員会「区市町村議会議員選挙投票率（統一分）」", "https://www.senkyo.metro.tokyo.lg.jp/election/turnout/kugikai-turnout/")
+
+
+def column_nav(slug):
+    others = "".join(f'<li><a href="/column/{c["slug"]}/">{E(c["title"])}</a></li>' for c in COLUMNS if c["slug"] != slug)
+    return f'<section><h2>ほかのコラム</h2><ul>{others}</ul><p><a href="/column/">選挙コラムの一覧</a>　／　<a href="/">トップにもどる</a></p></section>'
+
+
+def page_column_index():
+    li = "".join(f'<li><a class="t" href="/column/{c["slug"]}/">{E(c["title"])}</a>{E(c["lead"])}</li>' for c in COLUMNS)
+    body = f"""<div class="hero"><h1>選挙コラム</h1><p class="lead">数字で見る文京区の選挙。投票率や投票のしかた、選挙の仕組みを、公式の資料の数字で紹介します。特定の候補者や政党の評価はしません。</p></div>
+<ul class="cards">{li}</ul>"""
+    write("/column/", layout("/column/", "選挙コラム｜数字で見る文京区の選挙", "文京区の選挙の投票率や投票のしかたを、公式の資料の数字で紹介するコラム。", body, crumbs=[(None, "選挙コラム")]))
+
+
+def page_column_top():
+    """コラム：文京区は東京で投票率1位。出典は選挙の記録（はじめに・町丁目別の総数）と都選管。"""
+    k = json.loads((ROOT / "data/kiroku_r5.json").read_text(encoding="utf-8"))
+    tot = k["total"]
+    absent = tot["electorate"] - tot["voters"]
+    tokyo = 44.98  # 都選管：令和5年4月23日 区市町村議会議員選挙（統一分）の投票率
+    top = 60
+    bars = f"""<ul class="vb">
+<li><div class="yr">文京区（区議選）</div><div class="tr"><i class="grow" style="width:{tot['turnout'] / top * 100:.1f}%"></i></div><div class="cap"><strong>{tot['turnout']:.2f}%</strong></div></li>
+<li><div class="yr">東京都内の区市町村議会議員選挙（全体）</div><div class="tr"><i class="grow lo" style="width:{tokyo / top * 100:.1f}%"></i></div><div class="cap"><strong>{tokyo:.2f}%</strong></div></li></ul>"""
+    body = f"""<div class="hero"><p class="note">選挙コラム｜数字で見る文京区の選挙</p><h1>文京区は東京で投票率1位。それでも約8万5千人が投票しなかった</h1>
+<p class="lead">2023年4月の文京区議会議員選挙の投票率を、東京のほかの区や市と比べます。</p></div>
+<div class="turn"><div class="big"><div><span>2023年の区議選の投票率</span><b>{tot['turnout']:.2f}%</b></div><div><span>投票しなかった人</span><b class="no">{absent:,}人</b></div></div></div>
+<section><h2>区議会議員選挙が行われた20区21市の中で1位</h2>
+<p>2023年4月23日の文京区議選の投票率は{tot['turnout']:.2f}%でした。区の選挙管理委員会によると、この日に議会議員選挙が行われた東京の20区21市の中で、いちばん高い投票率でした。統一地方選挙で東京の1位になったのは、初めてです。</p>
+<p>国政選挙でも、文京区は東京の23区26市の中で、12年続けて投票率1位だそうです（2024年3月時点の区の記録による）。</p>
+<div class="chart">{bars}<p class="note">東京都内の区市町村議会議員選挙（統一地方選挙で行われた分）全体の投票率は{tokyo:.2f}%でした。</p></div></section>
+<section><h2>それでも、2人に1人近くが投票していない</h2>
+<p>1位とはいえ、当日の有権者{tot['electorate']:,}人のうち、投票したのは{tot['voters']:,}人です。{absent:,}人、およそ2人に1人近くが投票しませんでした。</p>
+<p>区長選挙も同じ日に行われ、投票率は52.15%でした。</p></section>
+{say("次の区議選と区長選は、2027年4月の予定だよ。投票日や期日前投票の場所が決まったら、このサイトでお知らせするね。")}
+<section><h2>数字の出典</h2><div class="box"><ul>
+<li><a href="{E(KIROKU_R5[1])}" rel="noopener" target="_blank">{E(KIROKU_R5[0])}</a>（「はじめに」、「町丁目別当日有権者数・投票者数・投票率」の総数）。</li>
+<li><a href="{E(TOKYO_TURNOUT[1])}" rel="noopener" target="_blank">{E(TOKYO_TURNOUT[0])}</a>（令和5年4月23日の投票率）。</li>
+<li>このコラムは、投票率と投票のしかたについて書くものです。特定の候補者や政党の評価はしません。</li></ul></div></section>
+{column_nav("2023-top")}"""
+    p = "/column/2023-top/"
+    write(p, layout(p, "文京区は東京で投票率1位。それでも約8万5千人が投票しなかった｜選挙コラム",
+                    f"2023年の文京区議選の投票率{tot['turnout']:.2f}%は、議会議員選挙があった東京の20区21市で1位。それでも{absent:,}人が投票しなかった。",
+                    body, crumbs=[("/column/", "選挙コラム"), (None, "東京で投票率1位")]))
+
+
 def page_column_age():
     """コラム：2023年の区議選を年代別に見る。数字は選管の「選挙の記録」から（tools/import_kiroku.py）。
     投票率と投票のしかただけを扱い、候補者や政党の話はしない。"""
@@ -921,11 +974,11 @@ def page_column_age():
 <li><a href="{E(k['source'])}" rel="noopener" target="_blank">{E(k['source_label'])}</a>（「年齢階層別当日有権者数・投票者数・投票率」の表）。</li>
 <li>20代・70代の投票率は、表の人数（20〜24歳と25〜29歳、70〜74歳と75〜79歳）を足して計算しました。年代ごとの合計は、公表された区全体の人数（有権者{tot['electorate']:,}人、投票者{tot['voters']:,}人）と一致することを確かめています。</li>
 <li>このコラムは、投票率と投票のしかたについて書くものです。特定の候補者や政党の評価はしません。</li></ul></div></section>
-<p><a href="/">← トップにもどる</a></p>"""
+{column_nav("2023-age")}"""
     p = "/column/2023-age/"
     write(p, layout(p, "20代と70代、投票率はほぼ2倍の差｜2023年文京区議選を年代別に見る",
                     f"2023年の文京区議会議員選挙の投票率を年代別に。20代{t20:.1f}%、70代{t70:.1f}%。文京区選挙管理委員会「選挙の記録」より。",
-                    body, crumbs=[(None, "選挙コラム")]))
+                    body, crumbs=[("/column/", "選挙コラム"), (None, "20代と70代")]))
 
 
 # ------------------------------------------------------------ 訂正・削除・苦情の受付
@@ -1015,7 +1068,7 @@ def _out(name):
     return p
 page_index(); page_kouho(); page_kucho(); page_touhyou(); page_teisei(); page_about()
 if COLUMN:
-    page_column_age()
+    page_column_index(); page_column_top(); page_column_age()
 n_pages = len(PAGES)
 _out("404.html").write_text(layout("/404", "ページが見つかりません", "お探しのページは見つかりませんでした。", '<div class="hero"><h1>ページが見つかりません</h1><p><a href="/">トップにもどる</a></p></div>'), encoding="utf-8")
 PAGES.remove("/404")
