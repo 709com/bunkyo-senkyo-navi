@@ -107,9 +107,9 @@ svg text{fill:var(--fg);font-size:13px}svg .ax{stroke:var(--ln)}svg .lnx{stroke:
 .vb .tr{position:relative;height:26px;background:var(--ac2);border-radius:5px;margin:6px 0 4px}.vb .tr i{display:block;height:100%;border-radius:5px;background:var(--ac)}.vb .tr i.lo{background:var(--gr)}
 .vb .tr b{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px dashed var(--nw)}.vb .tr i.ov{position:absolute;left:0;top:0;background:var(--nw)}.vb .tr b.sq{border-left-color:var(--fg)}
 .endorse{font-size:12px;color:var(--mu);border:1px dashed var(--ln);border-radius:999px;padding:1px 8px;margin-left:6px;white-space:nowrap}.terms{font-size:13px;color:var(--mu);margin-top:2px}
-.all{list-style:none;padding:0;margin:8px 0}.all li{display:grid;grid-template-columns:2.4em 1fr 5.2em;gap:6px;align-items:center;font-size:12px;line-height:1.25;color:var(--mu)}
-.all .t{height:7px;background:var(--ac2);border-radius:3px;position:relative}.all .t i{display:block;height:100%;border-radius:3px;background:var(--gr)}.all li.w .t i{background:var(--ac)}
-.all li.me{color:var(--fg);font-weight:700;font-size:14px;padding:3px 0}.all li.me .t{height:12px}.all li.me .t i{background:var(--nw)}.all li.cut{display:block;border-top:2px dashed var(--nw);margin:3px 0;font-size:11px;color:var(--nw)}
+.all{list-style:none;padding:0;margin:8px 0}.all li>span:last-child{text-align:right;font-variant-numeric:tabular-nums}.all li{display:grid;grid-template-columns:2.4em 1fr 5.2em;gap:6px;align-items:center;font-size:12px;line-height:1.25;color:var(--mu)}
+.all .t{height:7px;background:var(--ac2);border-radius:3px;position:relative}.all .t i{display:block;height:100%;border-radius:3px;background:var(--gr)}.all li.win .t i{background:var(--ac)}
+.all li.me{color:var(--fg);font-weight:700}.all li.me .t i{background:var(--nw)}.all li.cut{display:block;border-top:2px dashed var(--nw);margin:4px 0 2px;padding-top:2px;font-size:11px;line-height:1.4;color:var(--nw)}
 .pg{list-style:none;padding:0;margin:8px 0}.pg>li{padding:8px 0;border-bottom:1px solid var(--ln)}.pg .pn{font-weight:700;margin-bottom:4px}.pg>li.ind{border:2px dashed var(--mu);border-radius:10px;padding:10px 12px;margin-top:14px}.pg>li.ind .t i{background:var(--mu)}.pg>li.ind .note{margin:0 0 6px}
 tr.ind-sep td{border-top:2px dashed var(--mu);font-size:12px;color:var(--mu);padding-top:10px}tr.ind th,tr.ind td{background:var(--ac2)}.pg .hb li{grid-template-columns:4em 1fr;gap:0 10px;padding:3px 0}.pg .hb .t{margin-right:0}.pg .pv{grid-column:2;font-size:12px;color:var(--mu)}.pg .pv b{color:var(--fg);font-size:13px}.vb .cap{font-size:13px;color:var(--mu)}.vb .cap strong{color:var(--fg);font-size:15px}
 .lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--mu)}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}.lg i.dash{width:0;height:14px;border-left:2px dashed var(--nw);border-radius:0}
@@ -414,9 +414,9 @@ def last_election_html(c):
     for i, r in enumerate(e["rows"]):
         if i == e["seats"]:
             li.append(f'<li class="cut">▲ 当選（定数{e["seats"]}）／ ▼ 落選</li>')
-        cls = " ".join(x for x in ("w" if r["elected"] else "", "me" if me is r else "") if x)
-        nm = f'{E(c["name"])}　' if me is r else ""
-        li.append(f'<li class="{cls}"><span>{r["rank"]}位</span><span class="t"><i class="grow" style="width:{r["votes"] / maxv * 100:.1f}%"></i></span><span>{nm}{fv(r["votes"])}</span></li>')
+        cls = " ".join(x for x in ("win" if r["elected"] else "", "me" if me is r else "") if x)
+        # 本人の行も大きさ・並びは同じにし、色だけで示す（2026-10-28 先生の指示）
+        li.append(f'<li class="{cls}"><span>{r["rank"]}位</span><span class="t"><i class="grow" style="width:{r["votes"] / maxv * 100:.1f}%"></i></span><span>{fv(r["votes"])}</span></li>')
     chart = f'''<div class="chart"><ul class="all">{"".join(li)}</ul>
 <div class="lg"><span><i style="background:var(--ac)"></i>当選した人</span><span><i style="background:var(--gr)"></i>落選した人</span>{'<span><i style="background:var(--nw)"></i>' + E(c["name"]) + '</span>' if me else ''}</div></div>'''
     return f'''<section><h2>前回（{e['year']}年）の文京区議選</h2>{lead}{facts}
