@@ -59,6 +59,8 @@
 - build.py の `NOINDEX = True` で、全ページに noindex、Cloudflare 用 `_headers` に X-Robots-Tag、robots.txt からサイトマップの案内を外している
 - robots.txt で巡回を拒否しない（拒否すると noindex が読まれず、URLだけ検索に出ることがある）
 - Google Search Console への登録・サイトマップ送信は、本人が本格公開を決めるまでしない。解除は `NOINDEX = False` → build → 本人OK → push
+- **本格公開のときに必ずやる（2026-10-30 先生の指示）**：noindex を外したら、同じ日に Google Search Console に bunkyo-senkyo.jp を登録し、サイトマップを送る。所有の確認は、Cloudflare の DNS に TXT レコードを足す方法が簡単（先生がログインした画面で行う）。
+- アクセス数は Cloudflare の Web Analytics で見る（各ページに計測のしかけが入っている。Cookie を使わない）。Google アナリティクスは入れていない。
 
 ## 情報の鮮度と定期巡回（2026-10-26 開始）
 - 確認日から14日（build.py の STALE_DAYS）たったものは、画面には出さず内部で見直す（build の出力と毎日の巡回の報告に一覧が出る）。2026-10-27 本人方針：「要再確認」の旗はその人の印象を悪くするため
