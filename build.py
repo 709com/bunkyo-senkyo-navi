@@ -17,7 +17,18 @@ KUCHO_PAGES = True  # 2026-10-28 先生OK
 import os
 TOP_V2 = os.environ.get("NAVI_TOP_V2", "1") == "1"
 # 選挙コラム（2026-10-28 試作。先生のOKが出るまで公開しない。試作を見るときだけ NAVI_COLUMN=1）
-COLUMN = os.environ.get("NAVI_COLUMN") == "1"  # 2026-10-28 先生OK。旧トップに戻すときは NAVI_TOP_V2=0
+COLUMN = os.environ.get("NAVI_COLUMN") == "1"
+# トップの見出しを動く表示にする（2026-10-30 試作。先生のOKが出たら既定を "1" にする）
+HERO_ANIM = os.environ.get("NAVI_HERO_ANIM", "1") == "1"  # 2026-10-30 先生OK
+
+
+def anim_text(text, start=0):
+    """1文字ずつ下から浮かび上がる見出し。文字はそのまま読める（読み上げや検索にも影響しない）。"""
+    out, i = [], start
+    for ch in text:
+        out.append(f'<span style="--i:{i}">{E(ch)}</span>')
+        i += 1
+    return "".join(out), i  # 2026-10-28 先生OK。旧トップに戻すときは NAVI_TOP_V2=0
 SITE_NAME = "文京区議選ナビ2027"
 # 訂正・削除・苦情の受付（Googleフォーム。先生のアカウントで作成、2026-10-27）
 # 迷惑メール対策のため、メールアドレスはサイトに出さない。
@@ -47,6 +58,10 @@ document.querySelectorAll('ul.shuffle').forEach(function(ul){var it=[].slice.cal
 var fx=[].slice.call(ul.children).filter(function(li){return li.classList.contains('open');});
 for(var i=it.length-1;i>0;i--){var j=r(i+1),t=it[i];it[i]=it[j];it[j]=t;}it.concat(fx).forEach(function(li){ul.appendChild(li);});});})();</script>"""
 # 画面に入ったら動き出す（グラフが伸びる・カードがふわっと出る）。JSが動かない環境では最初から表示
+COUNT_JS = """<script>(function(){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+var els=[].slice.call(document.querySelectorAll('.count[data-to]'));if(!els.length)return;
+function run(e){var to=parseFloat(e.getAttribute('data-to')),t0=null,d=1200;function f(t){if(!t0)t0=t;var p=Math.min((t-t0)/d,1),v=to*(1-Math.pow(1-p,3));e.textContent=v.toFixed(2)+'%';if(p<1)requestAnimationFrame(f);}requestAnimationFrame(f);}
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){run(x.target);io.unobserve(x.target);}});},{threshold:.4});els.forEach(function(e){io.observe(e);});}else{els.forEach(run);}})();</script>"""
 MOTION_JS = """<script>(function(){
 var t=[];document.querySelectorAll('.fade,.chart').forEach(function(e){t.push([e,[e]]);});
 document.querySelectorAll('.grow').forEach(function(e){t.push([e.parentElement,[e]]);});
@@ -128,7 +143,12 @@ svg text{fill:var(--fg);font-size:13px}svg .ax{stroke:var(--ln)}svg .lnx{stroke:
 .bub .nm{display:block;font-size:12px;font-weight:700;color:var(--ac)}
 .pg .pn{font-weight:700;margin-bottom:4px}
 .turn .big{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}.turn .big div{background:var(--ac2);border-radius:12px;padding:12px 14px}.turn .big span{display:block;font-size:13px;color:var(--mu)}.turn .big b{font-size:34px;line-height:1.2;color:var(--ac)}.turn .big b.no{color:var(--nw)}
-.cards.gate a.t{font-size:19px}.pg>li.ind{border:2px dashed var(--mu);border-radius:10px;padding:10px 12px;margin-top:14px}.pg>li.ind .t i{background:var(--mu)}.pg>li.ind .note{margin:0 0 6px}
+.cards.gate a.t{font-size:19px}
+.hero-anim h1.anim{font-size:30px;line-height:1.4}.hero-anim h1.anim span{display:inline-block;opacity:0;transform:translateY(.55em);animation:hup .55s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(var(--i) * 45ms)}
+.hero-anim h1.anim em.hl{font-style:normal;color:var(--ac);background:linear-gradient(transparent 62%,var(--ac2) 62%) no-repeat 0 0/0% 100%;animation:hmark .7s ease-out 1.1s forwards}
+@keyframes hup{to{opacity:1;transform:none}}@keyframes hmark{to{background-size:100% 100%}}
+@media (max-width:520px){.hero-anim h1.anim{font-size:26px}}
+@media (prefers-reduced-motion:reduce){.hero-anim h1.anim span{opacity:1;transform:none;animation:none}.hero-anim h1.anim em.hl{background-size:100% 100%;animation:none}}.pg>li.ind{border:2px dashed var(--mu);border-radius:10px;padding:10px 12px;margin-top:14px}.pg>li.ind .t i{background:var(--mu)}.pg>li.ind .note{margin:0 0 6px}
 tr.ind-sep td{border-top:2px dashed var(--mu);font-size:12px;color:var(--mu);padding-top:10px}tr.ind th,tr.ind td{background:var(--ac2)}.pg .hb li{grid-template-columns:4em 1fr;gap:0 10px;padding:3px 0}.pg .hb .t{margin-right:0}.pg .pv{grid-column:2;font-size:12px;color:var(--mu)}.pg .pv b{color:var(--fg);font-size:13px}.vb .cap{font-size:13px;color:var(--mu)}.vb .cap strong{color:var(--fg);font-size:15px}
 .lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--mu)}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}.lg i.dash{width:0;height:14px;border-left:2px dashed var(--nw);border-radius:0}
 .duel{margin:14px 0 18px}.duel .yr{font-weight:700;font-size:15px;margin-bottom:4px}.duel .tr{display:flex;height:34px;border-radius:6px;overflow:hidden}
@@ -185,7 +205,7 @@ def layout(path, title, desc, body, crumbs=None, jsonld=None, active=None):
 このサイトは文京区、文京区議会、選挙管理委員会等の公式サイトではありません。公開情報から集めた範囲で運営者の責任において掲載しています。<br>
 最終更新 {E(UPDATED)}</p></div></footer>
 {SHUFFLE_JS}
-{MOTION_JS}
+{MOTION_JS}{COUNT_JS}
 </body></html>
 """
 
@@ -277,6 +297,15 @@ def line_chart(points, ymin, ymax, step, unit, label):
 
 
 # ------------------------------------------------------------ トップ
+def hero_h1():
+    if not HERO_ANIM:
+        return '<div class="hero"><h1>2027年4月、文京区で<br>2つの選挙があります</h1>'
+    a, n = anim_text("2027年4月、文京区で")
+    b, n = anim_text("2つの選挙", n)
+    c, n = anim_text("があります", n)
+    return f'<div class="hero hero-anim"><h1 class="anim" aria-label="2027年4月、文京区で2つの選挙があります">{a}<br><em class="hl">{b}</em>{c}</h1>'
+
+
 def page_index():
     chips = "".join(f'<li><a href="/kouho/{c["slug"]}/">{E(c["name"])}</a></li>' for c in cands)
     prow = []
@@ -322,11 +351,11 @@ def page_index():
         not_vote = 100 - last["turnout"]
         tchart = line_chart([(e["year"], e["turnout"]) for e in elections], 40, 60, 5, "%", "文京区議選の投票率の推移")
         body = f"""
-<div class="hero"><h1>2027年4月、文京区で<br>2つの選挙があります</h1>
+{hero_h1()}
 <p class="lead">文京区議会議員選挙と文京区長選挙です。このサイトは、立候補予定者や過去の結果など、公開されている情報だけをまとめています。</p>
 <div class="facts"><div>投票日 <b>{E(el['date_note'])}</b></div><div>区議会議員 <b>定数{el['seats']}</b></div><div>区長 <b>1人</b></div></div></div>
 <section class="turn"><h2>前回の区議選、投票したのは約2人に1人</h2>
-<div class="big"><div><span>{last['year']}年の区議選の投票率</span><b>{last['turnout']:.2f}%</b></div><div><span>投票しなかった人</span><b class="no">{not_vote:.2f}%</b></div></div>
+<div class="big"><div><span>{last['year']}年の区議選の投票率</span><b class="count" data-to="{last['turnout']:.2f}">{last['turnout']:.2f}%</b></div><div><span>投票しなかった人</span><b class="no count" data-to="{not_vote:.2f}">{not_vote:.2f}%</b></div></div>
 <div class="chart">{tchart}<p class="note">文京区議選の投票率の推移（{Y0}〜{Y1}年、文京区選挙管理委員会の公表値）。区長選は{kc_last['year']}年に{kc_last['turnout']:.2f}%でした。</p></div>
 <p><b>このサイトは、文京区の選挙の投票率を上げることを目指しています。</b>まずは、誰が立候補を予定しているかを知るところから始めてみてください。</p></section>
 <ul class="cards gate">
